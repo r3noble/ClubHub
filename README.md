@@ -1,5 +1,5 @@
 # CEN3031-Project-Group
-## Project name: GitClub or Clubber
+## Project name: ClubHub
 ## Project members:
 ### Front end:
  - Jenna Sheldon 
