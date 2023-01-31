@@ -2,11 +2,17 @@
 A Club Executive wants to...
  create a profile
  advertise events
+  =>
  manage their members
+  =>allow members to be blocked from viewing club page
+  =>allow inactive members to be removed from followers list
  add a bio and other information
- be able to remind members of an upcoming meeting. The user is able to send out an email to the account emails members used to register
- be able to promote and demote other members into positions in the club, some executive members can have privileges to plan events and edit the club description
- 
+  =>create bio header underneath club name/logo on club page
+ be able to remind members of an upcoming meeting. 
+  =>The user is able to send out an email to the account emails members used to register
+ be able to promote and demote other members into positions in the club 
+  =>some executive members can have privileges to plan events and edit the club description
+  
 A school admin wants to...
  limit who can view club events
   =>only students with ufl.edu domains are able to view or join clubs on ClubHub
@@ -16,6 +22,10 @@ A school admin wants to...
 A club member wants to...
  give feedback
   =>add portal in club page for public comments (maybe like Facebook?)
+ view events
+  =>create timeline where events will be listed
+  =>able to click on events to bring up a page on the event
+  =>allow for likes & comments to be public under the events on the timeline
  
 A prospective member wants to...
  enter their schedule
@@ -27,6 +37,8 @@ A prospective member wants to...
  
 A company wants to...
  see a resume portal from the club
+  =>allow club members to upload resumes to a pool that only companies can view
+  =>make pool available to view when company user views club web page
 
 
 # ideas for how to implement/ brainstorming
