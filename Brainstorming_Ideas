@@ -8,10 +8,14 @@ A Club Executive wants to...
  be able to promote and demote other members into positions in the club, some executive members can have privileges to plan events and edit the club description
  
 A school admin wants to...
- limit who can view club events, only students with ufl.edu domains are able to view or join clubs on ClubHub
+ limit who can view club events
+  =>only students with ufl.edu domains are able to view or join clubs on ClubHub
+ mointor club activities
+  =>allow access to view all club pages
 
 A club member wants to...
  give feedback
+  =>add portal in club page for public comments (maybe like Facebook?)
  
 A prospective member wanst to...
  enter their schedule 
