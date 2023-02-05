@@ -1,0 +1,7 @@
+@import 'node_modules/bulma/css/bulma.css';
+
+.navbar-brand {
+  background: "/assets/img/logo.png";
+  background-size: cover;
+  width: 400px
+}
