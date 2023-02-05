@@ -23,6 +23,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule
-  ]
+  ],
+  exports:[RouterModule]
 })
 export class AppRoutingModule { }
