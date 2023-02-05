@@ -1,0 +1,49 @@
+<button>Log In</button>
+
+<button>My Organization</button>
+
+<br><br>
+
+<div>
+  <div>
+    <div>Advertise an Event</div>
+    <div>Event Name</div>
+    <input
+      [(ngModel)]="title"
+      type="text"
+      placeholder = "Enter your Event Name">
+  </div>
+  <div>
+    <div>Description</div>
+    <input
+      [(ngModel)]="post"
+      type= "text"
+      placeholder = "Describe your Event">
+  </div>
+  <button (click) ="addEvent()">Add Event</button>
+</div>
+
+<br>
+<br>
+<br>
+
+
+<div *ngFor= "let clubItem of clubItems">
+    <div>{{ clubItem.clubTitle }}</div>
+    <div>{{ clubItem.title }}</div>
+    <div>{{ clubItem.post }}</div>
+
+    <br>
+    <div>
+      <div>
+          <input
+          type="text"
+          placeholder="Add a question or comment">
+      </div>
+      <button>post</button>
+    </div>
+    <br>
+    <button>I'm Interested</button>
+    <br>
+    <br>
+</div>
