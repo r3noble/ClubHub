@@ -10,6 +10,9 @@ interface clubItem {
 
 @Component({
   selector: 'app-root',
+  template: `
+
+  `,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
