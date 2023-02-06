@@ -19,7 +19,7 @@
         </div>
         <div id="navbarMenuHeroA" class="navbar-menu ">
           <div class="navbar-end">
-            <a class="navbar-item">
+            <a class="navbar-item" [routerLink]="'/'" routerLinkActive="active" >
               Home
             </a>
             <a class="navbar-item" >
@@ -31,7 +31,7 @@
             <a class="navbar-item">
               FAQ
             </a>
-            <a [routerLink]="'/profile'">Profile</a>
+            <a class="navbar-item" [routerLink]="'/profile'">Profile</a>
 
             <span class="navbar-item">
               <a class="button is-inverted is-primary  has-text-dark">
