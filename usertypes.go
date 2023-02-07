@@ -1,41 +1,50 @@
 package main
 
-type Adminer interface {
+import (
+	"fmt"
+)
+
+type UserManager interface {
 	//insert functions admins should be able to perform here
+	getType() int
+	setType(rank int) error
+	IncType()
+	DecType()
 }
 
-type Admin struct {
+type User struct {
 	//insert data admin should store
+	/*user type will be set with integers and a known code of level. The lower the value the lower the privilege
+	0 - member
+	1 - exec
+	2 - admin
+	*/
+	Name string
+	Pass string
+	Type int
+	Corp bool //default is false
 }
 
-//implement functions listed in Adminer
-
-type Memberer interface {
-	//insert functions regular club members should be able to perform
+func (u *User) getType() int {
+	return u.Type
 }
 
-type Member struct {
-	//insert data members should be able to store
+func (u *User) setType(rank int) error {
+	if rank < 0 || rank > 2 {
+		return fmt.Errorf("rank must be between 0 and 2, got %d", rank)
+	}
+	u.Type = rank
+	return nil
 }
 
-//implement functions listed by Memberer
-
-type Execer interface {
-	//insert functions club execs would need
+func (u *User) IncRank() {
+	if u.Type < 2 {
+		u.Type++
+	}
 }
 
-type Exec struct {
-	//insert data exec users would need to store
+func (u *User) DecRank() {
+	if u.Type > 0 {
+		u.Type--
+	}
 }
-
-//implement Execer functions here
-
-type Corporater interface {
-	//insert functions company recruiters/speakers would need
-}
-
-type Corporate struct {
-	//insert data corporate users would need to store
-}
-
-//implement Corporater functions here
