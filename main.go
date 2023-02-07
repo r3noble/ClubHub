@@ -2,9 +2,18 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	_ "github.com/lib/pq"
 	"log"
 	"net/http"
-	//_ "github.com/lib/pq"
+)
+
+const (
+	host     = "localhost"
+	port     = 4200
+	user     = "postgres"
+	password = "password"
+	dbname   = "mydb"
 )
 
 var db *sql.DB
@@ -19,10 +28,20 @@ func main() {
 }
 
 func initDB() {
-	var err error
-	//connecting to postgresql
-	db, err = sql.Open("postgres", "dbname=mydb sslmode=disable")
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+
+	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error opening connection to database:", err)
+		return
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("Error pinging database:", err)
+		return
 	}
 }
