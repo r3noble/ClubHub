@@ -1,43 +1,43 @@
 User stories
-- A Club Executive wants to...
- create a profile
- advertise events
-  =>manage their members
-  =>allow members to be blocked from viewing club page
-  =>allow inactive members to be removed from followers list
- add a bio and other information
-  =>create bio header underneath club name/logo on club page
- be able to remind members of an upcoming meeting. 
-  =>The user is able to send out an email to the account emails members used to register
- be able to promote and demote other members into positions in the club 
-  =>some executive members can have privileges to plan events and edit the club description
+- A Club Executive wants to... <br>
+ create a profile <br>
+ advertise events <br>
+  =>manage their members <br>
+  =>allow members to be blocked from viewing club page <br>
+  =>allow inactive members to be removed from followers list  <br>
+ add a bio and other information <br>
+  =>create bio header underneath club name/logo on club page <br>
+ be able to remind members of an upcoming meeting.  <br>
+  =>The user is able to send out an email to the account emails members used to register  <br>
+ be able to promote and demote other members into positions in the club <br>
+  =>some executive members can have privileges to plan events and edit the club description <br> 
   
-- A school admin wants to...
- limit who can view club events
-  =>only students with ufl.edu domains are able to view or join clubs on ClubHub
- mointor club activities
-  =>allow access to view all club pages
+- A school admin wants to...  <br>
+ limit who can view club events <br>
+  =>only students with ufl.edu domains are able to view or join clubs on ClubHub 
+ mointor club activities <br>
+  =>allow access to view all club pages <br>
 
-- A club member wants to...
- give feedback
-  =>add portal in club page for public comments (maybe like Facebook?)
- view events
-  =>create timeline where events will be listed
-  =>able to click on events to bring up a page on the event
-  =>allow for likes & comments to be public under the events on the timeline
+- A club member wants to... <br>
+ give feedback <br>
+  =>add portal in club page for public comments (maybe like Facebook?) <br>
+ view events <br>
+  =>create timeline where events will be listed  <br>
+  =>able to click on events to bring up a page on the event <br>
+  =>allow for likes & comments to be public under the events on the timeline <br>
  
-- A prospective member wants to...
- enter their schedule
-  =>give users access to a personal calender that events can be added to
- see how many active members are in the club
-  =>add a "followers" tab (like Instagram)
- see links to the clubs' recent social media
-  =>add link availability to bio (like Instagram)
+- A prospective member wants to... <br>
+ enter their schedule <br>
+  =>give users access to a personal calender that events can be added to <br>
+ see how many active members are in the club <br>
+  =>add a "followers" tab (like Instagram) <br>
+ see links to the clubs' recent social media <br>
+  =>add link availability to bio (like Instagram) <br>
  
-- A company wants to...
- see a resume portal from the club
-  =>allow club members to upload resumes to a pool that only companies can view
-  =>make pool available to view when company user views club web page
+- A company wants to... <br>
+ see a resume portal from the club <br>
+  =>allow club members to upload resumes to a pool that only companies can view <br>
+  =>make pool available to view when company user views club web page <br>
 
 What issues your team planned to address
 - The front end team planned on addressing a home page and the login page, with working tabs to navigate between the pages and a login that allowed 
