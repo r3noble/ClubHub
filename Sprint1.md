@@ -1,5 +1,5 @@
 User stories
-- A Club Executive wants to... <br>
+- A Club Executive wants to..<br>
  create a profile <br>
  advertise events <br>
   =>manage their members <br>
