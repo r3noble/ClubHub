@@ -3,15 +3,17 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
-	//_ "github.com/lib/pq"
 )
 
+// models struct of users, replace later
 type Credentials struct {
-	Password string `json:"password", db:"password"`
-	Username string `json:"username", db:"username"`
+	Password  string `json:"password", db:"password"`
+	Username  string `json:"username", db:"username"`
+	UserLevel string `json:"userlevel, db:"userlevel"`
 }
 
 func Signup(w http.ResponseWriter, r *http.Request) {
@@ -25,14 +27,23 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	//use bcrypt to salt & hash pword
 	//8 is hashing value
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(creds.Password), 8)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Println("Could not hash password")
+		return
+	}
 
-	//insert username and hashed pword into db
-	if _, err = db.Query("insert into users values ($1, $2)", creds.Username, string(hashedPassword)); err != nil {
+	//insert username, hashed pword, and userlevel into db
+	insertData := `INSERT INTO users (name, password, userlevel)
+					VALUES ($1, $2, $3)`
+
+	if _, err = db.Query(insertData, creds.Username, hashedPassword, creds.UserLevel); err != nil {
 		//if error return service error
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
+	//Properly signed up if no errors til this point
 }
 
 func Signin(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +55,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//get pword found in DB for username input
-	result := db.QueryRow("select password from users where username=$1", creds.Username)
+	result := db.QueryRow("SELECT userlevel, password FROM users WHERE username=$1", creds.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -52,13 +63,14 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	//create another credentials instance to store what we retrieve from the db
 	stored := &Credentials{}
 	//store obtained pword
-	err = result.Scan(&stored.Password)
+	err = result.Scan(&stored.Password, &stored.UserLevel)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			//**DO SOMETHING****
+			//invalid password entered => **DO SOMETHING****
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+		//other issue, do something else
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
