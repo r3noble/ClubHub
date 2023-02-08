@@ -16,7 +16,7 @@ const appRoutes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
-  }
+  },
   {
     path: 'login',
     component: LoginComponent
