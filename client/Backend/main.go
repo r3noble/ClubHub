@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	_ "github.com/lib/pq"
 )
 
 const (
@@ -20,6 +18,7 @@ const (
 var db *sql.DB
 
 func main() {
+	host := "127.0.0.1:8080"
 	http.HandleFunc("/signin", Signin)
 	http.HandleFunc("/signup", Signup)
 	//initialize databse
