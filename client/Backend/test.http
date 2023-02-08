@@ -1,0 +1,23 @@
+##Signup request
+POST http://localhost:4200/signup
+{
+    "username": "Trey",
+    "password": "mysecurepassword",
+    "userlevel": 1
+}
+
+##Signin request
+
+POST http://localhost:4200/signin
+{
+    "username": "Trey",
+    "password": "mysecurepassword"
+}
+
+##Invalid signin request
+
+POST http://localhost:4200/signin
+{
+    "username": "Trey",
+    "password": "incorrectpassword"
+}
