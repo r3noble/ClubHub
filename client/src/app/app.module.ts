@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ProfileComponent } from './profile/profile.component';
 import  appRoutes  from './app-routing.module';
 import { LoginComponent } from './login/login.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoginComponent } from './login/login.component';
     HeaderComponent,
     FooterComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    CalendarComponent
   ],
 
 
