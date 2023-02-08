@@ -10,13 +10,13 @@ import { LoginComponent } from './login/login.component';
 const appRoutes: Routes = [
   {
   path : '',
-  component: AppComponent
+  component: HomeComponent
 
   },
   {
     path: 'profile',
     component: ProfileComponent
-  }
+  },
   {
     path: 'login',
     component: LoginComponent
