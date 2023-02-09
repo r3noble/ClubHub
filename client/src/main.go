@@ -18,13 +18,13 @@ const (
 var db *sql.DB
 
 func main() {
-	host := "127.0.0.1:8080"
+	port := ":8080"
 	http.HandleFunc("/signin", Signin)
 	http.HandleFunc("/signup", Signup)
 	//initialize databse
-	initDB()
+	//initDB()
 	//start server
-	log.Fatal(http.ListenAndServe(":4200", nil))
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 func initDB() {
