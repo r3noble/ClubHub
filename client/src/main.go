@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -17,8 +19,19 @@ const (
 
 var db *sql.DB
 
+type User struct {
+	gorm.Model
+	username string `json:"username" gorm:"primary_key"`
+	name     string `json:"name"`
+	pass     string `json:"pass"`
+}
+
 func main() {
 	port := ":8080"
+	router := mux.NewRouter()
+
+	router.HandleFunc("/signin", Signin).Methods("PUT")
+	router.HandleFunc("/signup", Signup).Methods("POST")
 	http.HandleFunc("/signin", Signin)
 	http.HandleFunc("/signup", Signup)
 	//initialize databse
