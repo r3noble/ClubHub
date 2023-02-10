@@ -25,13 +25,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "@angular/material/prebuilt-themes/purple-green.css",
               "node_modules/bulma/css/bulma.css",
               "src/styles.css"
-
             ],
-            "scripts": [
-
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -91,13 +90,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "@angular/material/prebuilt-themes/purple-green.css",
               "node_modules/bulma/css/bulma.css",
               "src/styles.css"
-
             ],
-            "scripts": [
-
-            ]
+            "scripts": []
           }
         }
       }
