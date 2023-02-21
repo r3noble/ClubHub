@@ -53,6 +53,7 @@ func main() {
 		log.Fatal("? Could not load environment variables", err)
 	}
 
+	//**figure out what handler to send to
 	router.HandleFunc("/api/login",
 		func(w http.ResponseWriter, r *http.Request) {
 			message := "Welcome to ClubHub login using Golang with Gorm and Postgres"
