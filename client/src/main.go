@@ -1,60 +1,66 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "kraus"
-	password = "0228"
-	dbname   = "mydb"
+/*
+	type User struct {
+		gorm.Model
+		username string `json:"username" gorm:"primary_key"`
+		name     string `json:"name"`
+		pass     string `json:"pass"`
+	}
+
+	func main() {
+		port := ":8080"
+		router := mux.NewRouter()
+
+		router.HandleFunc("/signin", Signin).Methods("PUT")
+		router.HandleFunc("/signup", Signup).Methods("POST")
+		http.HandleFunc("/signin", Signin)
+		http.HandleFunc("/signup", Signup)
+		//initialize databse
+		//initDB()
+		//start server
+		log.Fatal(http.ListenAndServe(port, nil))
+	}
+*/
+
+var (
+	router *mux.Router
 )
 
-var db *sql.DB
+func init() {
+	config, err := initializers.LoadConfig(".")
+	if err != nil {
+		log.Fatal("? Could not load environment variables", err)
 
-type User struct {
-	gorm.Model
-	username string `json:"username" gorm:"primary_key"`
-	name     string `json:"name"`
-	pass     string `json:"pass"`
+	}
+
+	initializers.ConnectDB(&config)
+
+	router = mux.NewRouter()
 }
 
 func main() {
-	port := ":8080"
-	router := mux.NewRouter()
-
-	router.HandleFunc("/signin", Signin).Methods("PUT")
-	router.HandleFunc("/signup", Signup).Methods("POST")
-	http.HandleFunc("/signin", Signin)
-	http.HandleFunc("/signup", Signup)
-	//initialize databse
-	//initDB()
-	//start server
-	log.Fatal(http.ListenAndServe(port, nil))
-}
-
-func initDB() {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-
-	db, err := sql.Open("kraus", psqlInfo)
+	config, err := initializers.LoadConfig(".")
 	if err != nil {
-		fmt.Println("Error opening connection to database:", err)
-		return
+		log.Fatal("? Could not load environment variables", err)
 	}
-	defer db.Close()
 
-	err = db.Ping()
-	if err != nil {
-		fmt.Println("Error pinging database:", err)
-		return
-	}
+	router.HandleFunc("/api/login",
+		func(w http.ResponseWriter, r *http.Request) {
+			message := "Welcome to ClubHub login using Golang with Gorm and Postgres"
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`{"status": "success", "message": "` + message + `"}`))
+		}).Methods("GET")
+
+	log.Fatal(http.ListenAndServe(":"+config.ServerPort, router))
+
 }

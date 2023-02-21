@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    #maps local port 6500 to default postgresql port 5432
+    #allows access to postgresql outside the container
+    ports:
+      - 6500:5432
+    env_file:
+      - ./app.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres:
