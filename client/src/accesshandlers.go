@@ -1,5 +1,6 @@
 package main
 
+/*
 import (
 	"encoding/json"
 	"fmt"
@@ -82,7 +83,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 	}
 }*/
-
+/*
 func SignIn(w http.ResponseWriter, r *http.Request) {
 	creds := &models.User{}
 	err := json.NewDecoder(r.Body).Decode(creds)
@@ -122,3 +123,4 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Sign in successful"))
 }
+*/
