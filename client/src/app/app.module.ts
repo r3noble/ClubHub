@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import  appRoutes  from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     FooterComponent,
     ProfileComponent,
     LoginComponent,
-    CalendarComponent
+    CalendarComponent,
+    RegisterComponent
   ],
 
 
