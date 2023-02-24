@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
@@ -56,8 +57,18 @@ type User struct {
 	Age      int
 }
 
-//var userMap map[int]User
+// var userMap map[int]User
+type App struct {
+	//db *gorm.DB
+	u map[int]User
+	r *mux.Router
+}
 
+func (a *App) start() {
+	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
+	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
+	http.ListenAndServe(":8080", a.r)
+}
 func main() {
 	//	userMap := make(map[int]User)
 
@@ -70,31 +81,38 @@ func main() {
 	cole.Password = "pass"
 	//userMap[1] = cole
 
-	router := mux.NewRouter()
-	/*config, err := initializers.LoadConfig(".")
-	if err != nil {
-		log.Fatal("? Could not load environment variables", err)
+	app := App{
+		//db: db,
+		u: make(map[int]User),
+		r: mux.NewRouter(),
 	}
-	*/
-	/*
-		//**figure out what handler to send to
-		router.HandleFunc("/api/login",
-			func(w http.ResponseWriter, r *http.Request) {
-				message := "Welcome to ClubHub login using Golang with Gorm and Postgres"
-				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusOK)
-				w.Write([]byte(`{"status": "success", "message": "` + message + `"}`))
-			}).Methods("GET")
+	app.u[1] = User{ID: 1, Name: "Cole", Age: 21, Email: "cole@rottenberg.org", Password: "pass"}
+	app.start()
 
-		log.Fatal(http.ListenAndServe(":"+config.ServerPort, router))
-	*/
-	router.HandleFunc("/health", HealthCheck).Methods("GET")
-	router.HandleFunc("/getSlice", testJSON).Methods("GET")
-	router.HandleFunc("/getMap1", func(w http.ResponseWriter, r *http.Request) {
+	//router.HandleFunc("/health", HealthCheck).Methods("GET")
+	//router.HandleFunc("/getSlice", testJSON).Methods("GET")
+	/*router.HandleFunc("/getMap1", func(w http.ResponseWriter, r *http.Request) {
 		testJSONMap(w, r, cole)
 	}).Methods("GET")
 	http.Handle("/", router)
 	http.ListenAndServe(":8080", router)
+	*/
+}
+func (a *App) addStudent(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var us User
+	err := json.NewDecoder(r.Body).Decode(&us)
+	if err != nil {
+		sendErr(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	s.ID = uuid.New().String()
+	err = a.db.Save(&s).Error
+	if err != nil {
+		sendErr(w, http.StatusInternalServerError, err.Error())
+	} else {
+		w.WriteHeader(http.StatusCreated)
+	}
 }
 
 type Response struct {
