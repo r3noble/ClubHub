@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
 import { SchedulerModule } from 'smart-webcomponents-angular/scheduler';
+import { StepperComponent } from './stepper/stepper.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { SchedulerModule } from 'smart-webcomponents-angular/scheduler';
     ProfileComponent,
     LoginComponent,
     CalendarComponent,
-    RegisterComponent
+    RegisterComponent,
+    StepperComponent
   ],
 
 
