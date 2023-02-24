@@ -13,7 +13,7 @@ import  appRoutes  from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
-
+import { SchedulerModule } from 'smart-webcomponents-angular/scheduler';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +33,7 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-
+    SchedulerModule
 
   ],
   providers: [],
