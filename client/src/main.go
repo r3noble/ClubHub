@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
@@ -98,23 +97,25 @@ func main() {
 	http.ListenAndServe(":8080", router)
 	*/
 }
-func (a *App) addStudent(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	var us User
-	err := json.NewDecoder(r.Body).Decode(&us)
-	if err != nil {
-		sendErr(w, http.StatusBadRequest, err.Error())
-		return
-	}
-	s.ID = uuid.New().String()
-	err = a.db.Save(&s).Error
-	if err != nil {
-		sendErr(w, http.StatusInternalServerError, err.Error())
-	} else {
-		w.WriteHeader(http.StatusCreated)
-	}
-}
 
+/*
+	func (a *App) addStudent(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		var us User
+		err := json.NewDecoder(r.Body).Decode(&us)
+		if err != nil {
+			sendErr(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		s.ID = uuid.New().String()
+		err = a.db.Save(&s).Error
+		if err != nil {
+			sendErr(w, http.StatusInternalServerError, err.Error())
+		} else {
+			w.WriteHeader(http.StatusCreated)
+		}
+	}
+*/
 type Response struct {
 	Users []User `json:"users"`
 }
