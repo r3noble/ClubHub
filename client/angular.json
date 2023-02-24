@@ -26,8 +26,8 @@
             ],
             "styles": [
               "node_modules/bulma/css/bulma.css",
-              "src/styles.css"
-
+              "src/styles.css",
+              "./node_modules/smart-webcomponents-angular/source/styles/smart.default.css"
             ],
             "scripts": [
 
@@ -92,8 +92,8 @@
             ],
             "styles": [
               "node_modules/bulma/css/bulma.css",
-              "src/styles.css"
-
+              "src/styles.css",
+              "./node_modules/smart-webcomponents-angular/source/styles/smart.default.css"
             ],
             "scripts": [
 
