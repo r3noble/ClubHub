@@ -44,6 +44,12 @@ export class CalendarComponent implements AfterViewInit, OnInit {
                     dateEnd: new Date(currentYear, currentMonth, todayDate, 10, 30),
                     backgroundColor: '#E67C73'
                 },
+                {
+                  label: 'Jenna and Kenneth 21st Birthday',
+                  dateStart: new Date(2023, 1, 28, 0, 0),
+                  dateEnd: new Date(2023, 1, 28, 10, 30),
+                  backgroundColor: '#E67C73'
+              },
             ]
 
         return data
