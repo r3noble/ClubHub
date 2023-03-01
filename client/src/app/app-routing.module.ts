@@ -28,7 +28,7 @@ const appRoutes: Routes = [
     component: CalendarComponent
   },
   {
-    path: 'login/register',
+    path: 'register',
     component: RegisterComponent
   }
 ];

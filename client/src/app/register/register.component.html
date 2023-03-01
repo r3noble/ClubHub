@@ -12,30 +12,23 @@
 
 <section class="section">
     <div class="field">
-        <label class="label">Name</label>
+        <label class="label">First Name</label>
         <div class="control">
-            <input class="input" type="text" placeholder="Text input">
+            <input class="input" type="text" placeholder="">
         </div>
     </div>
 
     <div class="field">
-        <label class="label">Username</label>
-        <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" placeholder="Text input" value="bulma">
-            <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-            </span>
-            <span class="icon is-small is-right">
-                <i class="fas fa-check"></i>
-            </span>
+        <label class="label">Last Name</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="">
         </div>
-        <p class="help is-success">This username is available</p>
     </div>
 
     <div class="field">
         <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
-            <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
+            <input class="input is-danger" type="email" placeholder="" value="">
             <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
             </span>
@@ -45,6 +38,43 @@
         </div>
         <p class="help is-danger">This email is invalid</p>
     </div>
+
+    
+    <div class="field">
+        <label class="label">Email</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input" type="email" name="email" [(ngModel)]="email" #emailInput="ngModel" required [pattern]="'^[a-zA-Z0-9._%+-]+@ufl.edu$'">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i *ngIf="emailInput.valid" class="fas fa-check"></i>
+          </span>
+        </div>
+        <p class="help is-success" *ngIf="emailInput.valid">This email is valid/unregistered.</p>
+        <p class="help is-danger" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+          Please enter a valid/unregistered email ending in "@ufl.edu".
+        </p>
+      </div>
+      
+      
+    
+    <!---<div class="field">
+        <label class="label">Email</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" type="text" name="email" [(ngModel)]="email" #emailInput="ngModel" required pattern="^[^\s]+$">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i *ngIf="emailInput.valid" class="fas fa-check"></i>
+            </span>
+        </div>
+        <p class="help is-success" *ngIf="emailInput.valid">This email is unregistered.</p>
+        <p class="help is-danger" *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+          Please enter a valid and unregistered email.
+        </p>
+    </div> -->
 
     <div class="field">
         <label class="label">Password</label>
@@ -56,7 +86,7 @@
     <div class="field">
         <label class="label">Re-type Password</label>
         <div class="control">
-            <input class="input" type="password" [(ngModel)]="password" name="password" required>
+            <input class="input" type="password" [(ngModel)]="rpassword" name="rpassword" required>
         </div>
     </div>
 

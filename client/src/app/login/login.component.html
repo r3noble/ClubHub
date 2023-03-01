@@ -33,9 +33,12 @@
             </button>
             <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-            <button type="submit" class="button is-medium">
+            <button type="submit" (click)="onRegister()" class="button is-medium">
+                Don't have an account? Sign up now!
+            </button>
+            <!--<button type="submit" class="button is-medium">
               Don't have an account? Sign up now!
-          </button>
+          </button>-->
         </form>
     </div>
 
