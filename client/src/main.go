@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 	"sync"
 
 	"github.com/gorilla/mux"
@@ -57,11 +56,15 @@ type User struct {
 	Password string
 	Age      int
 }
+type Credentials struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 // var userMap map[int]User
 type App struct {
 	//db *gorm.DB
-	u  map[int]User
+	u  map[string]User
 	r  *mux.Router
 	mu sync.Mutex
 }
@@ -77,21 +80,14 @@ func (a *App) start() {
 func main() {
 	//	userMap := make(map[int]User)
 
-	var cole User
-
-	cole.ID = 1
-	cole.Name = "cole"
-	cole.Age = 21
-	cole.Email = "cole@rottenberg.org"
-	cole.Password = "pass"
 	//userMap[1] = cole
 
 	app := App{
 		//db: db,
-		u: make(map[int]User),
+		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
-	app.u[1] = User{ID: 1, Name: "Cole", Age: 21, Email: "cole@rottenberg.org", Password: "pass"}
+	app.u["Cole"] = User{ID: 1, Name: "Cole", Age: 21, Email: "cole@rottenberg.org", Password: "pass"}
 	app.start()
 
 	//router.HandleFunc("/health", HealthCheck).Methods("GET")
@@ -103,23 +99,58 @@ func main() {
 	http.ListenAndServe(":8080", router)
 	*/
 }
-func (a *App) GetUserByID(id int) (*User, error) {
+func (a *App) GetUserByID(id string) (*User, error) {
 	user, ok := a.u[id]
 	if !ok {
 		return nil, fmt.Errorf("user with ID %d not found", id)
 	}
 	return &user, nil
 }
+func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
+	// Check if the request method is POST and the URL path is /user/login
+	if r.Method == "POST" && r.URL.Path == "/user/login" {
+		// Decode the JSON payload from the request body
+		var creds Credentials
+		err := json.NewDecoder(r.Body).Decode(&creds)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
 
+		// Check if the required fields (username and password) are present
+		if creds.Username == "" || creds.Password == "" {
+			http.Error(w, "Username and password are required", http.StatusBadRequest)
+			return
+		}
+
+		// Authenticate the user using the provided credentials (not shown)
+		// ...
+		user, ok := a.u[creds.Username]
+		if !ok {
+			http.Error(w, "Innvalid Username", http.StatusUnauthorized)
+			return
+		}
+		//now we check the password
+		knownPass := user.Password
+		if knownPass != creds.Password {
+			http.Error(w, "Invalid Password", http.StatusUnauthorized)
+			return
+		}
+
+		// Send a success response
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Login successful"))
+		return
+	}
+
+	// Send a 404 Not Found response if the URL path doesn't match
+	http.NotFound(w, r)
+}
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		http.Error(w, "Invalid id", http.StatusBadRequest)
-		return
-	}
+	id := vars["id"]
 	// Look up the user with the given id in the map
 	user, err := a.GetUserByID(id)
 	if err != nil {
@@ -146,7 +177,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the user ID already exists in the map
-	if _, ok := a.u[newUser.ID]; ok {
+	if _, ok := a.u[newUser.Name]; ok {
 		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
 		return
 	}
@@ -154,7 +185,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Add the new user to the map
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	a.u[newUser.ID] = newUser
+	a.u[newUser.Name] = newUser
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")
