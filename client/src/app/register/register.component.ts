@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
 
-    constructor(private router: Router) { }
+    constructor(public router: Router) { }
     
     name: string = "";
     username: string = "";
