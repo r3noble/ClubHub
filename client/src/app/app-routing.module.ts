@@ -26,6 +26,7 @@ const appRoutes: Routes = [
     path: 'calendar',
     component: CalendarComponent
   }
+
 ];
 
 export default appRoutes;
