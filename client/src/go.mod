@@ -6,6 +6,7 @@ require github.com/jackc/pgx/v4 v4.18.0
 
 require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.14.0 // indirect
