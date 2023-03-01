@@ -54,7 +54,6 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
-	Age      int
 }
 type Credentials struct {
 	Username string `json:"username"`
@@ -94,6 +93,18 @@ func (w *responseWriter) WriteHeader(statusCode int) {
 
 func (a *App) start() {
 	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
+	a.r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			if r.Method == "OPTIONS" {
+				w.WriteHeader(http.StatusOK)
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	})
 	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
 	//query-based matching using id
 	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
@@ -111,7 +122,7 @@ func main() {
 		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
-	app.u["Cole"] = User{ID: 1, Name: "Cole", Age: 21, Email: "cole@rottenberg.org", Password: "pass"}
+	app.u["Cole"] = User{ID: 1, Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 	app.start()
 
 	//router.HandleFunc("/health", HealthCheck).Methods("GET")
