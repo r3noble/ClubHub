@@ -68,27 +68,28 @@ type App struct {
 	r  *mux.Router
 	mu sync.Mutex
 }
+
 func WriteOnceMiddleware(h http.Handler) http.Handler {
-  return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-      wrappedWriter := &responseWriter{w, false}
-      h.ServeHTTP(wrappedWriter, r)
-      if !wrappedWriter.wroteHeader {
-          wrappedWriter.WriteHeader(http.StatusOK)
-      }
-  })
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		wrappedWriter := &responseWriter{w, false}
+		h.ServeHTTP(wrappedWriter, r)
+		if !wrappedWriter.wroteHeader {
+			wrappedWriter.WriteHeader(http.StatusOK)
+		}
+	})
 }
 
 type responseWriter struct {
-  http.ResponseWriter
-  wroteHeader bool
+	http.ResponseWriter
+	wroteHeader bool
 }
 
 func (w *responseWriter) WriteHeader(statusCode int) {
-  if w.wroteHeader {
-      return
-  }
-  w.ResponseWriter.WriteHeader(statusCode)
-  w.wroteHeader = true
+	if w.wroteHeader {
+		return
+	}
+	w.ResponseWriter.WriteHeader(statusCode)
+	w.wroteHeader = true
 }
 
 func (a *App) start() {
@@ -125,7 +126,7 @@ func main() {
 func (a *App) GetUserByID(id string) (*User, error) {
 	user, ok := a.u[id]
 	if !ok {
-		return nil, fmt.Errorf("user with ID %d not found", id)
+		return nil, fmt.Errorf("user with ID %s not found", id)
 	}
 	return &user, nil
 }

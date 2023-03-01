@@ -16,7 +16,8 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) {}
 
   onSubmit() {
-    this.loginService.login(this.username, this.password).subscribe(
+    this.loginService.login(this.username, this.password)
+    .subscribe(
       () => {
         // Redirect to the profile page if successful login
         this.router.navigate(['/profile']);
