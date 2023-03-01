@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
@@ -66,6 +67,8 @@ type App struct {
 func (a *App) start() {
 	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
 	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
+	//query-based matching using id
+	a.r.HandleFunc("/user/{id}", a.IdHandler).Methods("GET")
 	http.ListenAndServe(":8080", a.r)
 }
 func main() {
@@ -116,6 +119,26 @@ func main() {
 		}
 	}
 */
+func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		http.Error(w, "Invalid id", http.StatusBadRequest)
+		return
+	}
+	// Look up the user with the given id in the map
+	user, ok := a.u[id]
+	if !ok {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
+}
+
 type Response struct {
 	Users []User `json:"users"`
 }
