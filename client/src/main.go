@@ -228,3 +228,19 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	//next function writes back to the response
 	fmt.Fprintf(w, "API is running")
 }
+
+func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
+	// Get the username parameter from the URL path
+	username := r.URL.Query().Get("username")
+
+	// Retrieve the profile data from the map
+	profile, ok := a.u[username]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	// Convert the profile data to JSON and send it in the response
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(profile)
+}

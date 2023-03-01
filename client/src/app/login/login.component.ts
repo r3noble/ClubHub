@@ -20,10 +20,11 @@ export class LoginComponent {
     .subscribe(
       () => {
         // Redirect to the profile page if successful login
-        this.router.navigate(['/profile']);
+        this.router.navigate(['${this.baseUrl}/profile?username=${username}']);
       },
       (error) => {
         this.errorMessage = error.message;
+        this.router.navigate(['/profile']);
       }
     );
   }
