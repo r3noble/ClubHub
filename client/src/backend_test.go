@@ -2,14 +2,7 @@ package main
 
 import (
 	"testing"
-	"net/http/httptest"
-	"bytes"
-	"net/http"
 )
-
-/*func testLogin(t *Testing) {
-
-}*/
 
 func (a *App) TestGetUserByID(t *testing.T) {
 	//what is actually returned
