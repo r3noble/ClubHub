@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
 
+    constructor(private router: Router) { }
+    
     name: string = "";
     username: string = "";
     email: string = "";
@@ -17,32 +19,8 @@ export class RegisterComponent {
     rpassword: string = ""; 
     major: string = "";
 
-
-
-    registerForm: FormGroup;
-
-    constructor(private formBuilder: FormBuilder) {
-        this.registerForm = this.formBuilder.group({
-        username: ['', [Validators.required]]
-    });
-  }
-
-  onSpaceKeydown(event: any) {
-    if (event.code === 'Space') {
-      event.preventDefault();
-      const input = event.target as HTMLInputElement;
-      const value = input.value;
-      const newValue = value.replace(/ /g, '_');
-      input.value = newValue;
-    }
-  }
-
-    onSubmit() {
-        // Handle form submission
-      }
-    
-      get f() {
-        return this.registerForm.controls;
+    onCancel() {
+        this.router.navigate(['']);
       }
 }   
 
