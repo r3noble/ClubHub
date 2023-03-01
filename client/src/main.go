@@ -144,10 +144,12 @@ func (a *App) GetUserByID(id string) (*User, error) {
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
+	fmt.Println("Successfully entered Login Handler")
 	var creds Credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println("Bad Json in Body")
 		return
 	}
 
@@ -162,12 +164,14 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	user, ok := a.u[creds.Username]
 	if !ok {
 		http.Error(w, "Invalid Username", http.StatusUnauthorized)
+		fmt.Println("No found user")
 		return
 	}
 	//now we check the password
 	knownPass := user.Password
 	if knownPass != creds.Password {
 		http.Error(w, "Invalid Password", http.StatusUnauthorized)
+		fmt.Println("No found password")
 		return
 	}
 	response := struct {
@@ -181,9 +185,13 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Println("About to pass back user")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(jsonResponse)
+
+	fmt.Println("Passing back success")
 	// Send a success response
 	return
 
