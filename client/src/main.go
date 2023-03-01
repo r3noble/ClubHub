@@ -73,7 +73,7 @@ func (a *App) start() {
 	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
 	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
 	//query-based matching using id
-	a.r.HandleFunc("/user/{id}", a.IdHandler).Methods("GET")
+	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
 	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
 	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
 	http.ListenAndServe(":8080", a.r)
