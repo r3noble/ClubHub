@@ -6,6 +6,7 @@ import {Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const appRoutes: Routes = [
@@ -26,7 +27,10 @@ const appRoutes: Routes = [
     path: 'calendar',
     component: CalendarComponent
   }
-
+  {
+    path: 'login/register',
+    component: RegisterComponent
+  }
 ];
 
 export default appRoutes;

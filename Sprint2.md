@@ -12,6 +12,7 @@
 
 ## Front End Unit Tests
 
+
 ## Front End Cypress Test
 Wrote Cypress test that involved an up-down counter button, implemented the following checks to accompany:
 1. Make sure counter initializes to zero every time
