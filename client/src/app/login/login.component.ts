@@ -24,7 +24,7 @@ export class LoginComponent {
       },
       (error) => {
         this.errorMessage = error.message;
-        this.router.navigate(['/profile']);
+        //this.router.navigate(['/profile']);
       }
     );
   }
