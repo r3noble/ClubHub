@@ -132,54 +132,51 @@ func (a *App) GetUserByID(id string) (*User, error) {
 }
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
-	if r.Method == "POST" && r.URL.Path == "/user/login" {
-		// Decode the JSON payload from the request body
-		var creds Credentials
-		err := json.NewDecoder(r.Body).Decode(&creds)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		// Check if the required fields (username and password) are present
-		if creds.Username == "" || creds.Password == "" {
-			http.Error(w, "Username and password are required", http.StatusBadRequest)
-			return
-		}
-
-		// Authenticate the user using the provided credentials (not shown)
-		// ...
-		user, ok := a.u[creds.Username]
-		if !ok {
-			http.Error(w, "Invalid Username", http.StatusUnauthorized)
-			return
-		}
-		//now we check the password
-		knownPass := user.Password
-		if knownPass != creds.Password {
-			http.Error(w, "Invalid Password", http.StatusUnauthorized)
-			return
-		}
-		response := struct {
-			Message string `json:"message"`
-		}{
-			Message: "Login successful",
-		}
-
-		jsonResponse, err := json.Marshal(response)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(jsonResponse)
-		// Send a success response
+	// Decode the JSON payload from the request body
+	var creds Credentials
+	err := json.NewDecoder(r.Body).Decode(&creds)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	// Check if the required fields (username and password) are present
+	if creds.Username == "" || creds.Password == "" {
+		http.Error(w, "Username and password are required", http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate the user using the provided credentials (not shown)
+	// ...
+	user, ok := a.u[creds.Username]
+	if !ok {
+		http.Error(w, "Invalid Username", http.StatusUnauthorized)
+		return
+	}
+	//now we check the password
+	knownPass := user.Password
+	if knownPass != creds.Password {
+		http.Error(w, "Invalid Password", http.StatusUnauthorized)
+		return
+	}
+	response := struct {
+		Message string `json:"message"`
+	}{
+		Message: "Login successful",
+	}
+
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	// Send a success response
+	return
+
 	// Send a 404 Not Found response if the URL path doesn't match
-	http.NotFound(w, r)
 }
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
