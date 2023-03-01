@@ -9,7 +9,9 @@
 - Added unit tests.
 
 ### Back End
-
+- Added user searched functionality
+- Added user addition to DB functionality
+- Added user login functionality
 # Testing
 
 ## Front End Unit Tests
