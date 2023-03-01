@@ -49,7 +49,14 @@
     <div class="field">
         <label class="label">Password</label>
         <div class="control">
-            <input class="input" type="text" placeholder="Text input">
+            <input class="input" type="password" [(ngModel)]="password" name="password" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Re-type Password</label>
+        <div class="control">
+            <input class="input" type="password" [(ngModel)]="password" name="password" required>
         </div>
     </div>
 
@@ -83,10 +90,3 @@
         </div>
     </div>
 </section>
-
-<div class="field">
-    <label class="label">Name</label>
-    <div class="control">
-      <input class="input" type="text" placeholder="Text input">
-    </div>
-  </div>
