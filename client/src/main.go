@@ -99,7 +99,7 @@ func (a *App) start() {
 	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
 	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
 	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
-	http.ListenAndServe(":8080", WriteOnceMiddleware(a.r))
+	http.ListenAndServe(":8080", a.r)
 }
 func main() {
 	//	userMap := make(map[int]User)
