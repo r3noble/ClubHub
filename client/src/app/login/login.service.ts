@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -12,10 +12,9 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<any> {
-    const body = { username, password };
-    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post(this.loginUrl, body, options).pipe(
+  login(username: string, password: string): Observable<any> { // Use the new Observable symbol
+    const credentials = { username: username, password: password };
+    return this.http.post(this.loginUrl, credentials).pipe(
       catchError((error) => {
         return throwError(error);
       })

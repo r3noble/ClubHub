@@ -54,7 +54,6 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
-	Age      int
 }
 type Credentials struct {
 	Username string `json:"username"`
@@ -68,37 +67,50 @@ type App struct {
 	r  *mux.Router
 	mu sync.Mutex
 }
+
 func WriteOnceMiddleware(h http.Handler) http.Handler {
-  return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-      wrappedWriter := &responseWriter{w, false}
-      h.ServeHTTP(wrappedWriter, r)
-      if !wrappedWriter.wroteHeader {
-          wrappedWriter.WriteHeader(http.StatusOK)
-      }
-  })
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		wrappedWriter := &responseWriter{w, false}
+		h.ServeHTTP(wrappedWriter, r)
+		if !wrappedWriter.wroteHeader {
+			wrappedWriter.WriteHeader(http.StatusOK)
+		}
+	})
 }
 
 type responseWriter struct {
-  http.ResponseWriter
-  wroteHeader bool
+	http.ResponseWriter
+	wroteHeader bool
 }
 
 func (w *responseWriter) WriteHeader(statusCode int) {
-  if w.wroteHeader {
-      return
-  }
-  w.ResponseWriter.WriteHeader(statusCode)
-  w.wroteHeader = true
+	if w.wroteHeader {
+		return
+	}
+	w.ResponseWriter.WriteHeader(statusCode)
+	w.wroteHeader = true
 }
 
 func (a *App) start() {
 	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
+	a.r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			if r.Method == "OPTIONS" {
+				w.WriteHeader(http.StatusOK)
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	})
 	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
 	//query-based matching using id
 	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
 	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
 	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
-	http.ListenAndServe(":8080", WriteOnceMiddleware(a.r))
+	http.ListenAndServe(":8080", a.r)
 }
 func main() {
 	//	userMap := make(map[int]User)
@@ -110,7 +122,7 @@ func main() {
 		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
-	app.u["Cole"] = User{ID: 1, Name: "Cole", Age: 21, Email: "cole@rottenberg.org", Password: "pass"}
+	app.u["Cole"] = User{ID: 1, Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 	app.start()
 
 	//router.HandleFunc("/health", HealthCheck).Methods("GET")
@@ -125,49 +137,57 @@ func main() {
 func (a *App) GetUserByID(id string) (*User, error) {
 	user, ok := a.u[id]
 	if !ok {
-		return nil, fmt.Errorf("user with ID %d not found", id)
+		return nil, fmt.Errorf("user with ID %s not found", id)
 	}
 	return &user, nil
 }
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
-	if r.Method == "POST" && r.URL.Path == "/user/login" {
-		// Decode the JSON payload from the request body
-		var creds Credentials
-		err := json.NewDecoder(r.Body).Decode(&creds)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		// Check if the required fields (username and password) are present
-		if creds.Username == "" || creds.Password == "" {
-			http.Error(w, "Username and password are required", http.StatusBadRequest)
-			return
-		}
-
-		// Authenticate the user using the provided credentials (not shown)
-		// ...
-		user, ok := a.u[creds.Username]
-		if !ok {
-			http.Error(w, "Invalid Username", http.StatusUnauthorized)
-			return
-		}
-		//now we check the password
-		knownPass := user.Password
-		if knownPass != creds.Password {
-			http.Error(w, "Invalid Password", http.StatusUnauthorized)
-			return
-		}
-
-		// Send a success response
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Login successful"))
+	// Decode the JSON payload from the request body
+	var creds Credentials
+	err := json.NewDecoder(r.Body).Decode(&creds)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	// Check if the required fields (username and password) are present
+	if creds.Username == "" || creds.Password == "" {
+		http.Error(w, "Username and password are required", http.StatusBadRequest)
+		return
+	}
+
+	// Authenticate the user using the provided credentials (not shown)
+	// ...
+	user, ok := a.u[creds.Username]
+	if !ok {
+		http.Error(w, "Invalid Username", http.StatusUnauthorized)
+		return
+	}
+	//now we check the password
+	knownPass := user.Password
+	if knownPass != creds.Password {
+		http.Error(w, "Invalid Password", http.StatusUnauthorized)
+		return
+	}
+	response := struct {
+		Message string `json:"message"`
+	}{
+		Message: "Login successful",
+	}
+
+	jsonResponse, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	// Send a success response
+	return
+
 	// Send a 404 Not Found response if the URL path doesn't match
-	http.NotFound(w, r)
 }
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -218,4 +238,20 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
 	fmt.Fprintf(w, "API is running")
+}
+
+func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
+	// Get the username parameter from the URL path
+	username := r.URL.Query().Get("username")
+
+	// Retrieve the profile data from the map
+	profile, ok := a.u[username]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	// Convert the profile data to JSON and send it in the response
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(profile)
 }
