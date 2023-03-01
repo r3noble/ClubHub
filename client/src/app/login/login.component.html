@@ -14,23 +14,26 @@
 <section class="section">
     <div class="container">
         <form>
-            <div class="field">
+            <div class="field ">
                 <label class="label">Username</label>
-                <input type="text" name="name" class="input">
+                <div class="control ">
+                <input class = "input" type="text" [(ngModel)]="username" name="username" required>
+                <!----- <input type="text" name="name" class="input">--->
+                </div>
             </div>
 
             <div class="field">
-                <label class="label">Password</label>
-                <input type="text" name="name" class="input">
+                <label class="label">Password </label>
+                <input class = "input" type="password" [(ngModel)]="password" name="password" required>
+                <!---<input type="text" name="name" class="input">-->
             </div>
 
-
-
-            <button type="submit" class="button is-large is-warning">
-                Login
+            <button class="button is-success is-medium" (click)="onSubmit()">
+              Login
             </button>
+            <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-            <button type="submit" class="button is-large">
+            <button type="submit" class="button is-medium">
               Don't have an account? Sign up now!
           </button>
         </form>
