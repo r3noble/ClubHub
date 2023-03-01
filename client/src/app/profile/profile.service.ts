@@ -11,7 +11,7 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
   getProfile(username: string): Observable<any> {
-    const url = `${this.baseUrl}/profile?username=${username}`;
+    const url = `${this.baseUrl}/user/get/${username}`;
     return this.http.get<any>(url);
   }
 }
