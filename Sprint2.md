@@ -13,6 +13,8 @@
 # Testing
 
 ## Front End Unit Tests
+- added unit tests to each component with functi0ns (login, register, calendar, and profile)
+- at the moment, most work- we are having trouble with out integration as described in the video
 
 
 ## Front End Cypress Test

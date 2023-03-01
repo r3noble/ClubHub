@@ -13,17 +13,18 @@ export class LoginComponent {
   password: string = "";
   errorMessage: string = "";
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService,  public router: Router) {}
 
   onSubmit() {
     this.loginService.login(this.username, this.password)
     .subscribe(
       () => {
         // Redirect to the profile page if successful login
-        this.router.navigate(['${this.baseUrl}/profile?username=${username}']);
+        this.router.navigate(['./profile']);
       },
       (error) => {
-        this.errorMessage = error.message;
+        this.errorMessage = this.username;
+       // this.router.navigate([`./profile?username=${this.username}`])
         this.router.navigate(['/profile']);
       }
     );
