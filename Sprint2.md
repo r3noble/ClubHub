@@ -1,8 +1,6 @@
 # Sprint 2 Overview
 ## Work Completed in Sprint 2
-- Integrated front end and back end to perform a simple profile component
-- While the username is hardcoded in front end, the email is only in the map in the backend, and is reached using a get command
-- unfortunately, we have had a lot of trouble using post (partially integrated for our login component), and even after attending Alex's office hours are still struggling with it.
+- Integrated front end and back end to perform a simple (login or profile component)
 ### Front End
 - Added a calendar to the calendar page that we struggled for a long time with in Sprint 1.
 - Added a profile page for a user. (club to come later)
@@ -30,5 +28,15 @@ Wrote Cypress test that involved an up-down counter with buttons, implemented th
 
 # Back End Documentation
 - ## GET
-- ### able to search and find existing users
-- ### able to return detailed issues within searching mechinism
+ ### able to search and find existing users
+func (a *App) GetUserByID(id string)
+func (a *App) IdHandler
+### able to return detailed issues within searching
+- ## POST
+### adding user to DB
+ func (a *App) AddUserHandler <- gets passed JSON information
+### login credentials posting
+func (a *App) loginHandler <- passed username and password creds with JSON
+- ## TESTING
+### func HealthCheck returns plain text if API is running.
+
