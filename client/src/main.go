@@ -68,6 +68,28 @@ type App struct {
 	r  *mux.Router
 	mu sync.Mutex
 }
+func WriteOnceMiddleware(h http.Handler) http.Handler {
+  return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+      wrappedWriter := &responseWriter{w, false}
+      h.ServeHTTP(wrappedWriter, r)
+      if !wrappedWriter.wroteHeader {
+          wrappedWriter.WriteHeader(http.StatusOK)
+      }
+  })
+}
+
+type responseWriter struct {
+  http.ResponseWriter
+  wroteHeader bool
+}
+
+func (w *responseWriter) WriteHeader(statusCode int) {
+  if w.wroteHeader {
+      return
+  }
+  w.ResponseWriter.WriteHeader(statusCode)
+  w.wroteHeader = true
+}
 
 func (a *App) start() {
 	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
@@ -76,7 +98,7 @@ func (a *App) start() {
 	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
 	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
 	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
-	http.ListenAndServe(":8080", a.r)
+	http.ListenAndServe(":8080", WriteOnceMiddleware(a.r))
 }
 func main() {
 	//	userMap := make(map[int]User)
@@ -128,7 +150,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		// ...
 		user, ok := a.u[creds.Username]
 		if !ok {
-			http.Error(w, "Innvalid Username", http.StatusUnauthorized)
+			http.Error(w, "Invalid Username", http.StatusUnauthorized)
 			return
 		}
 		//now we check the password
