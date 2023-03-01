@@ -29,4 +29,5 @@ Wrote Cypress test that involved an up-down counter with buttons, implemented th
 # Back End Documentation
 - ## GET
 - ### able to search and find existing users
+func (a *App) GetUserByID(id string) return
 - ### able to return detailed issues within searching mechinism
