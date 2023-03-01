@@ -9,13 +9,12 @@
 - Added unit tests.
 
 ### Back End
-- Added user searching functionality which looks for existing users based on primary name tag
-- Linked a profile search to searched for existing users
-- Added health checks to APIs to test running.
-- Added unit tests.
+
 # Testing
 
 ## Front End Unit Tests
+- added unit tests to each component with functi0ns (login, register, calendar, and profile)
+- at the moment, most work- we are having trouble with out integration as described in the video
 
 
 ## Front End Cypress Test
@@ -26,8 +25,6 @@ Wrote Cypress test that involved an up-down counter with buttons, implemented th
 4. Makes sure that clicking makes a change event happen with the counter
 
 ## Back End Unit Tests
-1. Make sure we can grab a user by name(ID)
-2. Testing login handler with known login information
-3. Adding user to backend database
+
 # Back End Documentation
 
