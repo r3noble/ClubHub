@@ -3,7 +3,7 @@
 - Integrated front end and back end to perform a simple (login or profile component)
 ### Front End
 - Added a calendar to the calendar page that we struggled for a long time with in Sprint 1.
-- Added a profile page for a user (club to come late)
+- Added a profile page for a user (club to come later)
 - Added cypress test and unit tests.
 
 ### Back End
