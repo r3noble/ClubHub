@@ -28,14 +28,28 @@
                 <!---<input type="text" name="name" class="input">-->
             </div>
 
-            <button class="button is-success is-medium" (click)="onSubmit()">
-              Login
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link" (click)="onSubmit()">
+                        Login
+                    </button>
+                    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+                </div>
+                <div class="control">
+                    <button class="button is-link is-light" (click)="onRegister()">
+                        Don't have an account? Sign up now!
+                    </button>
+                </div>
+            </div>
+
+            <!--<button class="button is-success is-medium" (click)="onSubmit()">
+            Login
             </button>
             <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
             <button type="submit" (click)="onRegister()" class="button is-medium">
                 Don't have an account? Sign up now!
-            </button>
+            </button> -->
             <!--<button type="submit" class="button is-medium">
               Don't have an account? Sign up now!
           </button>-->
