@@ -126,7 +126,7 @@ func main() {
 func (a *App) GetUserByID(id string) (*User, error) {
 	user, ok := a.u[id]
 	if !ok {
-		return nil, fmt.Errorf("user with ID %d not found", id)
+		return nil, fmt.Errorf("user with ID %s not found", id)
 	}
 	return &user, nil
 }
