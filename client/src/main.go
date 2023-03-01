@@ -103,25 +103,6 @@ func main() {
 	http.ListenAndServe(":8080", router)
 	*/
 }
-
-/*
-	func (a *App) addStudent(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		var us User
-		err := json.NewDecoder(r.Body).Decode(&us)
-		if err != nil {
-			sendErr(w, http.StatusBadRequest, err.Error())
-			return
-		}
-		s.ID = uuid.New().String()
-		err = a.db.Save(&s).Error
-		if err != nil {
-			sendErr(w, http.StatusInternalServerError, err.Error())
-		} else {
-			w.WriteHeader(http.StatusCreated)
-		}
-	}
-*/
 func (a *App) GetUserByID(id int) (*User, error) {
 	user, ok := a.u[id]
 	if !ok {
@@ -179,11 +160,6 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newUser)
 }
-
-type Response struct {
-	Users []User `json:"users"`
-}
-
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
