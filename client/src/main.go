@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"sync"
 
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
@@ -60,8 +61,9 @@ type User struct {
 // var userMap map[int]User
 type App struct {
 	//db *gorm.DB
-	u map[int]User
-	r *mux.Router
+	u  map[int]User
+	r  *mux.Router
+	mu sync.Mutex
 }
 
 func (a *App) start() {
@@ -69,6 +71,7 @@ func (a *App) start() {
 	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
 	//query-based matching using id
 	a.r.HandleFunc("/user/{id}", a.IdHandler).Methods("GET")
+	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
 	http.ListenAndServe(":8080", a.r)
 }
 func main() {
@@ -119,6 +122,14 @@ func main() {
 		}
 	}
 */
+func (a *App) GetUserByID(id int) (*User, error) {
+	user, ok := a.u[id]
+	if !ok {
+		return nil, fmt.Errorf("user with ID %d not found", id)
+	}
+	return &user, nil
+}
+
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
@@ -129,64 +140,52 @@ func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Look up the user with the given id in the map
-	user, ok := a.u[id]
-	if !ok {
-		http.Error(w, "User not found", http.StatusNotFound)
+	user, err := a.GetUserByID(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	userJSON, err := json.Marshal(user)
+	if err != nil {
+		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(user)
+	w.Write(userJSON)
+}
+
+func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body to get the new user data
+	var newUser User
+	err := json.NewDecoder(r.Body).Decode(&newUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Check if the user ID already exists in the map
+	if _, ok := a.u[newUser.ID]; ok {
+		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
+		return
+	}
+
+	// Add the new user to the map
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	a.u[newUser.ID] = newUser
+
+	// Return the new user data as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(newUser)
 }
 
 type Response struct {
 	Users []User `json:"users"`
 }
 
-func testMap() []User {
-	//no matter what ds we put users in we will always send user json values as a slice of users
-	var users []User
-	var user User
-	users = append(users, user)
-	return users
-}
-
-func testUser(user User) []User {
-	var users []User
-	users = append(users, user)
-
-	return users
-}
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
 	fmt.Fprintf(w, "API is running")
-}
-func testJSON(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	var response Response
-	//setting the content type to json
-	w.Header().Set("Content-Type", "application/json")
-	users := testMap()
-	response.Users = users
-
-	jsonResponse, err := json.Marshal(response)
-	if err != nil {
-		return
-	}
-	w.Write(jsonResponse)
-}
-func testJSONMap(w http.ResponseWriter, r *http.Request, user User) {
-	w.WriteHeader(http.StatusOK)
-	var response Response
-	//setting the content type to json
-	w.Header().Set("Content-Type", "application/json")
-	users := testUser(user)
-	response.Users = users
-
-	jsonResponse, err := json.Marshal(response)
-	if err != nil {
-		return
-	}
-	w.Write(jsonResponse)
 }
