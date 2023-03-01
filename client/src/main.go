@@ -135,6 +135,7 @@ func main() {
 	*/
 }
 func (a *App) GetUserByID(id string) (*User, error) {
+	fmt.Println("Entering GetUserByID")
 	user, ok := a.u[id]
 	if !ok {
 		return nil, fmt.Errorf("user with ID %s not found", id)
@@ -174,13 +175,13 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No found password")
 		return
 	}
-	response := struct {
+	/*response := struct {
 		Message string `json:"message"`
 	}{
 		Message: "Login successful",
-	}
+	}*/
 
-	jsonResponse, err := json.Marshal(response)
+	jsonResponse, err := json.Marshal(user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
