@@ -245,6 +245,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
+	fmt.Println("Health check accessed")
 	fmt.Fprintf(w, "API is running")
 }
 
