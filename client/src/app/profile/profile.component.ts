@@ -11,6 +11,7 @@ import { ProfileService } from './profile.service';
 export class ProfileComponent implements OnInit {
   username: string ="";
   profile: any;
+  sub: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,7 +19,10 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.username = "Cole";
+    this.sub = this.route.params.subscribe(params => {
+      this.username = params['username'];
+      });
+      console.log(this.username);
     this.profileService.getProfile(this.username).subscribe(data => {
       this.profile = data;
     });
