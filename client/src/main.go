@@ -62,7 +62,7 @@ type Credentials struct {
 
 // var userMap map[int]User
 type App struct {
-	//db *gorm.DB
+	db *gorm.DB
 	u  map[string]User
 	r  *mux.Router
 	mu sync.Mutex
@@ -92,7 +92,18 @@ func (w *responseWriter) WriteHeader(statusCode int) {
 }
 
 func (a *App) start() {
-	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
+	//Initialize and open DB here
+	a.db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+	if err != nil {
+		panic("Error in opening DB")
+	}
+	//calls AutoMigrate and throws error if cannot migrate
+	//formats db to replicate user struct
+	err := a.db.AutoMigrate(&User{})
+	if err != nil {
+		panic("Error in migrating db")
+	}
+
 	a.r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -118,7 +129,7 @@ func main() {
 	//userMap[1] = cole
 
 	app := App{
-		//db: db,
+		db: db,
 		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
@@ -134,14 +145,21 @@ func main() {
 	http.ListenAndServe(":8080", router)
 	*/
 }
+
+func (a *App) QueryDbByID(id string) {
+
+}
+
 func (a *App) GetUserByID(id string) (*User, error) {
 	fmt.Println("Entering GetUserByID")
+	//TREY: QUERY DB HERE FOR USER ID (Call QueryDbByID)
 	user, ok := a.u[id]
 	if !ok {
 		return nil, fmt.Errorf("user with ID %s not found", id)
 	}
 	return &user, nil
 }
+
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
@@ -162,6 +180,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Authenticate the user using the provided credentials (not shown)
 	// ...
+	//TREY: QUERY DB here for username
 	user, ok := a.u[creds.Username]
 	if !ok {
 		http.Error(w, "Invalid Username", http.StatusUnauthorized)
@@ -204,6 +223,7 @@ func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 
 	id := vars["id"]
 	// Look up the user with the given id in the map
+	//TREY: Get user by ID must be updated for DB support
 	user, err := a.GetUserByID(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
@@ -229,12 +249,14 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the user ID already exists in the map
+	//TREY: Query DB for username, if EXISTS, print same error
 	if _, ok := a.u[newUser.Name]; ok {
 		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
 		return
 	}
 
 	// Add the new user to the map
+	//TREY: Call function to add new user to map
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	a.u[newUser.Name] = newUser
@@ -255,6 +277,7 @@ func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.URL.Query().Get("username")
 
 	// Retrieve the profile data from the map
+	//TREY: QUERY DB for username
 	profile, ok := a.u[username]
 	if !ok {
 		w.WriteHeader(http.StatusNotFound)
