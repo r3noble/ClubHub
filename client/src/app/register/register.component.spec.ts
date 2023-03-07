@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Router } from '@angular/router';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -19,5 +19,12 @@ describe('RegisterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to home page on cancel', () => {
+    const router = TestBed.inject(Router);
+    const spy = spyOn(router, 'navigate');
+    component.onCancel();
+    expect(spy).toHaveBeenCalledWith(['']);
   });
 });

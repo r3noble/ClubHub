@@ -9,10 +9,14 @@
 - Added unit tests.
 
 ### Back End
-
+- Added user searched functionality
+- Added user addition to DB functionality
+- Added user login functionality
 # Testing
 
 ## Front End Unit Tests
+- added unit tests to each component with functions (login, register, calendar, and profile)
+- at the moment, most work- we are having trouble with out integration as described in the video
 
 
 ## Front End Cypress Test
@@ -25,4 +29,16 @@ Wrote Cypress test that involved an up-down counter with buttons, implemented th
 ## Back End Unit Tests
 
 # Back End Documentation
+- ## GET
+ ### able to search and find existing users
+func (a *App) GetUserByID(id string)
+func (a *App) IdHandler
+### able to return detailed issues within searching
+- ## POST
+### adding user to DB
+ func (a *App) AddUserHandler <- gets passed JSON information
+### login credentials posting
+func (a *App) loginHandler <- passed username and password creds with JSON
+- ## TESTING
+### func HealthCheck returns plain text if API is running.
 
