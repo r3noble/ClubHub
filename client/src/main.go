@@ -3,57 +3,20 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
+	"strconv"
 	"sync"
 
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
-/*
-	type User struct {
-		gorm.Model
-		username string `json:"username" gorm:"primary_key"`
-		name     string `json:"name"`
-		pass     string `json:"pass"`
-	}
-
-	func main() {
-		port := ":8080"
-		router := mux.NewRouter()
-
-		router.HandleFunc("/signin", Signin).Methods("PUT")
-		router.HandleFunc("/signup", Signup).Methods("POST")
-		http.HandleFunc("/signin", Signin)
-		http.HandleFunc("/signup", Signup)
-		//initialize databse
-		//initDB()
-		//start server
-		log.Fatal(http.ListenAndServe(port, nil))
-	}
-*/
-/*
-var (
-	router *mux.Router
-)
-
-func init() {
-	config, err := initializers.LoadConfig(".")
-	if err != nil {
-		log.Fatal("? Could not load environment variables", err)
-
-	}
-
-	initializers.ConnectDB(&config)
-
-	router = mux.NewRouter()
-}
-*/
 type User struct {
-	ID       int
-	Name     string
-	Email    string
-	Password string
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 type Credentials struct {
 	Username string `json:"username"`
@@ -116,34 +79,22 @@ func (a *App) start() {
 			next.ServeHTTP(w, r)
 		})
 	})
-	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
+	a.r.HandleFunc("/api/health", HealthCheck).Methods("GET")
 	//query-based matching using id
-	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
-	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
-	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
+	a.r.HandleFunc("/api/getUser/{id}", a.IdHandler).Methods("GET")
+	a.r.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
+	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
 	http.ListenAndServe(":8080", a.r)
 }
 func main() {
-	//	userMap := make(map[int]User)
-
-	//userMap[1] = cole
-
 	app := App{
 		db: db,
 		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
-	app.u["Cole"] = User{ID: 1, Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
-	app.start()
+	app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 
-	//router.HandleFunc("/health", HealthCheck).Methods("GET")
-	//router.HandleFunc("/getSlice", testJSON).Methods("GET")
-	/*router.HandleFunc("/getMap1", func(w http.ResponseWriter, r *http.Request) {
-		testJSONMap(w, r, cole)
-	}).Methods("GET")
-	http.Handle("/", router)
-	http.ListenAndServe(":8080", router)
-	*/
+	app.start()
 }
 
 func (a *App) QueryDbByID(id string) {
@@ -247,6 +198,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	newUser.ID = strconv.Itoa(rand.Intn(1000))
 
 	// Check if the user ID already exists in the map
 	//TREY: Query DB for username, if EXISTS, print same error

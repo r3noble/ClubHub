@@ -20,17 +20,17 @@ export class LoginComponent {
     .subscribe(
       () => {
         // Redirect to the profile page if successful login
-        this.router.navigate(['./profile']);
+        this.router.navigate(['/profile', { username: this.username }]);
       },
       (error) => {
         this.errorMessage = this.username;
-       // this.router.navigate([`./profile?username=${this.username}`])
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/profile', { username: this.username }])
+        //this.router.navigate(['/profile']);
       }
     );
   }
 
   onRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register' ]);
   }
 }

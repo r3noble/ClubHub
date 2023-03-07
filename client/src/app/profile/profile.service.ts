@@ -10,8 +10,8 @@ export class ProfileService {
 
   constructor(private http: HttpClient) {}
 
-  getProfile(username: string): Observable<any> {
-    const url = `${this.baseUrl}/user/get/${username}`;
+  getProfile(name: string): Observable<any> {
+    const url = `${this.baseUrl}/user/get/${name}`;
     return this.http.get<any>(url);
   }
 }
