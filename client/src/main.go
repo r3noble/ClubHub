@@ -3,57 +3,21 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
+	"strconv"
 	"sync"
-
+	"gorm.io/gorm"
+	"gorm.io/driver/sqlite"
 	"github.com/gorilla/mux"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
-/*
-	type User struct {
-		gorm.Model
-		username string `json:"username" gorm:"primary_key"`
-		name     string `json:"name"`
-		pass     string `json:"pass"`
-	}
-
-	func main() {
-		port := ":8080"
-		router := mux.NewRouter()
-
-		router.HandleFunc("/signin", Signin).Methods("PUT")
-		router.HandleFunc("/signup", Signup).Methods("POST")
-		http.HandleFunc("/signin", Signin)
-		http.HandleFunc("/signup", Signup)
-		//initialize databse
-		//initDB()
-		//start server
-		log.Fatal(http.ListenAndServe(port, nil))
-	}
-*/
-/*
-var (
-	router *mux.Router
-)
-
-func init() {
-	config, err := initializers.LoadConfig(".")
-	if err != nil {
-		log.Fatal("? Could not load environment variables", err)
-
-	}
-
-	initializers.ConnectDB(&config)
-
-	router = mux.NewRouter()
-}
-*/
 type User struct {
-	ID       int
-	Name     string
-	Email    string
-	Password string
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 type Credentials struct {
 	Username string `json:"username"`
@@ -62,7 +26,7 @@ type Credentials struct {
 
 // var userMap map[int]User
 type App struct {
-	//db *gorm.DB
+	db *gorm.DB
 	u  map[string]User
 	r  *mux.Router
 	mu sync.Mutex
@@ -92,7 +56,6 @@ func (w *responseWriter) WriteHeader(statusCode int) {
 }
 
 func (a *App) start() {
-	// ADD DATABASE MIGRATION TO APP instance e.g. a.db.AutoMigrate....
 	a.r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -105,43 +68,101 @@ func (a *App) start() {
 			next.ServeHTTP(w, r)
 		})
 	})
-	a.r.HandleFunc("/health", HealthCheck).Methods("GET")
+	a.r.HandleFunc("/api/health", HealthCheck).Methods("GET")
 	//query-based matching using id
-	a.r.HandleFunc("/user/get/{id}", a.IdHandler).Methods("GET")
-	a.r.HandleFunc("/user/add", a.AddUserHandler).Methods("POST")
-	a.r.HandleFunc("/user/login", a.loginHandler).Methods("POST") // handlers login
+	a.r.HandleFunc("/api/getUser/{id}", a.IdHandler).Methods("GET")
+	a.r.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
+	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
 	http.ListenAndServe(":8080", a.r)
 }
 func main() {
-	//	userMap := make(map[int]User)
-
-	//userMap[1] = cole
-
+	//Initialize and open DB here
+	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
+	if err != nil {
+		panic("Error in opening DB")
+	}
+	//calls AutoMigrate and throws error if cannot migrate
+	//formats db to replicate user struct
+	err = db.AutoMigrate(&User{})
+	if err != nil {
+		panic("Error in migrating db")
+	}
 	app := App{
-		//db: db,
+		db: db,
 		u: make(map[string]User),
 		r: mux.NewRouter(),
 	}
-	app.u["Cole"] = User{ID: 1, Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
-	app.start()
+	app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 
-	//router.HandleFunc("/health", HealthCheck).Methods("GET")
-	//router.HandleFunc("/getSlice", testJSON).Methods("GET")
-	/*router.HandleFunc("/getMap1", func(w http.ResponseWriter, r *http.Request) {
-		testJSONMap(w, r, cole)
-	}).Methods("GET")
-	http.Handle("/", router)
-	http.ListenAndServe(":8080", router)
-	*/
+	app.start()
 }
-func (a *App) GetUserByID(id string) (*User, error) {
+
+func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
+	err := a.db.Create(user).Error
+	if err != nil {
+		fmt.Printf("Error creating user: %s", err.Error())
+		http.Error(w, "Could not insert user into database", http.StatusInternalServerError)
+		return err
+	}
+	return nil
+}
+
+//called to search for user when adding user, does not return 404 if user not found as this is the desired result
+func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) *User {
+	//call is based on User Strcut not credentials struct, may need to change
+	user := User{}
+	if err := a.db.First(&user, User{Name: name}).Error; err != nil {
+		//respondError(w, http.StatusNotFound, err.Error())
+		fmt.Println("User not located, adding to database...")
+		return nil
+	}
+	return &user
+}
+
+//searches DB for user, returns nil if none found
+func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *User {
+	//call is based on User Strcut not credentials struct, may need to change
+	user := User{}
+	if err := a.db.First(&user, User{ID: id}).Error; err != nil {
+		//respondError(w, http.StatusNotFound, err.Error())
+		http.Error(w, "User not located", http.StatusNotFound)
+		return nil
+	}
+	 return &user
+}
+
+//searches DB fpr user, returns nil if none found
+func (a *App) QueryByName(name string, w http.ResponseWriter, r *http.Request) *User {
+	//call is based on User Strcut not credentials struct, may need to change
+	user := User{}
+	if err := a.db.First(&user, User{Name: name}).Error; err != nil {
+		//respondError(w, http.StatusNotFound, err.Error())
+		fmt.Printf("Error: %s", err.Error())
+		//http.Error(w, "User not located", http.StatusNotFound)
+		return nil
+	}
+	return &user
+}
+
+func (a *App) GetUserByName(name string, w http.ResponseWriter, r *http.Request) (*User, error){
+	fmt.Println("Entering GetUserByName")
+	user := a.QueryByName( name, w, r)
+	if user == nil {
+		return nil, fmt.Errorf("user with name %d not found", name)
+	}
+	return user, nil
+}
+
+func (a *App) GetUserByID(id string, w http.ResponseWriter, r *http.Request) (*User, error) {
 	fmt.Println("Entering GetUserByID")
-	user, ok := a.u[id]
-	if !ok {
+	//TREY: QUERY DB HERE FOR USER ID (Call QueryDbByID)
+	user := a.QueryDbByID(id, w, r)
+	if user == nil {
 		return nil, fmt.Errorf("user with ID %s not found", id)
 	}
-	return &user, nil
+	return user, nil
 }
+
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
@@ -162,8 +183,9 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Authenticate the user using the provided credentials (not shown)
 	// ...
-	user, ok := a.u[creds.Username]
-	if !ok {
+	//TREY: QUERY DB here for username
+	user := a.QueryByName(creds.Username, w, r)
+	if user == nil {
 		http.Error(w, "Invalid Username", http.StatusUnauthorized)
 		fmt.Println("No found user")
 		return
@@ -204,7 +226,8 @@ func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 
 	id := vars["id"]
 	// Look up the user with the given id in the map
-	user, err := a.GetUserByID(id)
+	//TREY: Get user by ID must be updated for DB support
+	user, err := a.GetUserByID(id, w, r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -227,22 +250,28 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	newUser.ID = strconv.Itoa(rand.Intn(1000))
 
 	// Check if the user ID already exists in the map
-	if _, ok := a.u[newUser.Name]; ok {
+	//TREY: Query DB for ID, if EXISTS, print same error
+	if user := a.UserExists(newUser.ID, w, r); user != nil {
 		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
 		return
 	}
 
 	// Add the new user to the map
-	a.mu.Lock()
-	defer a.mu.Unlock()
-	a.u[newUser.Name] = newUser
+	//TREY: Call function to add new user to db
+	err = a.CreateUser(&newUser, w, r)
+	if err != nil {
+		fmt.Println("User Unsuccessfully added to DB")
+	}
+	fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newUser)
 }
+
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
@@ -255,8 +284,9 @@ func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.URL.Query().Get("username")
 
 	// Retrieve the profile data from the map
-	profile, ok := a.u[username]
-	if !ok {
+	//TREY: QUERY DB for username
+	profile, _ := a.GetUserByName(username, w, r)
+	if profile == nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
