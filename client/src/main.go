@@ -98,7 +98,9 @@ func main() {
 }
 
 func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
-	err := a.db.Create(user).Error
+	//err := a.db.Create(user).Error
+	err := a.db.Model(&User{}).Create(user).Error
+	fmt.Println(user.Name)
 	if err != nil {
 		fmt.Printf("Error creating user: %s", err.Error())
 		http.Error(w, "Could not insert user into database", http.StatusInternalServerError)
@@ -174,6 +176,8 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Bad Json in Body")
 		return
 	}
+	// print the request body
+    fmt.Printf("Request body: %+v\n", creds)
 
 	// Check if the required fields (username and password) are present
 	if creds.Username == "" || creds.Password == "" {
@@ -250,6 +254,10 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	// print the request body
+    fmt.Printf("Request body: %+v\n", newUser)
+
 	newUser.ID = strconv.Itoa(rand.Intn(1000))
 
 	// Check if the user ID already exists in the map
@@ -265,7 +273,9 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("User Unsuccessfully added to DB")
 	}
-	fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
+	else{
+		fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
+	}
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")
