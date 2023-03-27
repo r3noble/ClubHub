@@ -12,6 +12,7 @@ export class LoginComponent {
   username: string = "";
   password: string = "";
   errorMessage: string = "";
+  baseUrl: any;
 
   constructor(private loginService: LoginService,  public router: Router) {}
 
