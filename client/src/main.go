@@ -272,8 +272,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	err = a.CreateUser(&newUser, w, r)
 	if err != nil {
 		fmt.Println("User Unsuccessfully added to DB")
-	}
-	else{
+	} else{
 		fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
 	}
 
