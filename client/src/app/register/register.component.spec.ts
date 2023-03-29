@@ -1,6 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import appRoutes, { AppRoutingModule } from '../app-routing.module';
 import { RegisterComponent } from './register.component';
+
+
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -8,7 +13,8 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ]
+      declarations: [ RegisterComponent ],
+      imports: [FormsModule, AppRoutingModule,RouterModule, HttpClientModule]
     })
     .compileComponents();
 
