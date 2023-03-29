@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import appRoutes from '../app-routing.module';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from './login.service';
+import { FormsModule } from '@angular/forms';
 
 describe('LoginService', () => {
   let service: LoginService;
@@ -14,6 +15,7 @@ describe('LoginService', () => {
         HttpClientModule,
         AppRoutingModule,
         RouterModule.forRoot(appRoutes),
+        FormsModule
       ],
     });
     service = TestBed.inject(LoginService);

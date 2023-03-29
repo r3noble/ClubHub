@@ -19,7 +19,7 @@ describe('HttpClient testing', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ]
+      imports: [ HttpClientTestingModule, FormsModule ]
     });
 
     // Inject the http service and test controller for each test
@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
         FormsModule,
         HttpClientModule,
         AppRoutingModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes)
 
       ]
     })
