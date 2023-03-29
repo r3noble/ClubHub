@@ -25,7 +25,7 @@ export class LoginComponent {
       },
       (error) => {
         this.errorMessage = this.username;
-        this.router.navigate(['/profile', { username: this.username }])
+        //this.router.navigate(['/profile', { username: this.username }])
         //this.router.navigate(['/profile']);
       }
     );
