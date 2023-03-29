@@ -99,7 +99,19 @@ func main() {
 		u:  make(map[string]User),
 		r:  mux.NewRouter(),
 	}
-	app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
+
+	hardCoder := User{
+		ID: "123",
+		Name: "tester",
+		Email: "tester@example.com",
+		Password: "password123",
+	}
+	err = app.db.Create(hardCoder).Error
+	if err != nil {
+		fmt.Println("Hardcoder unsuccessfully added to db")
+		return
+	}
+	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 
 	app.start()
 }
