@@ -19,6 +19,10 @@ export class RegisterComponent {
     rpassword: string = ""; 
     major: string = "";
 
+    onRegister() {
+        
+    }
+
     onCancel() {
         this.router.navigate(['']);
       }
