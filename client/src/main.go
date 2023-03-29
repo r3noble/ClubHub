@@ -100,6 +100,7 @@ func main() {
 		r:  mux.NewRouter(),
 	}
 
+	//hardcodes test user to db
 	hardCoder := User{
 		ID: "123",
 		Name: "tester",
@@ -195,7 +196,7 @@ func (a *App) GetUserByName(name string, w http.ResponseWriter, r *http.Request)
 	fmt.Println("Entering GetUserByName")
 	user := a.QueryByName(name, w, r)
 	if user == nil {
-		return nil, fmt.Errorf("user with name %d not found", name)
+		return nil, fmt.Errorf("user with name %s not found", name)
 	}
 	return user, nil
 }

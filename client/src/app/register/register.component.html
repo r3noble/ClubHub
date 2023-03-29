@@ -14,14 +14,14 @@
     <div class="field">
         <label class="label">First Name</label>
         <div class="control">
-            <input class="input" type="text" placeholder="">
+            <input class="input" type="text" name="firstName" [(ngModel)]="firstName" name="firstName" required>
         </div>
     </div>
 
     <div class="field">
         <label class="label">Last Name</label>
         <div class="control">
-            <input class="input" type="text" placeholder="">
+            <input class="input" type="text" name="lastName" [(ngModel)]="lastName" name="lastName" required>
         </div>
     </div>
     
@@ -60,8 +60,7 @@
         <label class="label">College</label>
         <div class="control">
             <div class="select">
-                <select>
-                    <option>Select dropdown</option>
+                <select name="college" [(ngModel)]="college" required>
                     <option>Engineering</option>
                     <option>Agricultural and Life Sciences</option>
                     <option>Arts</option>
@@ -78,6 +77,7 @@
                     <option>Pharmacy</option>
                     <option>Public Health and Health Professions</option>
                     <option>Veterinary Medecine</option>
+                    <option>Other</option>
                 </select>
             </div>
         </div>
@@ -86,7 +86,7 @@
     <div class="field">
         <div class="control">
             <label class="checkbox">
-                <input type="checkbox">
+                <input type="checkbox" id="agree-checkbox">
                 I agree to the <a href="#">terms and conditions</a>
             </label>
         </div>
@@ -94,7 +94,7 @@
 
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link">Register Now!</button>
+            <button class="button is-link" (click)="onRegister()">Register Now!</button>
         </div>
         <div class="control">
             <button class="button is-link is-light" (click)="onCancel()">Cancel</button>
