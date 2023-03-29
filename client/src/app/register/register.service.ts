@@ -9,7 +9,7 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   registerUser(id: string, fullName: string, email: string, password: string) {
-    const url = 'http://localhost:8080/api/adduser';
+    const url = 'http://localhost:8080/api/addUser';
     const data = {
       id: "1",
       name: fullName,
