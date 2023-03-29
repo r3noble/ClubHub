@@ -57,7 +57,7 @@
 
 ##### StepperComponent
 - should create
-- 
+
 ##### HomeComponent
 - should create
 
@@ -81,8 +81,6 @@ func (a *App) IdHandler
 - ## POST
 ### adding user to DB
  func (a *App) AddUserHandler <- gets passed JSON information
-#### Go Testing 
-- Tested Go Login and AddUser API within home built Go Testin framework... printed fully functional register and login events.
 ### login credentials posting
 func (a *App) loginHandler <- passed username and password creds with JSON
 - ## TESTING
