@@ -20,12 +20,14 @@ export class LoginComponent {
   onSubmit() {
     this.LoginService.login(this.username, this.password)
     .subscribe(
-      ()=> {
-        // Redirect to the profile page if successful login
-        this.router.navigate(['/profile', { user: "hello"}])
-        alert();
-       },
+      response => {
+        this.router.navigate(['/profile', { user: response}])
 
+      },
+      error => {
+        console.log(error);
+        // handle error
+      }
     );
   }
 
