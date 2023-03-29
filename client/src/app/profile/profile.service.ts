@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfileService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'localhost:8080';
 
   constructor(private http: HttpClient) {}
 
