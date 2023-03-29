@@ -7,9 +7,10 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
-	"gorm.io/gorm"
-	"gorm.io/driver/sqlite"
+
 	"github.com/gorilla/mux"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
@@ -70,9 +71,15 @@ func (a *App) start() {
 	})
 	a.r.HandleFunc("/api/health", HealthCheck).Methods("GET")
 	//query-based matching using id
+	//user CRUD APIs
 	a.r.HandleFunc("/api/getUser/{id}", a.IdHandler).Methods("GET")
 	a.r.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
 	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
+	//club CRUD APIs
+	a.r.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
+	//a.r.HandleFunc("/api/addClub", a.GetClubHandler).Methods("POST")
+	//a.r.HandleFunc("/api/addClub", a.DeleteClubHandler).Methods("POST")
+
 	http.ListenAndServe(":8080", a.r)
 }
 func main() {
@@ -89,18 +96,44 @@ func main() {
 	}
 	app := App{
 		db: db,
-		u: make(map[string]User),
-		r: mux.NewRouter(),
+		u:  make(map[string]User),
+		r:  mux.NewRouter(),
 	}
 	app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 
 	app.start()
 }
+func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body to get the new user data
+	var newUser User
+	err := json.NewDecoder(r.Body).Decode(&newUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	newUser.ID = strconv.Itoa(rand.Intn(1000))
 
+	// Check if the user ID already exists in the map
+	//TREY: Query DB for ID, if EXISTS, print same error
+	if user := a.UserExists(newUser.ID, w, r); user != nil {
+		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
+		return
+	}
+
+	// Add the new user to the map
+	//TREY: Call function to add new user to db
+	err = a.CreateUser(&newUser, w, r)
+	if err != nil {
+		fmt.Println("User Unsuccessfully added to DB")
+	}
+	fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
+
+	// Return the new user data as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(newUser)
+}
 func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
-	//err := a.db.Create(user).Error
-	err := a.db.Model(&User{}).Create(user).Error
-	fmt.Println(user.Name)
+	err := a.db.Create(user).Error
 	if err != nil {
 		fmt.Printf("Error creating user: %s", err.Error())
 		http.Error(w, "Could not insert user into database", http.StatusInternalServerError)
@@ -109,7 +142,7 @@ func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) err
 	return nil
 }
 
-//called to search for user when adding user, does not return 404 if user not found as this is the desired result
+// called to search for user when adding user, does not return 404 if user not found as this is the desired result
 func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) *User {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := User{}
@@ -121,7 +154,7 @@ func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) *U
 	return &user
 }
 
-//searches DB for user, returns nil if none found
+// searches DB for user, returns nil if none found
 func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *User {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := User{}
@@ -130,10 +163,10 @@ func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *Us
 		http.Error(w, "User not located", http.StatusNotFound)
 		return nil
 	}
-	 return &user
+	return &user
 }
 
-//searches DB fpr user, returns nil if none found
+// searches DB fpr user, returns nil if none found
 func (a *App) QueryByName(name string, w http.ResponseWriter, r *http.Request) *User {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := User{}
@@ -146,9 +179,9 @@ func (a *App) QueryByName(name string, w http.ResponseWriter, r *http.Request) *
 	return &user
 }
 
-func (a *App) GetUserByName(name string, w http.ResponseWriter, r *http.Request) (*User, error){
+func (a *App) GetUserByName(name string, w http.ResponseWriter, r *http.Request) (*User, error) {
 	fmt.Println("Entering GetUserByName")
-	user := a.QueryByName( name, w, r)
+	user := a.QueryByName(name, w, r)
 	if user == nil {
 		return nil, fmt.Errorf("user with name %d not found", name)
 	}
@@ -176,8 +209,6 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Bad Json in Body")
 		return
 	}
-	// print the request body
-    fmt.Printf("Request body: %+v\n", creds)
 
 	// Check if the required fields (username and password) are present
 	if creds.Username == "" || creds.Password == "" {
@@ -254,10 +285,6 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
-	// print the request body
-    fmt.Printf("Request body: %+v\n", newUser)
-
 	newUser.ID = strconv.Itoa(rand.Intn(1000))
 
 	// Check if the user ID already exists in the map
@@ -272,9 +299,8 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	err = a.CreateUser(&newUser, w, r)
 	if err != nil {
 		fmt.Println("User Unsuccessfully added to DB")
-	} else{
-		fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
 	}
+	fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")
