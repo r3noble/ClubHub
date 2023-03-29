@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"go
+	"gorm.io/gorm"
 )
 
 type User struct {
