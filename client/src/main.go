@@ -57,8 +57,11 @@ func (w *responseWriter) WriteHeader(statusCode int) {
 }
 
 func (a *App) start() {
+
 	a.r.Use(func(next http.Handler) http.Handler {
+
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
@@ -223,6 +226,7 @@ func (a *App) GetUserByID(id string, w http.ResponseWriter, r *http.Request) (*U
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	fmt.Println("Successfully entered Login Handler")
 	var creds Credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -348,7 +352,7 @@ func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	// Convert the profile data to JSON and send it in the response
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(profile)
