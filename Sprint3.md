@@ -17,7 +17,7 @@
 
 #### Back End
 - loginhandler_test.go
-    - tests our login API to ensure it is receiving and interpretting json request correctly and accessing correct user from database corretcly
+    - tests our login API to ensure it is receiving and interpretting json request correctly and accessing correct user from database correctly
 - adduser_test.go
     - tests our addUser API to ensure it is receiving/interpretting json correctly and then properly adding user to database
 
