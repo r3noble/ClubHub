@@ -12,10 +12,10 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
+    const url = 'localhost:8080/api/login'
     const body = { username, password };
-    const headers = new HttpHeaders().set("Access-Control-Allow-Origin", "*");
-    const options = { headers: headers };
-    return this.http.post('localhost:8080/api/login', body, options);
+
+    return this.http.post(url, body);
 
   }
 }
