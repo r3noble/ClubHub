@@ -9,10 +9,60 @@
 - Cleaned up the repository (more reworking)
 - 
 ## Unit Tests
-#### Front End
-- 
+
 #### Back End
+
+#### Front End
+
+##### ProfileService
+- should be created
+
+##### LoginComponent
+- should call loginService login method on submit
+- should navigate to register page on register button click
+- should set error message and navigate to profile page on failed login
+- should create
+
+##### RegisterComponent
+- should navigate to home page on cancel
+- should create
+
+##### LoginService
+- should be created
+
+##### CalendarComponent
+- should initialize the shadeUntilCurrentTime property
+- should initialize the dataSource property with data
+- should create
+- should initialize the firstDayOfWeek property
+- should initialize the currentTimeIndicator property
+- should initialize the views property
+- should initialize the view property
+- should initialize the dataSource property with specific data
+
+##### ProfileComponent
+- should create
+
+##### FooterComponent
+- should create
+
+##### StepperComponent
+- should create
 - 
+##### HomeComponent
+- should create
+
+##### HttpClientTesting
+- works
+
+##### AppComponent
+- should create the app
+- should have title 'ClubHub'
+
+##### HeaderComponent
+- should create
+
+
 ## Updated Backend API Documentation
 - ## GET
  ### able to search and find existing users
