@@ -16,6 +16,10 @@
 ## Unit Tests
 
 #### Back End
+- loginhandler_test.go
+    - tests our login API to ensure it is receiving and interpretting json request correctly and accessing correct user from database corretcly
+- adduser_test.go
+    - tests our addUser API to ensure it is receiving/interpretting json correctly and then properly adding user to database
 
 #### Front End
 
