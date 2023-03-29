@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
 type User struct {
