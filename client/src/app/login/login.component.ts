@@ -15,21 +15,17 @@ export class LoginComponent {
   baseUrl: any;
 
 
-  constructor(private loginService: LoginService,  public router: Router) {}
+  constructor(private LoginService: LoginService,  public router: Router) {}
 
   onSubmit() {
-    this.loginService.login(this.username, this.password)
+    this.LoginService.login(this.username, this.password)
     .subscribe(
-      (response)=> {
+      ()=> {
         // Redirect to the profile page if successful login
         this.router.navigate(['/profile', { user: "hello"}])
-        alert(response);
+        alert();
        },
-      (error) => {
-        this.errorMessage = error;
-        //this.router.navigate(['/profile', { username: this.username }])
-        this.router.navigate(['/profile', { username: this.username}]);
-      }
+
     );
   }
 
