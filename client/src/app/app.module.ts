@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms' ;
-import { HttpClientModule} from '@angular/common/http' ;
+import { HttpClientModule, HttpClient} from '@angular/common/http' ;
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,6 +15,9 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
 import { SchedulerModule } from 'smart-webcomponents-angular/scheduler';
 import { StepperComponent } from './stepper/stepper.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,8 +38,12 @@ import { StepperComponent } from './stepper/stepper.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    SchedulerModule
+    SchedulerModule,
 
+  ],
+  exports: [
+    HeaderComponent,
+    FooterComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

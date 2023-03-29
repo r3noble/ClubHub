@@ -2,7 +2,35 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { LoginService } from './login.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
+// Other imports
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
+import appRoutes from '../app-routing.module';
+import { FormsModule } from '@angular/forms';
+
+
+describe('HttpClient testing', () => {
+  let httpClient:  HttpClient;
+  let httpTestingController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ]
+    });
+
+    // Inject the http service and test controller for each test
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
+
+  it('works', () => {
+  });
+});
+
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -11,7 +39,15 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ LoginComponent ],
+      imports:
+      [
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot(appRoutes),
+
+      ]
     })
     .compileComponents();
 

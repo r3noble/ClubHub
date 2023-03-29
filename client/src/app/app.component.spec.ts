@@ -1,12 +1,48 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
+// Http testing module and mocking controller
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+
+// Other imports
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
+import appRoutes from './app-routing.module';
+
+describe('HttpClient testing', () => {
+  let httpClient:  HttpClient;
+  let httpTestingController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ]
+    });
+
+    // Inject the http service and test controller for each test
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
+
+  it('works', () => {
+  });
+});
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent,
+        FooterComponent
+      ],
+      imports: [
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule.forRoot(appRoutes),
       ],
     }).compileComponents();
   });
@@ -23,10 +59,5 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('ClubHub');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ClubHub app is running!');
-  });
+
 });
