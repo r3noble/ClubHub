@@ -11,7 +11,6 @@ import(
 	"gorm.io/gorm"
     "encoding/json"
 
-    "client/src/main.go"
 )
 
 func TestAddUserHandler(t *testing.T) {
