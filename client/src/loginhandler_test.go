@@ -9,9 +9,10 @@ import(
     "github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+    "encoding/json"
 )
 
-func TestLoginHandler(t *testing.T) {
+/*func TestLoginHandler(t *testing.T) {
     a := &App{
         u: map[string]User{
             "1": {ID: 1, Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"},
@@ -42,14 +43,13 @@ func TestLoginHandler(t *testing.T) {
         t.Errorf("returned unexpected body, got %v want %v", mockRec.Body.String(), expected)
     }
     
-}
+}*/
 
-func TestAddUserHandler(t *testing.T) {
+func TestLoginHandler(t *testing.T) {
     testDB, err := gorm.Open(sqlite.Open("testUser.db"), &gorm.Config{})
     if err != nil {
         t.Fatal(err)
     }
-    defer testDB.close()
 
     //migrate db schema
     err = testDB.AutoMigrate(&User{})
@@ -58,14 +58,26 @@ func TestAddUserHandler(t *testing.T) {
     }
 
     // Create a new App instance with the mock database
-	a := &App{
-		db: db,
-		r:  mux.NewRouter(),
-	}
+    a := &App{
+        db: testDB,
+        r:  mux.NewRouter(),
+    }
+
+    //create a mock user to use for authentication
+    user := &User{
+        ID: "123",
+        Name:     "testuser",
+        Email:    "testuser@example.com",
+        Password: "testpassword",
+    }
+    err = a.db.Create(user).Error
+    if err != nil {
+        t.Fatal(err)
+    }
 
     //create a mock request to server
-    body:= []byte(`{"ID": "69", "Name": "tester", "Email": "fml@fm.com", "Password": "testP"}`)
-    req, err := http.NewRequest("POST", "/api/addUser", bytes.NewBuffer(body))
+    body := []byte(`{"username": "testuser", "password": "testpassword"}`)
+    req, err := http.NewRequest("POST", "/api/login", bytes.NewBuffer(body))
     if err != nil {
         t.Fatal(err)
     }
@@ -73,18 +85,23 @@ func TestAddUserHandler(t *testing.T) {
     //create mock request recorder
     mockRec := httptest.NewRecorder()
 
-    //call addUser handler with mock request recorder
-    http.HandleFunc("api/addUser", a.AddUserHandler)
-    http.DefaultServeMux.ServeHTTP(mockRec, req)
+    //call loginHandler with mock request recorder
+    a.r.HandleFunc("/api/login", a.loginHandler)
+    a.r.ServeHTTP(mockRec, req)
 
     //check status code
     if status := mockRec.Code; status != http.StatusOK {
         t.Errorf("Wrong status returned, got %v, want %v", status, http.StatusOK)
     }
 
-    expected := `{"message": "Login successful"}`
-    if mockRec.Body.String() != expected {
-        t.Errorf("Returned unexpected body, got %v, want %v", mockRec.Body.String(), expected)
+    //check response body
+    var responseUser User
+    err = json.NewDecoder(mockRec.Body).Decode(&responseUser)
+    if err != nil {
+        t.Fatal(err)
+    }
+    if responseUser.ID != user.ID || responseUser.Name != user.Name || responseUser.Email != user.Email {
+        t.Errorf("Returned unexpected user data, got %v, want %v", responseUser, user)
     }
 }
 
