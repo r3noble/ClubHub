@@ -4,6 +4,11 @@
 #### Front End
 - Integrated a post with the backend to improve our front/back communications
 - Performed a lot of debugging with our testing issues that arose in the last sprint
+- Added new tests
+- Now have about 30 working tests, compared to none on last sprint
+- Added register functionality with back end
+- Added login functionality with back end
+
 #### Back End
 - Reworked our database to make it functional
 - Cleaned up the repository (more reworking)

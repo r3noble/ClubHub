@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
 type User struct {
@@ -20,6 +19,7 @@ type User struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
 type Credentials struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -82,6 +82,7 @@ func (a *App) start() {
 
 	http.ListenAndServe(":8080", a.r)
 }
+
 func main() {
 	//Initialize and open DB here
 	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
@@ -116,6 +117,7 @@ func main() {
 
 	app.start()
 }
+
 func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new user data
 	var newUser User
@@ -145,6 +147,7 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newUser)
 }
+
 func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
 	err := a.db.Create(user).Error
 	if err != nil {
@@ -268,6 +271,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Send a 404 Not Found response if the URL path doesn't match
 }
+
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
