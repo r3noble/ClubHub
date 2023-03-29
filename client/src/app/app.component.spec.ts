@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import appRoutes from './app-routing.module';
 
 describe('HttpClient testing', () => {
@@ -43,6 +44,7 @@ describe('AppComponent', () => {
         HttpClientModule,
         AppRoutingModule,
         RouterModule.forRoot(appRoutes),
+        FormsModule
       ],
     }).compileComponents();
   });

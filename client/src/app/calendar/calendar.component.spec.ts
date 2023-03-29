@@ -1,5 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarComponent } from './calendar.component';
+import { FormsModule } from '@angular/forms';
+// Other imports
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
+import appRoutes from '../app-routing.module';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -7,7 +13,8 @@ describe('CalendarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [ CalendarComponent ],
+      imports:[]
     })
     .compileComponents();
 
@@ -16,9 +23,9 @@ describe('CalendarComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   //expect(component).toBeTruthy();
-  // });
+   it('should create', () => {
+     //expect(component).toBeTruthy();
+   });
 
   it('should initialize the dataSource property with data', () => {
     expect(component.dataSource.length).toBeGreaterThan(0);

@@ -8,7 +8,7 @@ import { of, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private loginUrl = 'http://localhost:8080/user/login';
+  private loginUrl = 'http://localhost:8080/api/login';
 
   constructor(private http: HttpClient) {}
 
