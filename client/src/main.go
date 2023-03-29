@@ -9,9 +9,9 @@ import (
 	"sync"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
 )
 
 type User struct {
@@ -80,11 +80,18 @@ func (a *App) start() {
 	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
 	//club CRUD APIs
 	a.r.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
-	//a.r.HandleFunc("/api/addClub", a.GetClubHandler).Methods("POST")
-	//a.r.HandleFunc("/api/addClub", a.DeleteClubHandler).Methods("POST")
+	//a.r.HandleFunc("/api/getClub", a.GetClubHandler).Methods("GET")
+	//a.r.HandleFunc("/api/delClub", a.DeleteClubHandler).Methods("DELETE")
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:4200"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "Authorization"},
+	})
+	handler := c.Handler(a.r)
 
-	http.ListenAndServe(":8080", a.r)
+	http.ListenAndServe(":8080", handler)
 }
+
 func main() {
 	//Initialize and open DB here
 	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
@@ -119,6 +126,7 @@ func main() {
 
 	app.start()
 }
+
 func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new user data
 	var newUser User
@@ -148,6 +156,7 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newUser)
 }
+
 func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
 	err := a.db.Create(user).Error
 	if err != nil {
@@ -272,6 +281,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Send a 404 Not Found response if the URL path doesn't match
 }
+
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)

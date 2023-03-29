@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RegisterService } from './register.service';
 
 
 @Component({
@@ -10,8 +11,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
 
-    constructor(public router: Router) { }
+    constructor(public router: Router, private RegisterService: RegisterService) {}
     
+    fullName: string = "";
     firstName: string = "";
     lastName: string = "";
     email: string = "";
@@ -53,11 +55,27 @@ export class RegisterComponent {
             alert("Please agree to the terms and conditions before registering.");
             return;
         }
+        else{
+            // If all fields are valid, set the boolean variable to true
+            this.register = true;
+        }
 
-        // If all fields are valid, set the boolean variable to true
-        this.register = true;
+        // If register boolean is tru then submit the form data to the server to register the user.
+        if(this.register == true){
+            this.fullName = this.firstName + " " + this.lastName;
+            this.RegisterService.registerUser("1", this.fullName, this.email, this.password).subscribe(
+                response => {
+                  console.log(response);
+                  // handle success
+                  this.router.navigate(['']);
+                },
+                error => {
+                  console.log(error);
+                  // handle error
+                }
+              );            
+        }
 
-        // Add code here to submit the form data to the server or to perform any other necessary action
     }
 
     onCancel() {
