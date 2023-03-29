@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/initializers"
@@ -19,6 +20,11 @@ type User struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
+}
+type Club struct {
+	Name        string `json:"name"`
+	ownerName   string `json:"ownerName"`
+	memberCount int    `json:"memberCount"`
 }
 type Credentials struct {
 	Username string `json:"username"`
@@ -77,10 +83,16 @@ func (a *App) start() {
 	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
 	//club CRUD APIs
 	a.r.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
-	//a.r.HandleFunc("/api/addClub", a.GetClubHandler).Methods("POST")
-	//a.r.HandleFunc("/api/addClub", a.DeleteClubHandler).Methods("POST")
+	//a.r.HandleFunc("/api/getClub", a.GetClubHandler).Methods("GET")
+	//a.r.HandleFunc("/api/delClub", a.DeleteClubHandler).Methods("DELETE")
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:4200"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "Authorization"},
+	})
+	handler := c.Handler(a.r)
 
-	http.ListenAndServe(":8080", a.r)
+	http.ListenAndServe(":8080", handler)
 }
 func main() {
 	//Initialize and open DB here
@@ -102,9 +114,9 @@ func main() {
 
 	//hardcodes test user to db
 	hardCoder := User{
-		ID: "123",
-		Name: "tester",
-		Email: "tester@example.com",
+		ID:       "123",
+		Name:     "tester",
+		Email:    "tester@example.com",
 		Password: "password123",
 	}
 	err = app.db.Create(hardCoder).Error
