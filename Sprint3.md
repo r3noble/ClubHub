@@ -12,7 +12,9 @@
 #### Back End
 - Reworked our database to make it functional
 - Cleaned up the repository (more reworking)
-- 
+- Added unit tests
+
+
 ## Unit Tests
 
 #### Back End
