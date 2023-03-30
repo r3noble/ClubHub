@@ -34,7 +34,7 @@ func TestLoginHandler(t *testing.T) {
     //create a mock user to use for authentication
     user := &User{
         ID: "123",
-        Name:     "testuser",
+        Name:     "testlogin",
         Email:    "testuser@example.com",
         Password: "testpassword",
     }
@@ -44,7 +44,7 @@ func TestLoginHandler(t *testing.T) {
     }
 
     //create a mock request to server
-    body := []byte(`{"username": "testuser", "password": "testpassword"}`)
+    body := []byte(`{"username": "testlogin", "password": "testpassword"}`)
     req, err := http.NewRequest("POST", "/api/login", bytes.NewBuffer(body))
     if err != nil {
         t.Fatal(err)

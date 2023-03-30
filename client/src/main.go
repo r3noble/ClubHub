@@ -139,7 +139,8 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Check if the user ID already exists in the map
 	//TREY: Query DB for ID, if EXISTS, print same error
-	if user := a.UserExists(newUser.ID, w, r); user != nil {
+	exists := a.UserExists(newUser.ID, w, r)
+	if exists {
 		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
 		return
 	}
@@ -167,20 +168,19 @@ func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) err
 	return nil
 }
 
-// called to search for user when adding user, does not return 404 if user not found as this is the desired result
-func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) *User {
+// called to search for user when adding user, returns FALSE if no user found and TRUE if found
+func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bool {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := User{}
 	if err := a.db.First(&user, User{Name: name}).Error; err != nil {
-		//respondError(w, http.StatusNotFound, err.Error())
 		fmt.Println("User not located, adding to database...")
-		return nil
+		return false
 	}
-	return &user
+	return true
 }
 
 // searches DB for user, returns nil if none found
-func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *User {
+func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *User  {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := User{}
 	if err := a.db.First(&user, User{ID: id}).Error; err != nil {
@@ -316,7 +316,8 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Check if the user ID already exists in the map
 	//TREY: Query DB for ID, if EXISTS, print same error
-	if user := a.UserExists(newUser.ID, w, r); user != nil {
+	exists := a.UserExists(newUser.ID, w, r)
+	if exists {
 		http.Error(w, "User with that ID already exists", http.StatusBadRequest)
 		return
 	}
