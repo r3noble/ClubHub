@@ -12,7 +12,7 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    const url = 'localhost:8080/api/login'
+    const url = 'http://localhost:8080/api/login'
     const body = { username, password };
 
     return this.http.post(url, body);

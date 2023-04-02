@@ -63,7 +63,7 @@ describe('LoginComponent', () => {
   it('should call loginService login method on submit', () => {
     const username = 'testUser';
     const password = 'testPassword';
-    loginServiceSpy.login.and.returnValue(of(null));
+    loginServiceSpy.login.and.returnValue(of());
     component.username = username;
     component.password = password;
 
