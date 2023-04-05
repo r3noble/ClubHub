@@ -16,7 +16,7 @@ import (
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
-func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
+func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -130,7 +130,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 //NOT CURRENTLY USED
-func (a *App) profileHandler(w http.ResponseWriter, r *http.Request) {
+func (a *App) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	// Get the username parameter from the URL path
 	username := r.URL.Query().Get("username")
 

@@ -19,14 +19,14 @@ import(
 
 // var userMap map[int]User
 type App struct {
-	db *gorm.DB
-	r  *mux.Router
+	DB *gorm.DB
+	R  *mux.Router
 	mu sync.Mutex
 }
 
-func (a *App) start() {
+func (a *App) Start() {
 
-	a.r.Use(func(next http.Handler) http.Handler {
+	a.R.Use(func(next http.Handler) http.Handler {
 
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -40,14 +40,14 @@ func (a *App) start() {
 			next.ServeHTTP(w, r)
 		})
 	})
-	a.r.HandleFunc("/api/health", HealthCheck).Methods("GET")
+	a.R.HandleFunc("/api/health", HealthCheck).Methods("GET")
 	//query-based matching using id
 	//user CRUD APIs
-	a.r.HandleFunc("/api/getUser/{id}", a.IdHandler).Methods("GET")
-	a.r.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
-	a.r.HandleFunc("/api/login", a.loginHandler).Methods("POST") // handlers login
+	a.R.HandleFunc("/api/getUser/{id}", a.IdHandler).Methods("GET")
+	a.R.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
+	a.R.HandleFunc("/api/login", a.LoginHandler).Methods("POST") // handlers login
 	//club CRUD APIs
-	a.r.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
+	a.R.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
 	//a.r.HandleFunc("/api/getClub", a.GetClubHandler).Methods("GET")
 	//a.r.HandleFunc("/api/delClub", a.DeleteClubHandler).Methods("DELETE")
 	c := cors.New(cors.Options{
@@ -55,7 +55,7 @@ func (a *App) start() {
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "Authorization"},
 	})
-	handler := c.Handler(a.r)
+	handler := c.Handler(a.R)
 
 	http.ListenAndServe(":8080", handler)
 }

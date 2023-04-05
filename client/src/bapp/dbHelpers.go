@@ -6,7 +6,7 @@ import(
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 func (a *App) CreateUser(user *models.User, w http.ResponseWriter, r *http.Request) error {
-	err := a.db.Create(user).Error
+	err := a.DB.Create(user).Error
 	if err != nil {
 		fmt.Printf("Error creating user: %s", err.Error())
 		http.Error(w, "Could not insert user into database", http.StatusInternalServerError)
@@ -19,7 +19,7 @@ func (a *App) CreateUser(user *models.User, w http.ResponseWriter, r *http.Reque
 func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bool {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := models.User{}
-	if err := a.db.First(&user, models.User{Name: name}).Error; err != nil {
+	if err := a.DB.First(&user, models.User{Name: name}).Error; err != nil {
 		fmt.Println("User not located, adding to database...")
 		return false
 	}
@@ -30,7 +30,7 @@ func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bo
 func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User  {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := models.User{}
-	if err := a.db.First(&user, models.User{ID: id}).Error; err != nil {
+	if err := a.DB.First(&user, models.User{ID: id}).Error; err != nil {
 		//respondError(w, http.StatusNotFound, err.Error())
 		http.Error(w, "User not located", http.StatusNotFound)
 		return nil
@@ -42,7 +42,7 @@ func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *mo
 func (a *App) QueryByName(name string, w http.ResponseWriter, r *http.Request) *models.User {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := models.User{}
-	if err := a.db.First(&user, models.User{Name: name}).Error; err != nil {
+	if err := a.DB.First(&user, models.User{Name: name}).Error; err != nil {
 		//respondError(w, http.StatusNotFound, err.Error())
 		fmt.Printf("Error: %s", err.Error())
 		//http.Error(w, "User not located", http.StatusNotFound)

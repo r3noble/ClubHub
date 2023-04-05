@@ -8,6 +8,9 @@ import(
     "github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
 )
 
 
@@ -18,26 +21,26 @@ func TestUserExists(t *testing.T) {
 	}
 
 	//migrate DB schema
-	err = testDB.AutoMigrate(&User{})
+	err = testDB.AutoMigrate(&models.User{})
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	//create app instance w/ mock db
-	a := &App {
-		db: testDB,
-		r: mux.NewRouter(),
+	a := &bapp.App {
+		DB: testDB,
+		R: mux.NewRouter(),
 	}
 
 	//create user to add to db, this will be checked for later
-	user := &User {
+	user := &models.User {
 		ID: "01",
 		Name: "testExists",
 		Email: "testExists@test.com",
 		Password: "pass123",
 	}
 
-	err = a.db.Create(user).Error
+	err = a.DB.Create(user).Error
 	if err != nil {
 		t.Errorf("Error in adding, expected none, got %s", err)
 	}

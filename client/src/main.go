@@ -54,11 +54,8 @@ func main() {
 		panic("Error in migrating db")
 	}
 	app := bapp.App{
-		db: db,
-		/*u:  make(map[string]models.User),
-		r:  mux.NewRouter(),*/
-		r: mux.NewRouter(),
-		//mu: sync.Mutex,
+		DB: db,
+		R: mux.NewRouter(),
 	}
 
 	//hardcodes test user to db
@@ -68,13 +65,13 @@ func main() {
 		Email:    "tester@example.com",
 		Password: "password123",
 	}
-	err = app.db.Create(hardCoder).Error
+	err = app.DB.Create(hardCoder).Error
 	if err != nil {
-		fmt.Println("Hardcoder unsuccessfully added to db")
+		fmt.Println("Tester unsuccessfully hard-coded to db")
 		return
 	}
 	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 
-	app.start()
+	app.Start()
 }
 
