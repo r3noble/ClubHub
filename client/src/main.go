@@ -53,14 +53,16 @@ func main() {
 	if err != nil {
 		panic("Error in migrating db")
 	}
-	app := App{
+	app := bapp.App{
 		db: db,
-		u:  make(map[string]User),
-		r:  mux.NewRouter(),
+		/*u:  make(map[string]models.User),
+		r:  mux.NewRouter(),*/
+		r: mux.NewRouter(),
+		//mu: sync.Mutex,
 	}
 
 	//hardcodes test user to db
-	hardCoder := User{
+	hardCoder := models.User{
 		ID:       "123",
 		Name:     "tester",
 		Email:    "tester@example.com",

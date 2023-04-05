@@ -1,4 +1,4 @@
-package backend_app
+package bapp
 
 import(
 	"net/http"
