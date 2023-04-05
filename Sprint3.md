@@ -7,6 +7,10 @@
 - Added new tests
 - Now have about 30 working tests, compared to none on last sprint
 - Added register functionality with back end
+    - Added form controls in order to ensure correct data to input into database.
+    - All incorrect data input is rejected with a dialogue box telling the user the data that is incorrect.
+    - Connected with backend (POST), successfully was able to add users into database.
+    - Navigates to the main page after successfully adding a user into the database.
 - Added login functionality with back end
 
 #### Back End
