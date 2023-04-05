@@ -1,20 +1,20 @@
 package main
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"fmt"
-	"math/rand"
+	//"math/rand"
 	"net/http"
-	"strconv"
-	"sync"
+	//"strconv"
+	//"sync"
 
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
+	//"github.com/rs/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
-	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/backend_app"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
 )
 
 
@@ -49,7 +49,7 @@ func main() {
 	}
 	//calls AutoMigrate and throws error if cannot migrate
 	//formats db to replicate user struct
-	err = db.AutoMigrate(&User{})
+	err = db.AutoMigrate(&models.User{})
 	if err != nil {
 		panic("Error in migrating db")
 	}

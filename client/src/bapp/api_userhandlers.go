@@ -6,12 +6,12 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
-	"sync"
+	//"sync"
 
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	//"github.com/rs/cors"
+	//"gorm.io/driver/sqlite"
+	//"gorm.io/gorm"
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
@@ -21,7 +21,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	// Decode the JSON payload from the request body
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	fmt.Println("Successfully entered Login Handler")
-	var creds Credentials
+	var creds models.Credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -100,7 +100,7 @@ func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new user data
-	var newUser User
+	var newUser models.User
 	err := json.NewDecoder(r.Body).Decode(&newUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

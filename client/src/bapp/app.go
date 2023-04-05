@@ -1,26 +1,25 @@
 package backend_app
 
 import(
-	"encoding/json"
-	"fmt"
-	"math/rand"
+	//"encoding/json"
+	//"fmt"
+	//"math/rand"
 	"net/http"
-	"strconv"
+	//"strconv"
 	"sync"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	"gorm.io/driver/sqlite"
+	//"gorm.io/driver/sqlite"
 	"gorm.io/gorm"	
 
-	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
+	//"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
 
 // var userMap map[int]User
 type App struct {
 	db *gorm.DB
-	u  map[string]User
 	r  *mux.Router
 	mu sync.Mutex
 }

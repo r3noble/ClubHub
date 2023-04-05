@@ -6,12 +6,6 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
-	"sync"
-
-	"github.com/gorilla/mux"
-	"github.com/rs/cors"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
@@ -19,7 +13,7 @@ import (
 //NOT CURRENTLY USED, NEEDS UPDATING
 func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new user data
-	var newUser User
+	var newUser models.User
 	err := json.NewDecoder(r.Body).Decode(&newUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
