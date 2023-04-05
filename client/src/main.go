@@ -1,15 +1,10 @@
 package main
 
 import (
-	//"encoding/json"
 	"fmt"
-	//"math/rand"
 	"net/http"
-	//"strconv"
-	//"sync"
 
 	"github.com/gorilla/mux"
-	//"github.com/rs/cors"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 

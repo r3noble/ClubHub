@@ -3,6 +3,7 @@ package bapp
 import(
 	"net/http"
 	"fmt"
+	
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 func (a *App) CreateUser(user *models.User, w http.ResponseWriter, r *http.Request) error {
