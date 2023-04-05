@@ -1,0 +1,8 @@
+This exists because we cannot insert users with identical IDs into the testDB when running "go test -v"
+
+USED TEST IDs:
+    add_user: 81
+    create_user: 001
+    loginHandler: 010
+    user_exists: 100
+    getByID: 101

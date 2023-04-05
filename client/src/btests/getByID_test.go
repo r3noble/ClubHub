@@ -1,7 +1,7 @@
 package main
 
-import(
-    "testing"
+import (
+	"testing"
     "net/http"
     "net/http/httptest"
     
@@ -13,8 +13,7 @@ import(
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
 )
 
-
-func TestUserExists(t *testing.T) {
+func TestGetByID(t *testing.T) {
 	testDB, err := gorm.Open(sqlite.Open("testUser.db"), &gorm.Config{})
 	if err != nil {
 		t.Fatal(err)
@@ -34,7 +33,7 @@ func TestUserExists(t *testing.T) {
 
 	//create user to add to db, this will be checked for later
 	user := &models.User {
-		ID: "100",
+		ID: "101",
 		Name: "testExists",
 		Email: "testExists@test.com",
 		Password: "pass123",
@@ -48,8 +47,9 @@ func TestUserExists(t *testing.T) {
 	mockW := httptest.NewRecorder()
 	mockR := httptest.NewRequest(http.MethodPost, "/users", nil)
 
-	exists := a.UserExists(user.Name, mockW, mockR)
-	if !exists {
-		t.Errorf("Expected user %s to exists but it does not", user.Name)
+	found, err := a.GetUserByID(user.ID, mockW, mockR)
+
+	if found.ID != "101" {
+		t.Errorf("Unexpected ID returned, got %s, want 101", found.ID)
 	}
 }
