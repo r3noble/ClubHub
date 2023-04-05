@@ -1,5 +1,10 @@
 package backend_app
 
+import(
+	"net/http"
+	"fmt"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
+)
 func (a *App) CreateUser(user *User, w http.ResponseWriter, r *http.Request) error {
 	err := a.db.Create(user).Error
 	if err != nil {
