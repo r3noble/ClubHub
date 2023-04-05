@@ -25,6 +25,7 @@ export class LoginComponent {
 
       },
       error => {
+        alert(error);
         console.log(error);
         // handle error
       }

@@ -11,6 +11,8 @@ import(
 	"gorm.io/gorm"
     "encoding/json"
 
+    "github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
 )
 
 func TestAddUserHandler(t *testing.T) {
@@ -20,19 +22,19 @@ func TestAddUserHandler(t *testing.T) {
     }
 
     //migrate db schema
-    err = testDB.AutoMigrate(&User{})
+    err = testDB.AutoMigrate(&models.User{})
     if err != nil {
         t.Fatal(err)
     }
 
     // Create a new App instance with the mock database
-    a := &App{
-        db: testDB,
-        r:  mux.NewRouter(),
+    a := &bapp.App{
+        DB: testDB,
+        R:  mux.NewRouter(),
     }
 
      //create a mock user to use for authentication
-     user := User{
+     user := models.User{
         ID: "81",
         Name:     "testuser",
         Email:    "testuser@example.com",
@@ -49,8 +51,8 @@ func TestAddUserHandler(t *testing.T) {
     mockRec := httptest.NewRecorder()
 
     //make request with mockRec and response
-    a.r.HandleFunc("/api/addUser", a.AddUserHandler)
-    a.r.ServeHTTP(mockRec, req)
+    a.R.HandleFunc("/api/addUser", a.AddUserHandler)
+    a.R.ServeHTTP(mockRec, req)
 
     //check status code
     if status := mockRec.Code; status != http.StatusOK {
@@ -58,7 +60,7 @@ func TestAddUserHandler(t *testing.T) {
     }
 
     //check response body
-    var responseUser User
+    var responseUser models.User
     err = json.NewDecoder(mockRec.Body).Decode(&responseUser)
     if err != nil {
         t.Fatal(err)
