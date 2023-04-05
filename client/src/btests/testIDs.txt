@@ -1,7 +1,7 @@
 This exists because we cannot insert users with identical IDs into the testDB when running "go test -v"
 
 USED TEST IDs:
-    add_user: 81
+    add_user: 81 (has to be 81, think it has something to do with random number generator in loginHandler)
     create_user: 001
     loginHandler: 010
     user_exists: 100
