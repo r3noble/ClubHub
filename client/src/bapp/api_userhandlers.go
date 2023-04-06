@@ -143,6 +143,20 @@ func (a *App) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(profile)
 }
 
+func (a *App) UpdateMembershipHandlr(w http.ResponseWriter, r *http.Request) {
+	//create instance of user being accessed
+	var updateUser models.User
+	err := json.NewDecoder(r.Body).Decode(&updateUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	//access user and update the clubs field
+	//need to discuss how front end wants to send the info of what clubs are being joined
+
+}
+
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	//next function writes back to the response
