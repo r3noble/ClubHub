@@ -33,7 +33,7 @@ func TestCreateUser(t *testing.T){
 
 	//create mock user to add
 	user := &models.User {
-		ID: "111",
+		ID: "001",
 		Name: "testCreate",
 		Email: "testlogin@test.com",
 		Password: "tlpword",

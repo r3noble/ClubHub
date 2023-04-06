@@ -36,7 +36,7 @@ func TestLoginHandler(t *testing.T) {
 
     //create a mock user to use for authentication
     user := &models.User{
-        ID: "123",
+        ID: "010",
         Name:     "testlogin",
         Email:    "testuser@example.com",
         Password: "testpassword",

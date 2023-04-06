@@ -29,7 +29,7 @@ func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bo
 
 // searches DB for user, returns nil if none found
 func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User  {
-	//call is based on User Strcut not credentials struct, may need to change
+	//call is based on User Struct not credentials struct, may need to change
 	user := models.User{}
 	if err := a.DB.First(&user, models.User{ID: id}).Error; err != nil {
 		//respondError(w, http.StatusNotFound, err.Error())
