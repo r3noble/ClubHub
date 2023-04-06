@@ -12,7 +12,12 @@ import(
 
 // var userMap map[int]User
 type App struct {
+	//DB is for user storage
 	DB *gorm.DB
+	//Cdb is for club storage
+	Cdb *gorm.DB
+	//Edb is for event storage
+	Edb *gorm.db
 	R  *mux.Router
 	mu sync.Mutex
 }
