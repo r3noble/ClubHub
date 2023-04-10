@@ -16,7 +16,7 @@ func (a *App) CreateUser(user *models.User, w http.ResponseWriter, r *http.Reque
 	return nil
 }
 
-func (a *App) CreateUser(club *models.Club, w http.ResponseWriter, r *http.Request) error {
+func (a *App) CreateClub(club *models.Club, w http.ResponseWriter, r *http.Request) error {
 	err := a.Cdb.Create(club).Error
 	if err != nil {
 		fmt.Printf("Error creating club: %s", err.Error())
