@@ -17,7 +17,7 @@ type App struct {
 	//Cdb is for club storage
 	Cdb *gorm.DB
 	//Edb is for event storage
-	Edb *gorm.db
+	Edb *gorm.DB
 	R  *mux.Router
 	mu sync.Mutex
 }
