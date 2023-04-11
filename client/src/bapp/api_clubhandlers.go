@@ -3,9 +3,7 @@ package bapp
 import (
 	"encoding/json"
 	"fmt"
-	"math/rand"
 	"net/http"
-	"strconv"
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
