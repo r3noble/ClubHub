@@ -82,9 +82,42 @@ func main() {
 		Treasurer:"idk change this data later",
 		About: "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering", 
 	}
+	ieee := models.Club{
+		Name: "IEEE",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
+	ufsit := models.Club{
+		Name: "UFSIT",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
+	wicse := models.Club{
+		Name: "WICSE",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
 		fmt.Println("wece not added!")
+	}
+	err = app.Cdb.Create(ieee).Error
+	if err != nil {
+		fmt.Println("ieee not added!")
+	}
+	err = app.Cdb.Create(ufsit).Error
+	if err != nil {
+		fmt.Println("ufsit not added!")
+	}
+	err = app.Cdb.Create(wicse).Error
+	if err != nil {
+		fmt.Println("wicse not added!")
 	}
 	app.Start()
 }

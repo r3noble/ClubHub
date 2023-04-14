@@ -48,6 +48,7 @@ func (a *App) GetClubHandler(w http.ResponseWriter, r *http.Request){
 	club := models.Club{}
 	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
 		fmt.Println("Club not located, adding to database...")
+		http.Error(w,err.Error(),http.StatusInternalServerError)
 		return
 	}
 	jsonResponse, err := json.Marshal(club)
