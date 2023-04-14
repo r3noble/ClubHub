@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header.component';
 
 
-
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
