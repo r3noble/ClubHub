@@ -48,6 +48,7 @@ func (a *App) Start() {
 	a.R.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
 	a.R.HandleFunc("/api/joinClub", a.JoinClubHandler).Methods("POST")
 	//a.r.HandleFunc("/api/getClub", a.GetClubHandler).Methods("GET")
+	a.R.HandleFunc("/api/getClub/{id}", a.GetClubHandler).Methods("GET")
 	//a.r.HandleFunc("/api/delClub", a.DeleteClubHandler).Methods("DELETE")
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:4200"},

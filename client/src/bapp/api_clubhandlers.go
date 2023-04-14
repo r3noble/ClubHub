@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
+	"github.com/gorilla/mux"
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
@@ -39,8 +39,27 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newClub)
 }
-func (a *App) GetAllClubs(w http.ResponseWriter, r *http.Request){
+func (a *App) GetClubHandler(w http.ResponseWriter, r *http.Request){
 	//Get all clubs from the clubs database to check if exist
+	//var tmp models.Club
+	vars := mux.Vars(r)
+	name := vars["id"]
+
+	club := models.Club{}
+	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
+		fmt.Println("Club not located, adding to database...")
+		http.Error(w,err.Error(),http.StatusInternalServerError)
+		return
+	}
+	jsonResponse, err := json.Marshal(club)
+	if err != nil{
+		http.Error(w,err.Error(),http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	return
 }
 
 func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {

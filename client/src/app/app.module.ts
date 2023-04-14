@@ -16,6 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { SchedulerModule } from 'smart-webcomponents-angular/scheduler';
 import { StepperComponent } from './stepper/stepper.component';
 import { ClubComponent } from './club/club.component';
+import { CprofileComponent } from './cprofile/cprofile.component';
 
 
 
@@ -30,7 +31,8 @@ import { ClubComponent } from './club/club.component';
     CalendarComponent,
     RegisterComponent,
     StepperComponent,
-    ClubComponent
+    ClubComponent,
+    CprofileComponent
   ],
 
 

@@ -49,8 +49,17 @@ func main() {
 	if err != nil {
 		panic("Error in migrating db")
 	}
+	cdb,cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	if cerr != nil {
+		panic("Error in opening CDB")
+	}
+	cerr = cdb.AutoMigrate(&models.Club{})
+	if cerr != nil {
+		panic("Error in migrating CDB")
+	}
 	app := bapp.App{
 		DB: db,
+		Cdb: cdb,
 		R: mux.NewRouter(),
 	}
 
@@ -64,10 +73,52 @@ func main() {
 	err = app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
-		return
 	}
 	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
-
+	wece := models.Club{
+		Name: "WECE",
+		President: "Jenna Sheldon",
+		VP: "idk change this data later",
+		Treasurer:"idk change this data later",
+		About: "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering", 
+	}
+	ieee := models.Club{
+		Name: "IEEE",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
+	ufsit := models.Club{
+		Name: "UFSIT",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
+	wicse := models.Club{
+		Name: "WICSE",
+		President: "Idk lol",
+		VP: "Idk lol",
+		Treasurer:"Idk lol",
+		About:"Idk lol",
+	}
+	err = app.Cdb.Create(wece).Error
+	if err != nil {
+		fmt.Println("wece not added!")
+	}
+	err = app.Cdb.Create(ieee).Error
+	if err != nil {
+		fmt.Println("ieee not added!")
+	}
+	err = app.Cdb.Create(ufsit).Error
+	if err != nil {
+		fmt.Println("ufsit not added!")
+	}
+	err = app.Cdb.Create(wicse).Error
+	if err != nil {
+		fmt.Println("wicse not added!")
+	}
 	app.Start()
 }
 
