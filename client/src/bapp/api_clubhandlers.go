@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
+	"github.com/gorilla/mux"
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
@@ -44,7 +44,7 @@ func (a *App) GetClubHandler(w http.ResponseWriter, r *http.Request){
 	//var tmp models.Club
 	vars := mux.Vars(r)
 	name := vars["id"]
-	
+
 	club := models.Club{}
 	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
 		fmt.Println("Club not located, adding to database...")
