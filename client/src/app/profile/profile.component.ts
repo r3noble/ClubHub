@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from './profile.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-profile',
@@ -9,23 +10,14 @@ import { ProfileService } from './profile.service';
 })
 
 export class ProfileComponent implements OnInit {
-  username: string ="";
-  profile: any;
-  sub: any;
+  name: string | null = "please login";
+  email: string | null = "";
 
-  constructor(
-    private route: ActivatedRoute,
-    private profileService: ProfileService
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.username = params['Name'];
-      });
-      console.log(this.username);
-    this.profileService.getProfile(this.username).subscribe(data => {
-      this.profile = data;
-    });
+    this.name = this.route.snapshot.queryParamMap.get('name');
+    this.email = this.route.snapshot.queryParamMap.get('email');
   }
 }
 
