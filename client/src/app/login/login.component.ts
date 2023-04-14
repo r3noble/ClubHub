@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { User } from '../user.model';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LoginComponent {
     this.LoginService.login(this.username, this.password)
     .subscribe(
       response => {
-        this.router.navigate(['/profile', { user: response}])
+        this.router.navigate(['/profile', { User: response}])
 
       },
       error => {

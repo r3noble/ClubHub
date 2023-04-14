@@ -118,7 +118,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("User Unsuccessfully added to DB")
 	}
-	fmt.Printf("User successfully created with name %s and ID %s", newUser.Name, newUser.ID)
+	fmt.Printf("User successfully created with name %s and ID %\n", newUser.Name, newUser.ID)
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")
@@ -141,6 +141,20 @@ func (a *App) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	// Convert the profile data to JSON and send it in the response
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(profile)
+}
+
+func (a *App) UpdateMembershipHandlr(w http.ResponseWriter, r *http.Request) {
+	//create instance of user being accessed
+	var updateUser models.User
+	err := json.NewDecoder(r.Body).Decode(&updateUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	//access user and update the clubs field
+	//need to discuss how front end wants to send the info of what clubs are being joined
+
 }
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
