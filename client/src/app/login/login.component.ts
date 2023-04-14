@@ -22,6 +22,7 @@ export class LoginComponent {
     this.LoginService.login(this.username, this.password)
       .subscribe(
         (user: User) => {
+
           this.router.navigate(['/profile'], { queryParams: { user: JSON.stringify(user) }});
         },
         (error) => {
