@@ -1,11 +1,17 @@
 Front End
     Goals:
         - club tab for displaying clubs, no search bar COMPLETED
-        - club profile page
-        - update calendar to work with backend 
+        - club profile page IN PROGRESS
+            - rerouting
+        - update calendar to work with backend (yeah...)
         - login needs to have getuser functionality COMPLETED
-        - update profile page (get rid of picture section)
-        - OPTIONAL: update top tool bar to look better visually
+        - update profile page (get rid of picture section) IN PROGRESS
+            - need to get more info from back end about user
+        - jenna talking to herself
+            - calendar
+            - if calendar works, we can put events in the club profiles
+            - move auth service to seperate file, cant all be in login service
+            - :japenese_ogre:
 
 
 
