@@ -29,6 +29,10 @@ const appRoutes: Routes = [
     component: ProfileComponent
   },
   {
+    path: 'profile/:User',
+    component: ProfileComponent
+  },
+  {
     path: 'login',
     component: LoginComponent
   },

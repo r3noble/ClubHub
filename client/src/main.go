@@ -37,6 +37,7 @@ func (w *responseWriter) WriteHeader(statusCode int) {
 }
 
 func main() {
+	fmt.Println("ClubHub running, awaiting requests...")
 	//Initialize and open DB here
 	db, err := gorm.Open(sqlite.Open("users.db"), &gorm.Config{})
 	if err != nil {

@@ -61,10 +61,10 @@ func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *mo
 }
 
 // searches DB fpr user, returns nil if none found
-func (a *App) QueryByName(name string, w http.ResponseWriter, r *http.Request) *models.User {
+func (a *App) QueryByName(email string, w http.ResponseWriter, r *http.Request) *models.User {
 	//call is based on User Strcut not credentials struct, may need to change
 	user := models.User{}
-	if err := a.DB.First(&user, models.User{Name: name}).Error; err != nil {
+	if err := a.DB.First(&user, models.User{Email: email}).Error; err != nil {
 		//respondError(w, http.StatusNotFound, err.Error())
 		fmt.Printf("Error: %s", err.Error())
 		//http.Error(w, "User not located", http.StatusNotFound)
