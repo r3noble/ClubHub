@@ -32,15 +32,24 @@
               FAQ
             </a>
             <a class="navbar-item" [routerLink]="'/profile'">Profile</a>
+            <div *ngIf="!loginService.islog">
+              <span class="navbar-item" [routerLink]="'/login'">
+                <a class="button is-inverted has-text-dark">
+                  <span class="icon">
+                    <i class="fa fa-solid fa-user"></i>
+                  </span>
+                  <span>Login</span>
+                </a>
+              </span>
+            </div>
+            <div *ngIf="loginService.islog">
+              <span class="navbar-item">
+              <button class="button is-link is-inverted has-text-dark"  (click)=loginService.logout()>
+               Logout
+            </button>
+          </span>
+            </div>
 
-            <span class="navbar-item" [routerLink]="'/login'">
-              <a class="button is-inverted has-text-dark">
-                <span class="icon">
-                  <i class="fa fa-solid fa-user"></i>
-                </span>
-                <span>Login</span>
-              </a>
-            </span>
           </div>
         </div>
       </div>

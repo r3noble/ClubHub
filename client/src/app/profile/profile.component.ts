@@ -18,15 +18,15 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private loginService: LoginService, public router: Router) {
-    if (!this.loginService.islog) {
+    if (!this.loginService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
 
   }
 
   ngOnInit() {
-    const userString = this.route.snapshot.queryParamMap.get('user') as string;
-    const user = JSON.parse(userString) as User;
+    const user = this.loginService.getUser();
+  //  const user = JSON.parse(userString) as User;
     this.name = user.name;
     this.email = user.email;
    // this.name = "not workin";

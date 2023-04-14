@@ -10,7 +10,7 @@ import { User } from '../user.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = "";
+  email: string = "";
   password: string = "";
   errorMessage: string = "";
   baseUrl: any;
@@ -19,11 +19,11 @@ export class LoginComponent {
   constructor(private LoginService: LoginService,  public router: Router) {}
 
   onSubmit() {
-    this.LoginService.login(this.username, this.password)
+    this.LoginService.login(this.email, this.password)
       .subscribe(
         (user: User) => {
 
-          this.router.navigate(['/profile'], { queryParams: { user: JSON.stringify(user) }});
+          this.router.navigate(['/profile', {User: user}]);
         },
         (error) => {
           alert('Incorrect Username or Password');
