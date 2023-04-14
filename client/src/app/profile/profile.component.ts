@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from './profile.service';
 import { User } from '../user.model';
+import { LoginService } from '../login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,8 +17,10 @@ export class ProfileComponent implements OnInit {
   email: string  = "";
 
 
-  constructor(private route: ActivatedRoute) {
-    console.log('ProfileComponent constructor called');
+  constructor(private route: ActivatedRoute, private loginService: LoginService, public router: Router) {
+    if (!this.loginService.islog) {
+      this.router.navigate(['/login']);
+    }
 
   }
 
