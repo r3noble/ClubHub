@@ -124,7 +124,6 @@ func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Send a 404 Not Found response if the URL path doesn't match
 }
 
-//NOT CURRENTLY USED??
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
