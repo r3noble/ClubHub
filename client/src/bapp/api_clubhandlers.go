@@ -39,8 +39,23 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newClub)
 }
-func (a *App) GetAllClubs(w http.ResponseWriter, r *http.Request){
+func (a *App) GetClubs(w http.ResponseWriter, r *http.Request){
 	//Get all clubs from the clubs database to check if exist
+	//var tmp models.Club
+	club := models.Club{}
+	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
+		fmt.Println("Club not located, adding to database...")
+		return
+	}
+	jsonResponse, err := json.Marshal(club)
+	if err != nil{
+		http.Error(w,err.Error(),http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	return
 }
 
 func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
