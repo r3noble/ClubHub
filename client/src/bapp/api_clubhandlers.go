@@ -43,8 +43,16 @@ func (a *App) GetAllClubs(w http.ResponseWriter, r *http.Request){
 	//Get all clubs from the clubs database to check if exist
 }
 
-func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
+/*func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//get user from database
-	//determine if they are in the club
-	//
-}
+	var user model.User
+	err := json.NewDecoder(r.Body).Decode(&newUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	//determine if they are in the club already
+		//if yes -> send back message to frontend to display error message
+		//otherwise-> edit the club column for their userDB slot
+			//must append a , and the club name to existing club string
+	//send back success message to front end
+}*/
