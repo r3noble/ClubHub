@@ -27,8 +27,13 @@ func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
+	var clubList string
 	//create new string of clubs to be added
-	clublist := user.Clubs + "," + ident.Name
+	if user.Clubs == "" {
+		clubList = ident.Name
+	}else {
+		clubList = user.Clubs + "," + ident.Name
+	}
 	//determine if they are in the club already
 	var clubName string
 	for i := 0; i < len(user.Clubs); i++ {
@@ -44,8 +49,8 @@ func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	//otherwise-> edit the club column for their userDB slot
-	user.Clubs = clublist
-	a.DB.Model(&models.User{}).Where("ID=?", user.ID).Update("Clubs", clublist)
+	user.Clubs = clubList
+	a.DB.Model(&models.User{}).Where("ID=?", user.ID).Update("Clubs", clubList)
 	
 	jsonResponse, err := json.Marshal(user)
 	if err != nil {
