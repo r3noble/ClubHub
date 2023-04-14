@@ -1,8 +1,9 @@
 Front End
     Goals:
-        - club tab for displaying clubs, no search bar
-        - update calendar to work with backend
-        - login needs to have getuser functionality
+        - club tab for displaying clubs, no search bar COMPLETED
+        - club profile page
+        - update calendar to work with backend 
+        - login needs to have getuser functionality COMPLETED
         - update profile page (get rid of picture section)
         - OPTIONAL: update top tool bar to look better visually
 
