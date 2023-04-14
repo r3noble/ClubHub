@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from './profile.service';
 import { User } from '../user.model';
@@ -10,14 +11,21 @@ import { User } from '../user.model';
 })
 
 export class ProfileComponent implements OnInit {
-  name: string | null = "please login";
-  email: string | null = "";
+  name: string  = "Please Login";
+  email: string  = "";
 
-  constructor(private route: ActivatedRoute) {}
+
+  constructor(private route: ActivatedRoute) {
+    console.log('ProfileComponent constructor called');
+
+  }
 
   ngOnInit() {
-    this.name = this.route.snapshot.queryParamMap.get('name');
-    this.email = this.route.snapshot.queryParamMap.get('email');
+    const userString = this.route.snapshot.queryParamMap.get('user') as string;
+    const user = JSON.parse(userString) as User;
+    this.name = user.name;
+    this.email = user.email;
+   // this.name = "not workin";
   }
 }
 

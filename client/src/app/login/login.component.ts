@@ -20,17 +20,15 @@ export class LoginComponent {
 
   onSubmit() {
     this.LoginService.login(this.username, this.password)
-    .subscribe(
-      response => {
-        this.router.navigate(['/profile', { User: response}])
-
-      },
-      error => {
-        alert(error);
-        console.log(error);
-        // handle error
-      }
-    );
+      .subscribe(
+        (user: User) => {
+          this.router.navigate(['/profile'], { queryParams: { user: JSON.stringify(user) }});
+        },
+        (error) => {
+          alert('Incorrect Username or Password');
+          console.log(error);
+        }
+      );
   }
 
   onRegister() {
