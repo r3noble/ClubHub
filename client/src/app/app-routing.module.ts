@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
+import { ClubComponent } from './club/club.component';
 
 
 const appRoutes: Routes = [
@@ -16,16 +17,20 @@ const appRoutes: Routes = [
 
   },
   {
+    path: 'club',
+    component: ClubComponent
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent
+  },
+  {
     path: 'profile',
     component: ProfileComponent
   },
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'calendar',
-    component: CalendarComponent
   },
   {
     path: 'register',
