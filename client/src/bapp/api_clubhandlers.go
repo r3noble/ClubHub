@@ -43,16 +43,50 @@ func (a *App) GetAllClubs(w http.ResponseWriter, r *http.Request){
 	//Get all clubs from the clubs database to check if exist
 }
 
-/*func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
-	//get user from database
-	var user model.User
-	err := json.NewDecoder(r.Body).Decode(&newUser)
+func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
+	//get identification of user to be accessed
+	var ident models.ClubAdder
+	err := json.NewDecoder(r.Body).Decode(&ident)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
+
+	//get user to be accessed from DB
+	var user models.User
+	if err = a.DB.First(&user, "ID=?", ident.ID).Error; err != nil {
+		fmt.Println("User with that name not found")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	//create new string of clubs to be added
+	clublist := user.Clubs + "," + ident.Name
 	//determine if they are in the club already
+	var clubName string
+	for i := 0; i < len(user.Clubs); i++ {
+		if string(user.Clubs[i]) == ","{
+			clubName = ""
+		}
+		clubName += string(user.Clubs[i])
 		//if yes -> send back message to frontend to display error message
-		//otherwise-> edit the club column for their userDB slot
-			//must append a , and the club name to existing club string
+		if clubName == ident.Name{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			fmt.Println("User already a part of that club")
+			return
+		}
+	}
+	//otherwise-> edit the club column for their userDB slot
+	user.Clubs = clublist
+	a.DB.Model(&models.User{}).Where("ID=?", user.ID).Update("Clubs", clublist)
+	
+	jsonResponse, err := json.Marshal(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	
 	//send back success message to front end
-}*/
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+
+}
