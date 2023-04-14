@@ -43,3 +43,8 @@ func (a *App) GetAllClubs(w http.ResponseWriter, r *http.Request){
 	//Get all clubs from the clubs database to check if exist
 }
 
+func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
+	//get user from database
+	//determine if they are in the club
+	//
+}
