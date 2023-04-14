@@ -8,6 +8,9 @@ import(
     "github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
 )
 
 func TestCreateUser(t *testing.T){
@@ -17,20 +20,20 @@ func TestCreateUser(t *testing.T){
 	}
 
 	//migrate db schema
-	err = testDB.AutoMigrate(&User{})
+	err = testDB.AutoMigrate(&models.User{})
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	//create app instance w/ mock db
-	a := &App{
-		db: testDB,
-		r: mux.NewRouter(),
+	a := &bapp.App{
+		DB: testDB,
+		R: mux.NewRouter(),
 	}
 
 	//create mock user to add
-	user := &User {
-		ID: "111",
+	user := &models.User {
+		ID: "001",
 		Name: "testCreate",
 		Email: "testlogin@test.com",
 		Password: "tlpword",
@@ -46,8 +49,8 @@ func TestCreateUser(t *testing.T){
 	}
 
 	//check user was added to db
-	var created User
-	a.db.First(&created, user.ID)
+	var created models.User
+	a.DB.First(&created, user.ID)
 	if created != *user{
 		t.Errorf("Expected user %+v, but got %+v", user, &created)
 	}

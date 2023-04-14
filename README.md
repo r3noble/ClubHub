@@ -16,6 +16,7 @@ Ideas for expansion of features include profiles of students that can show what 
 ### Setting up the terminal:
 - install angular: npm install
 - install bulma? we should run it on a blank terminal to see if im forgetting things
+- install favicon
 - instal go: go get ____ (trey and cole?)
 - install mingw?
 
