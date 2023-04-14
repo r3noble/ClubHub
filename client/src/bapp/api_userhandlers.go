@@ -12,6 +12,59 @@ import (
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
+func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
+	//get identification of user to be accessed
+	var ident models.ClubAdder
+	err := json.NewDecoder(r.Body).Decode(&ident)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	//get user to be accessed from DB
+	var user models.User
+	if err = a.DB.First(&user, "ID=?", ident.ID).Error; err != nil {
+		fmt.Println("User with that name not found")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	var clubList string
+	//create new string of clubs to be added
+	if user.Clubs == "" {
+		clubList = ident.Name
+	}else {
+		clubList = user.Clubs + "," + ident.Name
+	}
+	//determine if they are in the club already
+	var clubName string
+	for i := 0; i < len(user.Clubs); i++ {
+		if string(user.Clubs[i]) == ","{
+			clubName = ""
+		}
+		clubName += string(user.Clubs[i])
+		//if yes -> send back message to frontend to display error message
+		if clubName == ident.Name{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			fmt.Println("User already a part of that club")
+			return
+		}
+	}
+	//otherwise-> edit the club column for their userDB slot
+	user.Clubs = clubList
+	a.DB.Model(&models.User{}).Where("ID=?", user.ID).Update("Clubs", clubList)
+	
+	jsonResponse, err := json.Marshal(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	
+	//send back success message to front end
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+
+}
+
 func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
@@ -141,20 +194,6 @@ func (a *App) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	// Convert the profile data to JSON and send it in the response
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(profile)
-}
-
-func (a *App) UpdateMembershipHandlr(w http.ResponseWriter, r *http.Request) {
-	//create instance of user being accessed
-	var updateUser models.User
-	err := json.NewDecoder(r.Body).Decode(&updateUser)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	//access user and update the clubs field
-	//need to discuss how front end wants to send the info of what clubs are being joined
-
 }
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {

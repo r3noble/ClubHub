@@ -48,6 +48,7 @@ func (a *App) GetClubHandler(w http.ResponseWriter, r *http.Request){
 	club := models.Club{}
 	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
 		fmt.Println("Club not located, adding to database...")
+		http.Error(w,err.Error(),http.StatusInternalServerError)
 		return
 	}
 	jsonResponse, err := json.Marshal(club)
@@ -60,17 +61,3 @@ func (a *App) GetClubHandler(w http.ResponseWriter, r *http.Request){
 	w.Write(jsonResponse)
 	return
 }
-
-/*func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
-	//get user from database
-	var user model.User
-	err := json.NewDecoder(r.Body).Decode(&newUser)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-	//determine if they are in the club already
-		//if yes -> send back message to frontend to display error message
-		//otherwise-> edit the club column for their userDB slot
-			//must append a , and the club name to existing club string
-	//send back success message to front end
-}*/
