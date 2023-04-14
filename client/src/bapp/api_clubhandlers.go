@@ -40,3 +40,8 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newClub)
 }
 
+func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
+	//get user from database
+	//determine if they are in the club
+	//
+}
