@@ -26,15 +26,15 @@ func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the required fields (username and password) are present
-	if creds.Username == "" || creds.Password == "" {
-		http.Error(w, "Username and password are required", http.StatusBadRequest)
+	if creds.Email == "" || creds.Password == "" {
+		http.Error(w, "Email and password are required", http.StatusBadRequest)
 		return
 	}
 
 	// Authenticate the user using the provided credentials (not shown)
 	// ...
 	//TREY: QUERY DB here for username
-	user := a.QueryByName(creds.Username, w, r)
+	user := a.QueryByName(creds.Email, w, r)
 	if user == nil {
 		http.Error(w, "Invalid Username", http.StatusUnauthorized)
 		fmt.Println("No found user")
