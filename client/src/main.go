@@ -140,9 +140,9 @@ func main() {
 	}
 	wicse := models.Club{
 		Name:      "WICSE",
-		President: "Idk lol",
-		VP:        "Idk lol",
-		Treasurer: "Idk lol",
+		President: "Robin Fintz",
+		VP:        "Minuet Greenberg",
+		Treasurer: "Katja Karoleski",
 		About:     "Idk lol",
 	}
 	err = app.Cdb.Create(wece).Error
