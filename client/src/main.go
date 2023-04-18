@@ -56,7 +56,7 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating CDB")
 	}
-	edb, eerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	edb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
 	}
@@ -79,7 +79,40 @@ func main() {
 		Password: "password123",
 		Clubs:    "WECE",
 	}
+	JShel := models.User{
+		ID:       "228",
+		Name:     "Jenna Sheldon",
+		Email:    "jennasheldon@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
+	ICar := models.User{
+		ID:       "333",
+		Name:     "Isabella Cratem",
+		Email:    "isabellacratem@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
+	SSchul := models.User{
+		ID:       "111",
+		Name:     "Sarah Schultz",
+		Email:    "sarahschultz@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
 	err = app.DB.Create(hardCoder).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(JShel).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(ICar).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(SSchul).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
