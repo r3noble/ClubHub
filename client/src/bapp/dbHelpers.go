@@ -25,7 +25,15 @@ func (a *App) CreateClub(club *models.Club, w http.ResponseWriter, r *http.Reque
 	}
 	return nil
 }
-
+func (a *App) CreateEvent(event *models.Event, w http.ResponseWriter, r *http.Request) error {
+	err := a.Edb.Create(event).Error
+	if err != nil {
+		fmt.Printf("Error creating event: %s", err.Error())
+		http.Error(w, "Could not insert event into database", http.StatusInternalServerError)
+		return err
+	}
+	return nil
+}
 // called to search for user when adding user, returns FALSE if no user found and TRUE if found
 func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bool {
 	//call is based on User Strcut not credentials struct, may need to change
@@ -47,7 +55,13 @@ func (a *App) ClubExists(name string, w http.ResponseWriter, r *http.Request) bo
 	}
 	return true
 }
-
+func (a *App) EventExists(name string) bool {
+	event := models.Event{}
+	if err := a.Edb.First(&event, models.Club{Name: name}).Error; err != nil {
+		return false;
+	}
+	return true;
+}
 // searches DB for user, returns nil if none found
 func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User  {
 	//call is based on User Struct not credentials struct, may need to change

@@ -56,10 +56,19 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating CDB")
 	}
+	edb, eerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	if cerr != nil {
+		panic("Error in opening CDB")
+	}
+	cerr = edb.AutoMigrate(&models.Event{})
+	if cerr != nil {
+		panic("Error in migrating EDB")
+	}
 	app := bapp.App{
 		DB:  db,
 		Cdb: cdb,
 		R:   mux.NewRouter(),
+		Edb: edb,
 	}
 
 	//hardcodes test user to db
