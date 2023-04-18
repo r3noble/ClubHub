@@ -129,7 +129,7 @@ func main() {
 		President: "Conrad Hellwege",
 		VP:        "Julian Moldonado",
 		Treasurer: "Justin Nagovskiy",
-		About:     "The institute of electric and electronics engineers promotes business, internships, and competition",
+		About:     "The Institute of Electric and Electronics Engineers is the leading professional association for the advancement of technology. It is the world's largest technical society, bringing members access to the industry's most essential technical information, networking opportunities, career development tools, and many other exclusive benefits.",
 	}
 	ufsit := models.Club{
 		Name:      "UFSIT",
