@@ -134,8 +134,8 @@ func main() {
 	ufsit := models.Club{
 		Name:      "UFSIT",
 		President: "Gabriella N",
-		VP:        "Idk lol",
-		Treasurer: "Idk lol",
+		VP:        "Jon P",
+		Treasurer: "Rachel O",
 		About:     "Idk lol",
 	}
 	wicse := models.Club{
