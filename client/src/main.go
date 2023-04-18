@@ -8,10 +8,9 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
-
 
 func WriteOnceMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +48,7 @@ func main() {
 	if err != nil {
 		panic("Error in migrating db")
 	}
-	cdb,cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	cdb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
 	}
@@ -58,9 +57,9 @@ func main() {
 		panic("Error in migrating CDB")
 	}
 	app := bapp.App{
-		DB: db,
+		DB:  db,
 		Cdb: cdb,
-		R: mux.NewRouter(),
+		R:   mux.NewRouter(),
 	}
 
 	//hardcodes test user to db
@@ -69,6 +68,7 @@ func main() {
 		Name:     "tester",
 		Email:    "tester@example.com",
 		Password: "password123",
+		Clubs:    "WECE",
 	}
 	err = app.DB.Create(hardCoder).Error
 	if err != nil {
@@ -76,32 +76,32 @@ func main() {
 	}
 	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 	wece := models.Club{
-		Name: "WECE",
+		Name:      "WECE",
 		President: "Jenna Sheldon",
-		VP: "idk change this data later",
-		Treasurer:"idk change this data later",
-		About: "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering", 
+		VP:        "Sarah Schultz",
+		Treasurer: "Isabella Carmen",
+		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
 	}
 	ieee := models.Club{
-		Name: "IEEE",
+		Name:      "IEEE",
 		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		VP:        "Idk lol",
+		Treasurer: "Idk lol",
+		About:     "Idk lol",
 	}
 	ufsit := models.Club{
-		Name: "UFSIT",
+		Name:      "UFSIT",
 		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		VP:        "Idk lol",
+		Treasurer: "Idk lol",
+		About:     "Idk lol",
 	}
 	wicse := models.Club{
-		Name: "WICSE",
+		Name:      "WICSE",
 		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		VP:        "Idk lol",
+		Treasurer: "Idk lol",
+		About:     "Idk lol",
 	}
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
@@ -121,4 +121,3 @@ func main() {
 	}
 	app.Start()
 }
-

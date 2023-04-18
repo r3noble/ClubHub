@@ -1,36 +1,32 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileService } from './profile.service';
+import { AuthService } from '../login/auth.service';
 import { User } from '../user.model';
-import { LoginService } from '../login/login.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-
 export class ProfileComponent implements OnInit {
   name: string  = "Please Login";
   email: string  = "";
+  clubs: string = "No clubs joined yet!"
 
-
-  constructor(private route: ActivatedRoute, private loginService: LoginService, public router: Router) {
-    if (!this.loginService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
-
-  }
+  constructor(private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
-    const user = this.loginService.getUser();
-  //  const user = JSON.parse(userString) as User;
-    this.name = user.name;
-    this.email = user.email;
-   // this.name = "not workin";
+    const user = this.authService.getUser();
+    //  const user = JSON.parse(userString) as User;
+      this.name = user.name;
+      this.email = user.email;
+      this.clubs = user.clubs;
+      if ( this.clubs == "" || this.clubs == "No clubs joined!" ) {
+        this.clubs = "No clubs joined!"
+      }
+      //alert(this.clubs);
+
+     // this.name = "not workin";
   }
+
 }
-
-

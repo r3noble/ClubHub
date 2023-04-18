@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
 import { ClubComponent } from './club/club.component';
+import { CprofileComponent } from './cprofile/cprofile.component';
 
 
 const appRoutes: Routes = [
@@ -39,6 +40,14 @@ const appRoutes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'cprofile',
+    component: CprofileComponent
+  },
+  {
+    path: 'cprofile/:name',
+    component: CprofileComponent
   }
 ];
 

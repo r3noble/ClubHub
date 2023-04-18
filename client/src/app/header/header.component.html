@@ -31,8 +31,11 @@
             <a class="navbar-item">
               FAQ
             </a>
-            <a class="navbar-item" [routerLink]="'/profile'">Profile</a>
-            <div *ngIf="!loginService.islog">
+            <a *ngIf="isLoggedIn()"class="navbar-item" [routerLink]="'/profile'">Profile
+            </a>
+            <a *ngIf="!isLoggedIn()"a class="navbar-item" [routerLink]="'/login'">Profile
+            </a>
+            <div *ngIf="!isLoggedIn()">
               <span class="navbar-item" [routerLink]="'/login'">
                 <a class="button is-inverted has-text-dark">
                   <span class="icon">
@@ -42,9 +45,9 @@
                 </a>
               </span>
             </div>
-            <div *ngIf="loginService.islog">
+            <div *ngIf="isLoggedIn()">
               <span class="navbar-item">
-              <button class="button is-link is-inverted has-text-dark"  (click)=loginService.logout()>
+              <button class="button is-link is-inverted has-text-dark"  (click)=logout()>
                Logout
             </button>
           </span>
