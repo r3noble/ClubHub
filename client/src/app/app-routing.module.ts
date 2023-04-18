@@ -9,7 +9,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './register/register.component';
 import { ClubComponent } from './club/club.component';
 import { CprofileComponent } from './cprofile/cprofile.component';
-
+import { CalComponent } from './cal/cal.component';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'calendar',
-    component: CalendarComponent
+    component: CalComponent
   },
   {
     path: 'profile',

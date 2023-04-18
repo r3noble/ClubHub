@@ -1,14 +1,13 @@
 package bapp
 
-import(
+import (
 	"net/http"
 	"sync"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	"gorm.io/gorm"	
+	"gorm.io/gorm"
 )
-
 
 // var userMap map[int]User
 type App struct {
@@ -18,8 +17,8 @@ type App struct {
 	Cdb *gorm.DB
 	//Edb is for event storage
 	Edb *gorm.DB
-	R  *mux.Router
-	mu sync.Mutex
+	R   *mux.Router
+	mu  sync.Mutex
 }
 
 func (a *App) Start() {
