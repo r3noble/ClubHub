@@ -128,12 +128,12 @@ func main() {
 		Name:      "IEEE",
 		President: "Conrad Hellwege",
 		VP:        "Julian Moldonado",
-		Treasurer: "Max Unknown",
+		Treasurer: "Justin Nagovskiy",
 		About:     "The institute of electric and electronics engineers promotes business, internships, and competition",
 	}
 	ufsit := models.Club{
 		Name:      "UFSIT",
-		President: "Idk lol",
+		President: "Gabriella N",
 		VP:        "Idk lol",
 		Treasurer: "Idk lol",
 		About:     "Idk lol",
