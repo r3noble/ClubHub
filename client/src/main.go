@@ -121,15 +121,15 @@ func main() {
 		Name:      "WECE",
 		President: "Jenna Sheldon",
 		VP:        "Sarah Schultz",
-		Treasurer: "Isabella Carmen",
+		Treasurer: "Isabella Cratem",
 		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
 	}
 	ieee := models.Club{
 		Name:      "IEEE",
-		President: "Idk lol",
-		VP:        "Idk lol",
-		Treasurer: "Idk lol",
-		About:     "Idk lol",
+		President: "Conrad Hellwege",
+		VP:        "Julian Moldonado",
+		Treasurer: "Max Unknown",
+		About:     "The institute of electric and electronics engineers promotes business, internships, and competition",
 	}
 	ufsit := models.Club{
 		Name:      "UFSIT",
