@@ -17,8 +17,8 @@
     <div class="tile is-child box">
       <p class="subtitle">Upcoming Events</p>
       <ul>
-        <li *ngFor="let club of club?.events?.split(',')">
-          <a routerLink="/club/{{club.trim()}}">{{club.trim()}}</a>
+        <li *ngFor="let event of club?.events?.split(',')">
+          <a routerLink="/event/{{event.trim()}}">{{event.trim()}}</a>
         </li>
       </ul>
     </div>
