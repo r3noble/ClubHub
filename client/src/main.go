@@ -66,7 +66,7 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating EDB")
 	}
-	
+
 	app := bapp.App{
 		DB:  db,
 		Cdb: cdb,
@@ -103,6 +103,13 @@ func main() {
 		Password: "password123",
 		Clubs:    "WECE",
 	}
+	RNoble := models.User{
+		ID:       "012",
+		Name:     "Robert Noble",
+		Email:    "nobler@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
 	err = app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
@@ -116,6 +123,10 @@ func main() {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
 	err = app.DB.Create(SSchul).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(RNoble).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
