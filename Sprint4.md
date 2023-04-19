@@ -25,7 +25,8 @@
   - added functionality, redirects to user profile
 - fixed calendar to display events with permanence
   -added future ability to integrate events to be handled with our api
-
+- added functionality in user profile page to show clubs that user joined
+  - clicking on the club names takes the user to the club profile page
 
 ## Tests
 
