@@ -44,6 +44,7 @@ func (a *App) Start() {
 	a.R.HandleFunc("/api/addUser", a.AddUserHandler).Methods("POST")
 	a.R.HandleFunc("/api/login", a.LoginHandler).Methods("POST") // handlers login
 	//club CRUD APIs
+	a.R.HandleFunc("api/getRole", a.GetRoleHandler).Methods("POST")
 	a.R.HandleFunc("/api/addClub", a.AddClubHandler).Methods("POST")
 	a.R.HandleFunc("/api/joinClub", a.JoinClubHandler).Methods("POST")
 	//a.r.HandleFunc("/api/getClub", a.GetClubHandler).Methods("GET")

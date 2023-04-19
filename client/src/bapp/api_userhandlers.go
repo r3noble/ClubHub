@@ -11,7 +11,69 @@ import (
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
+func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
+	//get user by json in POST
+	vars := mux.Vars(r)
+	name := vars["id"]
+	clubName := vars["name"]
+	var user models.User
+	err := a.DB.First(&user, models.User{Name: name})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	var club models.Club
+	err := a.Cdb.First(&club, models.Club{Name: clubName})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	//Add user name to the ClubAdder as response
+	var resp models.ClubAdder
+	resp.Name = user.Name
+	var inv string
+	list := user.Clubs
+	if list == "" {
+		inv = "Not a member"
+	}
+	var tmp string
+	for i := 0; i < len(user.Clubs); i++ {
+		if string(user.Clubs[i]) == "," {
+			tmp = ""
+		}
+		tmp += string(user.Clubs[i])
+		//if yes -> send back message to frontend to display error message
+		if tmp == clubName {
+			resp.ID = "Member"
+			jsonResponse, err := json.Marshal(resp)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				fmt.Println("Issue marshaling ClubAdder as Response")
+				return
+			}
 
+			//send back success message to front end
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(jsonResponse)
+			return
+		}
+	}
+
+	resp.ID = inv
+	jsonResponse, err := json.Marshal(resp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Issue marshaling ClubAdder as Response")
+		return
+	}
+
+	//send back success message to front end
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+
+	
+	//list will hold list of User clubs
+}
 func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//get identification of user to be accessed
 	var ident models.ClubAdder
