@@ -1,5 +1,5 @@
 <div class="tile is-ancestor">
-  <div class="tile is 12 is parent">
+  <div class="tile is-parent">
     <div class="tile is-child box">
       <p class="title">{{club?.name}}</p>
     </div>
@@ -15,27 +15,37 @@
     </div>
     <div class="tile is-child box">
       <p>President:</p>
-      <a>{{club?.president}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.president}}">{{club?.president}}</a></p>
+      <!--a>{{club?.president}}</a-->
       <!--- this is an idea im not sure we will have time for-->
       <!---a routerLink="/profile/{{president}}">{{presidentemail}}</a--->
       <p>Vice President:</p>
-      <a >{{club?.VP}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.VP}}">{{club?.VP}}</a></p>
+      <!---a >{{club?.VP}}</a--->
       <p>Treasurer:</p>
-      <a>{{club?.treasurer}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.treasurer}}">{{club?.treasurer}}</a></p>
+      <!---a>{{club?.treasurer}}</a--->
 
     </div>
 
   </div>
   <div class="tile is-6 is-parent">
     <div class="tile is-child box">
-      <p class="subtitle">Upcoming Events:</p>
+      <p class="subtitle">Upcoming Events</p>
 
     </div>
   </div>
-  <div class="tile is-2 is-parent">
+  <div class="tile is-2 is-parent">.
     <div class="tile is-child box">
       <p class="subtitle">Club Role</p>
 
     </div>
   </div>
 </div>
+
+<div class="control">
+      <button class="button is-link is-light" (click)="onCancel()">Explore Other Clubs</button>
+  </div>
+<div class="control">
+      <button class="button is-link" (click)="onJoin()">Join Club!</button>
+  </div>

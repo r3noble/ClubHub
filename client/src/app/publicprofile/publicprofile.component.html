@@ -3,15 +3,15 @@
     <div class="tile">
       <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-warning">
-          <p class="title">Clubs Joined</p>
-          <p class="subtitle"><a routerLink="/cprofile/{{clubs}}">{{clubs}}</a></p>
+          <p class="title">Executive Member of:</p>
+          <p class="subtitle"><a routerLink="/cprofile/{{user?.clubs}}}">{{user?.clubs?? ""}}</a></p>
 
         </article>
       </div>
       <div class="tile is-parent">
         <article class="tile is-child notification is-info">
-          <p class="title">{{ name }}</p>
-          <p class="subtitle">{{email}}</p>
+          <p class="title">{{ user?.name ?? "user not found" }}</p>
+          <p class="subtitle">{{user?.email ?? ""}}</p>
           <!--figure class="image is-4by3"--->
             <!--img src="https://bulma.io/images/placeholders/640x480.png"-->
           <!--/figure--->
@@ -33,7 +33,7 @@
   <div class="tile is-parent is-tall">
     <article class="tile is-child notification is-warning ">
       <div class="content">
-        <p class="title">My Upcoming Events</p>
+        <p class="title">Their Club's Upcoming Events</p>
 <!--- these would become clickable links-->
         <div class="content">
           GBM 2: Female Faculty Panel <br>

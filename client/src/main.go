@@ -80,41 +80,41 @@ func main() {
 }
 
 func hardCodedValues(app *bapp.App) {
-		//hardcodes test user to db
+	//hardcodes test user to db
 	hardCoder := models.User{
 		ID:       "123",
 		Name:     "tester",
 		Email:    "tester@example.com",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	JShel := models.User{
 		ID:       "228",
 		Name:     "Jenna Sheldon",
 		Email:    "jennasheldon@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	ICar := models.User{
 		ID:       "333",
 		Name:     "Isabella Cratem",
 		Email:    "isabellacratem@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	SSchul := models.User{
 		ID:       "111",
 		Name:     "Sarah Schultz",
 		Email:    "sarahschultz@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	RNoble := models.User{
 		ID:       "012",
 		Name:     "Robert Noble",
 		Email:    "nobler@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "UF Information Security Team (UFSIT)",
 	}
 	err := app.DB.Create(hardCoder).Error
 	if err != nil {
@@ -142,7 +142,7 @@ func hardCodedValues(app *bapp.App) {
 		President: "Jenna Sheldon",
 		VP:        "Sarah Schultz",
 		Treasurer: "Isabella Cratem",
-		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
+		About:     "WECE's objective is not only to encourage women to pursue a degree in ECE, but also to be a source of assistance in reaching academic and career goals.",
 	}
 	ieee := models.Club{
 		Name:      "Institute of Electrical and Electronics Engineers (IEEE)",

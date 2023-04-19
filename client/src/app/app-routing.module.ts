@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { ClubComponent } from './club/club.component';
 import { CprofileComponent } from './cprofile/cprofile.component';
 import { CalComponent } from './cal/cal.component';
+import { PublicprofileComponent } from './publicprofile/publicprofile.component';
 
 const appRoutes: Routes = [
   {
@@ -48,6 +49,14 @@ const appRoutes: Routes = [
   {
     path: 'cprofile/:name',
     component: CprofileComponent
+  },
+  {
+    path: 'publicprofile',
+    component: PublicprofileComponent
+  },
+  {
+    path: 'publicprofile/:name',
+    component: PublicprofileComponent
   }
 ];
 

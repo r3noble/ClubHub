@@ -1,11 +1,12 @@
 package bapp
 
-import(
-	"net/http"
+import (
 	"fmt"
-	
+	"net/http"
+
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
+
 func (a *App) CreateUser(user *models.User, w http.ResponseWriter, r *http.Request) error {
 	err := a.DB.Create(user).Error
 	if err != nil {
@@ -60,12 +61,13 @@ func (a *App) ClubExists(name string, w http.ResponseWriter, r *http.Request) bo
 func (a *App) EventExists(name string) bool {
 	event := models.Event{}
 	if err := a.Edb.First(&event, models.Club{Name: name}).Error; err != nil {
-		return false;
+		return false
 	}
-	return true;
+	return true
 }
+
 // searches DB for user, returns nil if none found
-func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User  {
+func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User {
 	//call is based on User Struct not credentials struct
 	user := models.User{}
 	if err := a.DB.First(&user, models.User{ID: id}).Error; err != nil {
@@ -90,6 +92,25 @@ func (a *App) QueryByName(email string, w http.ResponseWriter, r *http.Request) 
 func (a *App) GetUserByName(name string, w http.ResponseWriter, r *http.Request) (*models.User, error) {
 	fmt.Println("Entering GetUserByName")
 	user := a.QueryByName(name, w, r)
+	if user == nil {
+		return nil, fmt.Errorf("user with name %s not found", name)
+	}
+	return user, nil
+}
+
+func (a *App) QueryByNName(name string, w http.ResponseWriter, r *http.Request) *models.User {
+	//call is based on User Strcut not credentials struct
+	user := models.User{}
+	if err := a.DB.First(&user, models.User{Name: name}).Error; err != nil {
+		fmt.Printf("Error: %s", err.Error())
+		return nil
+	}
+	return &user
+}
+
+func (a *App) GetUserByNName(name string, w http.ResponseWriter, r *http.Request) (*models.User, error) {
+	fmt.Println("Entering GetUserByNName")
+	user := a.QueryByNName(name, w, r)
 	if user == nil {
 		return nil, fmt.Errorf("user with name %s not found", name)
 	}

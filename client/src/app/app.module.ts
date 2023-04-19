@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms' ;
@@ -18,6 +18,7 @@ import { StepperComponent } from './stepper/stepper.component';
 import { ClubComponent } from './club/club.component';
 import { CprofileComponent } from './cprofile/cprofile.component';
 import { CalComponent } from './cal/cal.component';
+import { PublicprofileComponent } from './publicprofile/publicprofile.component';
 
 
 
@@ -34,7 +35,8 @@ import { CalComponent } from './cal/cal.component';
     StepperComponent,
     ClubComponent,
     CprofileComponent,
-    CalComponent
+    CalComponent,
+    PublicprofileComponent
   ],
 
 
@@ -51,6 +53,9 @@ import { CalComponent } from './cal/cal.component';
     HeaderComponent,
     FooterComponent
   ],
+    schemas: [
+      NO_ERRORS_SCHEMA
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
