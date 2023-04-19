@@ -1,5 +1,5 @@
 <div class="tile is-ancestor">
-  <div class="tile is 12 is parent">
+  <div class="tile is-parent">
     <div class="tile is-child box">
       <p class="title">{{club?.name}}</p>
     </div>
@@ -31,14 +31,21 @@
   </div>
   <div class="tile is-6 is-parent">
     <div class="tile is-child box">
-      <p class="subtitle">Upcoming Events:</p>
+      <p class="subtitle">Upcoming Events</p>
 
     </div>
   </div>
-  <div class="tile is-2 is-parent">
+  <div class="tile is-2 is-parent">.
     <div class="tile is-child box">
       <p class="subtitle">Club Role</p>
 
     </div>
   </div>
 </div>
+
+<div class="control">
+      <button class="button is-link is-light" (click)="onCancel()">Explore Other Clubs</button>
+  </div>
+<div class="control">
+      <button class="button is-link" (click)="onJoin()">Join Club!</button>
+  </div>
