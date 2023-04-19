@@ -74,7 +74,13 @@ func main() {
 		Edb: edb,
 	}
 
-	//hardcodes test user to db
+	hardCodedValues(&app)
+
+	app.Start()
+}
+
+func hardCodedValues(app *bapp.App) {
+		//hardcodes test user to db
 	hardCoder := models.User{
 		ID:       "123",
 		Name:     "tester",
@@ -110,7 +116,7 @@ func main() {
 		Password: "password123",
 		Clubs:    "WECE",
 	}
-	err = app.DB.Create(hardCoder).Error
+	err := app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
@@ -220,5 +226,4 @@ func main() {
 	if err != nil {
 		fmt.Println("dreamteam not added!")
 	}
-	app.Start()
 }
