@@ -30,11 +30,6 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	//Add user name to the ClubAdder as response
 	var resp models.ClubAdder
 	resp.Name = user.Name
-	var inv string
-	list := user.Clubs
-	if list == "" {
-		inv = "Not a member"
-	}
 	var tmp string
 	for i := 0; i < len(user.Clubs); i++ {
 		if string(user.Clubs[i]) == "," {
