@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CprofileService } from './cprofile.service';
+import { User } from '../user.model';
 import { Club } from '../club.model';
 import { AuthService } from '../login/auth.service';
 

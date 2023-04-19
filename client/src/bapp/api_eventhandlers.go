@@ -9,6 +9,7 @@ import (
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
+//tested
 func (a *App) AddEventHandler(w http.ResponseWriter, r *http.Request) {
 	var newEvent models.Event
 	err := json.NewDecoder(r.Body).Decode(&newEvent)
@@ -35,6 +36,4 @@ func (a *App) AddEventHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newEvent)
 	return
 }
-func (a *App) GetEventHandlerA(w http.ResponseWriter, r *http.Request) {
 
-}
