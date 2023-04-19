@@ -139,15 +139,44 @@ func main() {
 		President: "Gabriella N",
 		VP:        "Jon P",
 		Treasurer: "Rachel O",
-		About:     "Idk lol",
+		About:     "UFSIT works to provide a welcoming environment for students to learn more about all areas of information security, including topics such as penetration testing, reverse engineering, vulnerability research, digital forensics, and more.",
 	}
 	wicse := models.Club{
 		Name:      "WICSE",
 		President: "Robin Fintz",
 		VP:        "Minuet Greenberg",
 		Treasurer: "Katja Karoleski",
-		About:     "Idk lol",
+		About:     "WiCSE is the official student ACM-W chapter at the University of Florida. They are dedicated to increasing the representation of women in Computer Science.",
 	}
+	sae := models.Club{
+		Name:      "SAE",
+		President: "Mitchell Thoeni",
+		VP:        "Cam Lott",
+		Treasurer: "Kyle Myott",
+		About:     "Also known as Gator Motorsports, SAE offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
+	}
+	aiaa := models.Club{
+		Name:      "AIAA",
+		President: "Jose Aguilar",
+		VP:        "Esha Shah",
+		Treasurer: "Max Chern",
+		About:     "AIAA promotes professional development for AE majors as well as ME majors with an interest in space and aeronautics through information sessions, tours, guest speakers, community outreach events, professional workshops, industry technical talks and other programming.",
+	}
+	acm := models.Club{
+		Name:      "ACM",
+		President: "Jennifer Lopez",
+		VP:        "Matthew Hanson",
+		Treasurer: "Joonho Jun",
+		About:     "The University of Florida's Association for Computing Machinery works to promote computer science education through professional events, social events, and Special Interest Groups.",
+	}
+	dreamteam := models.Club{
+		Name:      "dreamteam",
+		President: "Emily Jones",
+		VP:        "Neeva Sethi",
+		Treasurer: "Vijayasai Somasundaram",
+		About:     "Dream Team Engineering is a group of engineering and non-engineering students alike that are dedicated to making novel technologies to enhance the lives of the patients at UF Health Shands, the surrounding Gainesville community, and beyond.",
+	}
+
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
 		fmt.Println("wece not added!")
@@ -163,6 +192,22 @@ func main() {
 	err = app.Cdb.Create(wicse).Error
 	if err != nil {
 		fmt.Println("wicse not added!")
+	}
+	err = app.Cdb.Create(sae).Error
+	if err != nil {
+		fmt.Println("sae not added!")
+	}
+	err = app.Cdb.Create(aiaa).Error
+	if err != nil {
+		fmt.Println("dreamteam not added!")
+	}
+	err = app.Cdb.Create(acm).Error
+	if err != nil {
+		fmt.Println("acm not added!")
+	}
+	err = app.Cdb.Create(dreamteam).Error
+	if err != nil {
+		fmt.Println("dreamteam not added!")
 	}
 	app.Start()
 }
