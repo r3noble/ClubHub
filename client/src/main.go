@@ -146,7 +146,7 @@ func main() {
 		About:     "The Institute of Electric and Electronics Engineers is the leading professional association for the advancement of technology. It is the world's largest technical society, bringing members access to the industry's most essential technical information, networking opportunities, career development tools, and many other exclusive benefits.",
 	}
 	ufsit := models.Club{
-		Name:      "UF Information and Security Team (UFSIT)",
+		Name:      "UF Information Security Team (UFSIT)",
 		President: "Gabriella N",
 		VP:        "Jon P",
 		Treasurer: "Rachel O",
