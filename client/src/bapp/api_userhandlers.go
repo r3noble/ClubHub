@@ -31,18 +31,18 @@ func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//create new string of clubs to be added
 	if user.Clubs == "" {
 		clubList = ident.Name
-	}else {
+	} else {
 		clubList = user.Clubs + "," + ident.Name
 	}
 	//determine if they are in the club already
 	var clubName string
 	for i := 0; i < len(user.Clubs); i++ {
-		if string(user.Clubs[i]) == ","{
+		if string(user.Clubs[i]) == "," {
 			clubName = ""
 		}
 		clubName += string(user.Clubs[i])
 		//if yes -> send back message to frontend to display error message
-		if clubName == ident.Name{
+		if clubName == ident.Name {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			fmt.Println("User already a part of that club")
 			return
@@ -51,13 +51,13 @@ func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//otherwise-> edit the club column for their userDB slot
 	user.Clubs = clubList
 	a.DB.Model(&models.User{}).Where("ID=?", user.ID).Update("Clubs", clubList)
-	
+
 	jsonResponse, err := json.Marshal(user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	
+
 	//send back success message to front end
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -177,14 +177,15 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newUser)
 }
 
-//NOT CURRENTLY USED
+// NOT CURRENTLY USED jenna is trying to adapt this
 func (a *App) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	// Get the username parameter from the URL path
-	username := r.URL.Query().Get("username")
+	vars := mux.Vars(r)
+	name := vars["id"]
 
 	// Retrieve the profile data from the map
 	//TREY: QUERY DB for username
-	profile, _ := a.GetUserByName(username, w, r)
+	profile, _ := a.GetUserByNName(name, w, r)
 	if profile == nil {
 		w.WriteHeader(http.StatusNotFound)
 		return

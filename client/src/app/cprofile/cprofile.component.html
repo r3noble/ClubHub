@@ -15,13 +15,16 @@
     </div>
     <div class="tile is-child box">
       <p>President:</p>
-      <a>{{club?.president}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.president}}">{{club?.president}}</a></p>
+      <!--a>{{club?.president}}</a-->
       <!--- this is an idea im not sure we will have time for-->
       <!---a routerLink="/profile/{{president}}">{{presidentemail}}</a--->
       <p>Vice President:</p>
-      <a >{{club?.VP}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.VP}}">{{club?.VP}}</a></p>
+      <!---a >{{club?.VP}}</a--->
       <p>Treasurer:</p>
-      <a>{{club?.treasurer}}</a>
+      <p class="subtitle"><a routerLink="/publicprofile/{{club?.treasurer}}">{{club?.treasurer}}</a></p>
+      <!---a>{{club?.treasurer}}</a--->
 
     </div>
 

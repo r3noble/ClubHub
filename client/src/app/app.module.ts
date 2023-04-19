@@ -18,6 +18,7 @@ import { StepperComponent } from './stepper/stepper.component';
 import { ClubComponent } from './club/club.component';
 import { CprofileComponent } from './cprofile/cprofile.component';
 import { CalComponent } from './cal/cal.component';
+import { PublicprofileComponent } from './publicprofile/publicprofile.component';
 
 
 
@@ -34,7 +35,8 @@ import { CalComponent } from './cal/cal.component';
     StepperComponent,
     ClubComponent,
     CprofileComponent,
-    CalComponent
+    CalComponent,
+    PublicprofileComponent
   ],
 
 
