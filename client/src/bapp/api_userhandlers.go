@@ -11,6 +11,7 @@ import (
 
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
+
 func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	//get user by json in POST
 	vars := mux.Vars(r)
