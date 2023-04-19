@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CprofileService } from './cprofile.service';
 import { Club } from '../club.model';
 
@@ -12,7 +12,15 @@ export class CprofileComponent implements OnInit {
   name: string ="";
   club: Club | null = null;
 
-  constructor(private route: ActivatedRoute, private cprofileService: CprofileService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private cprofileService: CprofileService) { }
+
+  onJoin(){
+    
+  }
+
+  onCancel() {
+    this.router.navigate(['/club']);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
