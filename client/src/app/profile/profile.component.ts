@@ -18,9 +18,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     const user = this.authService.getUser();
     //  const user = JSON.parse(userString) as User;
-      this.name = user.name;
-      this.email = user.email;
-      this.clubs = user.clubs;
+      this.name = user?.name ?? "No user found";
+      this.email = user?.email;
+      this.clubs = user?.clubs;
       if ( this.clubs == "" || this.clubs == "No clubs joined!" ) {
         this.clubs = "No clubs joined!"
       }

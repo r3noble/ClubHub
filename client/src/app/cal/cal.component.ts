@@ -12,11 +12,11 @@ export class CalComponent {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    this.http.get<Event[]>('/api/getEvents').subscribe((events) => {
-      this.events = events;
-    });
-  }
+  //ngOnInit() {
+  //  this.http.get<Event[]>('/api/getEvents').subscribe((events) => {
+  //    this.events = events;
+  //  });
+ // }
 
 
 }
