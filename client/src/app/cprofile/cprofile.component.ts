@@ -22,9 +22,16 @@ export class CprofileComponent implements OnInit {
   }
 
   onJoin(){
-    if(!this.isLoggedIn){
-      alert("Please login to join a club.")
-    }
+    this.cprofileService.joinClub(this.authService.getUser().id, this.name)
+    .subscribe(
+      (user: User) => {
+        this.router.navigate(['/profile', {User: user}]);
+      },
+      (error) => {
+        alert('You are already in this club!');
+        console.log(error);
+      }
+    );
 
   }
 
