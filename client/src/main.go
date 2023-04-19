@@ -157,7 +157,14 @@ func main() {
 		President: "Jennifer Lopez",
 		VP:        "Matthew Hanson",
 		Treasurer: "Joonho Jun",
-		About:     "The University of Florida's Association for Computing Machinery works to promote computer science education through professional events, social events, and Special Interest Groups ",
+		About:     "The University of Florida's Association for Computing Machinery works to promote computer science education through professional events, social events, and Special Interest Groups.",
+	}
+	dreamteam := models.Club{
+		Name:      "dreamteam",
+		President: "Emily Jones",
+		VP:        "Neeva Sethi",
+		Treasurer: "Vijayasai Somasundaram",
+		About:     "Dream Team Engineering is a group of engineering and non-engineering students alike that are dedicated to making novel technologies to enhance the lives of the patients at UF Health Shands, the surrounding Gainesville community, and beyond.",
 	}
 
 	err = app.Cdb.Create(wece).Error
@@ -183,6 +190,10 @@ func main() {
 	err = app.Cdb.Create(acm).Error
 	if err != nil {
 		fmt.Println("acm not added!")
+	}
+	err = app.Cdb.Create(dreamteam).Error
+	if err != nil {
+		fmt.Println("dreamteam not added!")
 	}
 	app.Start()
 }
