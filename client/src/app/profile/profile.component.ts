@@ -11,6 +11,7 @@ import { User } from '../user.model';
 export class ProfileComponent implements OnInit {
   name: string  = "Please Login";
   email: string  = "";
+  clubstring : string = ""
   clubs: string = "No clubs joined yet!"
 
   constructor(private route: ActivatedRoute, private authService: AuthService) {}

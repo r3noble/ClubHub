@@ -4,7 +4,12 @@
       <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-warning">
           <p class="title">Clubs Joined</p>
-          <p class="subtitle"><a routerLink="/cprofile/{{clubs}}">{{clubs}}</a></p>
+          <p class="subtitle">
+            <li *ngFor="let club of clubs?.split(',')">
+              <a routerLink="/club/{{club.trim()}}">{{club.trim()}}</a>
+            </li>
+            <!--<a routerLink="/cprofile/{{clubs}}">{{clubs}}</a>-->
+          </p>
 
         </article>
       </div>
