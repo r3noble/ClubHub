@@ -150,7 +150,7 @@ func main() {
 		President: "Mitchell Thoeni",
 		VP:        "Cam Lott",
 		Treasurer: "Kyle Myott",
-		About:     "Offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
+		About:     "Also known as Gator Motorsports, SAE offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
 	}
 	acm := models.Club{
 		Name:      "ACM",
