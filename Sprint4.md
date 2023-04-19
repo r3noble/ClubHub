@@ -5,17 +5,23 @@
 ### Back End
 - added club database
 - added functions to
+  -  get user by name and email functional
   -  add clubs
-  -  view clubs/ create club profiles
+  -  view clubs
+  -  get club profiles
   -  add club to user 
 
+
 ### Front End
-- created club search page with redirects to club profiles
+- created club search page
+  - with redirects to club profiles
 - created club profiles 
-- added functionality, redirects, permanence to login
+  - with redirects to club executive member pages
+- added functionality, redirects, permanence to login/logout
 - integrated user profile with backend
-- added functionality, redirects to user profile
+  - added functionality, redirects to user profile
 - fixed calendar to display events with permanence
+  -added future ability to integrate events to be handled with our api
 
 
 ## Tests
