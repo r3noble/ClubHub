@@ -35,11 +35,11 @@ export class CprofileService {
   }
   ismember(id:string, name:string):Observable<member>{
     const url = `http://localhost:8080/api/getRole`;
-    const body = { id, name };
-    return this.http.post<Club>(url,body).pipe(
+    const body = { id:id, name:name };
+    return this.http.post<member>(url,body).pipe(
       map((response: any) => {
         const member: member = {
-          id: response.string,
+          id: response.id,
           name: response.name,
         };
         return member;

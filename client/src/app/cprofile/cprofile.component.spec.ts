@@ -40,7 +40,7 @@ describe('CprofileComponent', () => {
   });
 
   it('should set the club stuff when getClubInfo works', () => {
-    const club = { name: 'WECE', VP: 'Sarah Schultz', president:"",treasurer:"",about:"" };
+    const club = { name: 'WECE', VP: 'Sarah Schultz', president:"",treasurer:"",about:"" ,events:""};
     cprofileServiceSpy.getClubInfo.and.returnValue(of(club));
     component.ngOnInit();
     expect(component.club).toEqual(club);
