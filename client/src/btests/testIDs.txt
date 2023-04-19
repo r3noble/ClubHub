@@ -6,3 +6,4 @@ USED TEST IDs:
     loginHandler: 010
     user_exists: 100
     getByID: 101
+    roleHandler: 111
