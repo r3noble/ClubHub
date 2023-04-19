@@ -21,7 +21,19 @@
 ## Tests
 
 ### Back End
+
 ### Front End
 
-
 ## Updated Back End Documentation
+- ## GET
+ #### able to search and find existing users
+func (a *App) GetUserByID(id string)
+func (a *App) IdHandler
+#### able to return detailed issues within searching
+- ## POST
+#### adding user to DB
+ func (a *App) AddUserHandler <- gets passed JSON information
+#### login credentials posting
+func (a *App) loginHandler <- passed username and password creds with JSON
+- ## TESTING
+#### func HealthCheck returns plain text if API is running.
