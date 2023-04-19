@@ -22,8 +22,8 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	var club models.Club
-	err := a.Cdb.First(&club, models.Club{Name: clubName})
-	if err != nil {
+	err = a.Cdb.First(&club, models.Club{Name: clubName})
+	if err := nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	//Add user name to the ClubAdder as response
@@ -43,9 +43,9 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 		//if yes -> send back message to frontend to display error message
 		if tmp == clubName {
 			resp.ID = "Member"
-			jsonResponse, err := json.Marshal(resp)
+			jsonResponse, founderr := json.Marshal(resp)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
+				http.Error(w, founderr.Error(), http.StatusInternalServerError)
 				fmt.Println("Issue marshaling ClubAdder as Response")
 				return
 			}
@@ -59,9 +59,9 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	}
 
 	resp.ID = inv
-	jsonResponse, err := json.Marshal(resp)
+	jsonResponse, finerr := json.Marshal(resp)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, finerr.Error(), http.StatusInternalServerError)
 		fmt.Println("Issue marshaling ClubAdder as Response")
 		return
 	}
