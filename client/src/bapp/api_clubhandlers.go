@@ -8,6 +8,7 @@ import (
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
+//tested
 //should have identical functionality to AddUserHandler, minus generation of a random ID
 func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new Club data

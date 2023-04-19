@@ -37,6 +37,7 @@ func (a *App) CreateEvent(event *models.Event, w http.ResponseWriter, r *http.Re
 	return nil
 }
 
+//tested
 // called to search for user when adding user, returns FALSE if no user found and TRUE if found
 func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bool {
 	//call is based on User Strcut not credentials struct, may need to change
@@ -60,7 +61,7 @@ func (a *App) ClubExists(name string, w http.ResponseWriter, r *http.Request) bo
 }
 func (a *App) EventExists(name string) bool {
 	event := models.Event{}
-	if err := a.Edb.First(&event, models.Club{Name: name}).Error; err != nil {
+	if err := a.Edb.First(&event, models.Event{Event: name}).Error; err != nil {
 		return false
 	}
 	return true
@@ -117,6 +118,7 @@ func (a *App) GetUserByNName(name string, w http.ResponseWriter, r *http.Request
 	return user, nil
 }
 
+//tested
 func (a *App) GetUserByID(id string, w http.ResponseWriter, r *http.Request) (*models.User, error) {
 	fmt.Println("Entering GetUserByID")
 	//TREY: QUERY DB HERE FOR USER ID (Call QueryDbByID)
