@@ -1,16 +1,16 @@
 Front End
     Goals:
         - club tab for displaying clubs, no search bar COMPLETED
-        - club profile page IN PROGRESS
-            - rerouting
+        - club profile page COMPLETED (needs events)
+            - rerouting CHECK
         - update calendar to work with backend (yeah...)
         - login needs to have getuser functionality COMPLETED
-        - update profile page (get rid of picture section) IN PROGRESS
+        - update profile page (get rid of picture section)COMPLETED
             - need to get more info from back end about user
         - jenna talking to herself
             - calendar
             - if calendar works, we can put events in the club profiles
-            - move auth service to seperate file, cant all be in login service
+            - move auth service to seperate file, cant all be in login service CHECK
             - :japenese_ogre:
 
 
@@ -20,12 +20,13 @@ Back End
         - Adding clubs to user, displaying those clubs when that user logs in
             Do this by hard coding in clubs, then adding clubs to user class with 0 and 1 to indicate whether the user is in said club
         - clubs (struct made)
-            name, 1-3 admins, about
+            name, 1-3 admins, about CHECK
         - calendar (event struct made)
             club events stored in separate database
 
 Both Temas
     Goals:
+        - sprint 4 md with all testing n things
         - WEBSITE PITCH VIDEO **MUST COMPLETE**
         - Create/finish README's for running program on any computer
         - OPTIONAL: Create video for downloading all required packages to run program on any computer

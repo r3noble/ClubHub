@@ -8,10 +8,9 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/bapp"
+	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
-
 
 func WriteOnceMiddleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +48,7 @@ func main() {
 	if err != nil {
 		panic("Error in migrating db")
 	}
-	cdb,cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	cdb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
 	}
@@ -57,7 +56,7 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating CDB")
 	}
-	edb,eerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
+	edb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
 	}
@@ -66,10 +65,10 @@ func main() {
 		panic("Error in migrating EDB")
 	}
 	app := bapp.App{
-		DB: db,
+		DB:  db,
 		Cdb: cdb,
+		R:   mux.NewRouter(),
 		Edb: edb,
-		R: mux.NewRouter(),
 	}
 
 	//hardcodes test user to db
@@ -78,39 +77,73 @@ func main() {
 		Name:     "tester",
 		Email:    "tester@example.com",
 		Password: "password123",
+		Clubs:    "WECE",
+	}
+	JShel := models.User{
+		ID:       "228",
+		Name:     "Jenna Sheldon",
+		Email:    "jennasheldon@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
+	ICar := models.User{
+		ID:       "333",
+		Name:     "Isabella Cratem",
+		Email:    "isabellacratem@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
+	}
+	SSchul := models.User{
+		ID:       "111",
+		Name:     "Sarah Schultz",
+		Email:    "sarahschultz@ufl.edu",
+		Password: "password123",
+		Clubs:    "WECE",
 	}
 	err = app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
+	err = app.DB.Create(JShel).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(ICar).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
+	err = app.DB.Create(SSchul).Error
+	if err != nil {
+		fmt.Println("Tester unsuccessfully hard-coded to db")
+	}
 	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 	wece := models.Club{
-		Name: "WECE",
+		Name:      "WECE",
 		President: "Jenna Sheldon",
-		VP: "idk change this data later",
-		Treasurer:"idk change this data later",
-		About: "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering", 
+		VP:        "Sarah Schultz",
+		Treasurer: "Isabella Cratem",
+		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
 	}
 	ieee := models.Club{
-		Name: "IEEE",
-		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		Name:      "IEEE",
+		President: "Conrad Hellwege",
+		VP:        "Julian Moldonado",
+		Treasurer: "Justin Nagovskiy",
+		About:     "The Institute of Electric and Electronics Engineers is the leading professional association for the advancement of technology. It is the world's largest technical society, bringing members access to the industry's most essential technical information, networking opportunities, career development tools, and many other exclusive benefits.",
 	}
 	ufsit := models.Club{
-		Name: "UFSIT",
-		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		Name:      "UFSIT",
+		President: "Gabriella N",
+		VP:        "Jon P",
+		Treasurer: "Rachel O",
+		About:     "Idk lol",
 	}
 	wicse := models.Club{
-		Name: "WICSE",
-		President: "Idk lol",
-		VP: "Idk lol",
-		Treasurer:"Idk lol",
-		About:"Idk lol",
+		Name:      "WICSE",
+		President: "Robin Fintz",
+		VP:        "Minuet Greenberg",
+		Treasurer: "Katja Karoleski",
+		About:     "Idk lol",
 	}
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
@@ -130,4 +163,3 @@ func main() {
 	}
 	app.Start()
 }
-
