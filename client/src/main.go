@@ -145,6 +145,14 @@ func main() {
 		Treasurer: "Katja Karoleski",
 		About:     "WiCSE is the official student ACM-W chapter at the University of Florida. They are dedicated to increasing the representation of women in Computer Science.",
 	}
+	sae := models.Club{
+		Name:      "SAE",
+		President: "Mitchell Thoeni",
+		VP:        "Cam Lott",
+		Treasurer: "Kyle Myott",
+		About:     "Offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
+	}
+
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
 		fmt.Println("wece not added!")
@@ -160,6 +168,10 @@ func main() {
 	err = app.Cdb.Create(wicse).Error
 	if err != nil {
 		fmt.Println("wicse not added!")
+	}
+	err = app.Cdb.Create(sae).Error
+	if err != nil {
+		fmt.Println("sae not added!")
 	}
 	app.Start()
 }
