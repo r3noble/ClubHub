@@ -18,12 +18,12 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	name := vars["id"]
 	clubName := vars["name"]
 	var user models.User
-	uerr := a.DB.First(&user, models.User{Name: name})
+	uerr := a.DB.First(&user, models.User{Name: name}).Error
 	if uerr != nil {
 		http.Error(w, "User DNE", http.StatusBadRequest)
 	}
 	var club models.Club
-	cerr := a.Cdb.First(&club, models.Club{Name: clubName})
+	cerr := a.Cdb.First(&club, models.Club{Name: clubName}).Error
 	if cerr != nil {
 		http.Error(w, "Club DNE", http.StatusBadRequest)
 	}
@@ -59,7 +59,7 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 		}
 	}
 
-	resp.ID = inv
+	resp.ID = "Not a Member"
 	jsonResponse, finerr := json.Marshal(resp)
 	if finerr != nil {
 		http.Error(w, finerr.Error(), http.StatusInternalServerError)
