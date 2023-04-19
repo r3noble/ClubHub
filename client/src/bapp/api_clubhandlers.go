@@ -33,7 +33,7 @@ func (a *App) AddClubHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("Club Unsuccessfully added to DB")
 	}
-	fmt.Printf("Club successfully created with name %s", newClub.Name)
+	fmt.Printf("Club successfully created with name %s\n", newClub.Name)
 
 	// Return the new Club data as JSON
 	w.Header().Set("Content-Type", "application/json")

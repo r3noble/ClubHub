@@ -48,6 +48,7 @@ func main() {
 	if err != nil {
 		panic("Error in migrating db")
 	}
+
 	cdb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
@@ -56,6 +57,7 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating CDB")
 	}
+
 	edb, cerr := gorm.Open(sqlite.Open("clubs.db"), &gorm.Config{})
 	if cerr != nil {
 		panic("Error in opening CDB")
@@ -64,6 +66,7 @@ func main() {
 	if cerr != nil {
 		panic("Error in migrating EDB")
 	}
+	
 	app := bapp.App{
 		DB:  db,
 		Cdb: cdb,

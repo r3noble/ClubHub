@@ -170,7 +170,7 @@ func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("User Unsuccessfully added to DB")
 	}
-	fmt.Printf("User successfully created with name %s and ID %\n", newUser.Name, newUser.ID)
+	fmt.Printf("User successfully created with name %s and ID %s\n", newUser.Name, newUser.ID)
 
 	// Return the new user data as JSON
 	w.Header().Set("Content-Type", "application/json")

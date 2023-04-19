@@ -5,7 +5,7 @@ import (
     "bytes"
     "net/http"
     "net/http/httptest"
-    
+    "fmt"
     "github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -16,50 +16,47 @@ import (
 )
 
 func TestAddClubHandler(t *testing.T) {
-    testDB, err := gorm.Open(sqlite.Open("testClub.db"), &gorm.Config{})
+    testCdb, err := gorm.Open(sqlite.Open("testClub.db"), &gorm.Config{})
     if err != nil {
         t.Fatal(err)
     }
 
     //migrate db schema
-    err = testDB.AutoMigrate(&models.Club{})
+    err = testCdb.AutoMigrate(&models.Club{})
     if err != nil {
         t.Fatal(err)
     }
 
     // Create a new App instance with the mock database
     a := &bapp.App{
-        Cdb: testDB,
+        Cdb: testCdb,
         R:  mux.NewRouter(),
     }
-
      //create a mock user to use for authentication
     club := models.Club{
-    	Name: "testClub",
+    	Name: "testclub",
         President: "T1",
         VP: "T2",
 		Treasurer: "T3",
         About: "hey",
     }
-    
     body, _ := json.Marshal(club)
     req, err := http.NewRequest("POST", "/api/addClub", bytes.NewBuffer(body))
     if err != nil {
         t.Fatal(err)
     }
-
     //mock request recorder
     mockRec := httptest.NewRecorder()
 
     //make request with mockRec and response
-    a.R.HandleFunc("/api/addClub", a.AddUserHandler)
+    a.R.HandleFunc("/api/addClub", a.AddClubHandler)
     a.R.ServeHTTP(mockRec, req)
 
     //check status code
     if status := mockRec.Code; status != http.StatusOK {
         t.Errorf("Wrong status returned, got %v want %v", status, http.StatusOK)
     }
-
+    fmt.Println("API Request made")
     //check response body
     var responseClub models.Club
     err = json.NewDecoder(mockRec.Body).Decode(&responseClub)
