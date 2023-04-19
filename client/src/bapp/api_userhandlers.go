@@ -59,7 +59,7 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 		}
 	}
 
-	resp.ID = inv
+	resp.ID = "Not a Member"
 	jsonResponse, finerr := json.Marshal(resp)
 	if finerr != nil {
 		http.Error(w, finerr.Error(), http.StatusInternalServerError)
