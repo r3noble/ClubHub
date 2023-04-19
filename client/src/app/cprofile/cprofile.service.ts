@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Club } from '../club.model';
 import { map } from 'rxjs/operators';
+import { User } from '../user.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -28,7 +29,7 @@ export class CprofileService {
     );
   }
 
-  joinClub(id: string, name: string)
+  joinClub(id: string, name: string): Observable<User>
   {
     const url = `http://localhost:8080/api/joinClub/${name}`;
     const body = {
@@ -36,6 +37,19 @@ export class CprofileService {
       name: name,
     };
 
-    return this.http.post(url, body);
+    return this.http.post(url, body).pipe(
+      map((response: any) => {
+        const user: User = {
+          id: response.id,
+          name: response.name,
+          email: response.email,
+          password: response.password,
+          clubs: response.clubs
+        };
+    
+        return user;
+      })
+    );
   }
+  
 }

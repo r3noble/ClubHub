@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CprofileService } from './cprofile.service';
+import { User } from '../user.model';
 import { Club } from '../club.model';
 import { AuthService } from '../login/auth.service';
 
@@ -20,10 +21,16 @@ export class CprofileComponent implements OnInit {
   }
 
   onJoin(){
-    if(!this.isLoggedIn){
-      alert("Please login to join a club.")
-    }
-    
+    this.cprofileService.joinClub(this.authService.getUser().id, this.name)
+    .subscribe(
+      (user: User) => {
+        this.router.navigate(['/profile', {User: user}]);
+      },
+      (error) => {
+        alert('You are already in this club!');
+        console.log(error);
+      }
+    );
   }
 
   onCancel() {
