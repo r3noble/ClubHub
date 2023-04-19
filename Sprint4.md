@@ -103,12 +103,19 @@
 ## Updated Back End Documentation
 - ## GET
  #### able to search and find existing users
-func (a *App) GetUserByID(id string)
-func (a *App) IdHandler
+- func (a *App) GetUserByID(id string): able to grab user profile by both id, name, and email
+- func (a *App) IdHandler: Help function to the previous function
+- getClubHandler: Grab club information and pass back based on club name
+- profileHandler: handles user list within clubs and lists 
+
 #### able to return detailed issues within searching
 - ## POST
 #### adding user to DB
  func (a *App) AddUserHandler <- gets passed JSON information
+#### allow to add users to clubs
+- joinClubHandler: checks clubs csv within user struct and adds clubs if possible
+- getRoleHandler: checks an existing users membership within a club and returns their membership
+- 
 #### login credentials posting
 func (a *App) loginHandler <- passed username and password creds with JSON
 - ## TESTING

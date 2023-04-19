@@ -37,6 +37,7 @@ func TestCreateUser(t *testing.T){
 		Name: "testCreate",
 		Email: "testlogin@test.com",
 		Password: "tlpword",
+		Clubs: "Test Club",
 	}
 
 	mockW := httptest.NewRecorder()
