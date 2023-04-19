@@ -74,43 +74,49 @@ func main() {
 		Edb: edb,
 	}
 
+	hardCodedValues(&app)
+
+	app.Start()
+}
+
+func hardCodedValues(app *bapp.App) {
 	//hardcodes test user to db
 	hardCoder := models.User{
 		ID:       "123",
 		Name:     "tester",
 		Email:    "tester@example.com",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	JShel := models.User{
 		ID:       "228",
 		Name:     "Jenna Sheldon",
 		Email:    "jennasheldon@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	ICar := models.User{
 		ID:       "333",
 		Name:     "Isabella Cratem",
 		Email:    "isabellacratem@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	SSchul := models.User{
 		ID:       "111",
 		Name:     "Sarah Schultz",
 		Email:    "sarahschultz@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "Women in Electrical and Computer Engineering (WECE)",
 	}
 	RNoble := models.User{
 		ID:       "012",
 		Name:     "Robert Noble",
 		Email:    "nobler@ufl.edu",
 		Password: "password123",
-		Clubs:    "WECE",
+		Clubs:    "UF Information Security Team (UFSIT)",
 	}
-	err = app.DB.Create(hardCoder).Error
+	err := app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
@@ -220,5 +226,4 @@ func main() {
 	if err != nil {
 		fmt.Println("dreamteam not added!")
 	}
-	app.Start()
 }

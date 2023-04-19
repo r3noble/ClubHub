@@ -25,6 +25,7 @@ func (a *App) CreateClub(club *models.Club, w http.ResponseWriter, r *http.Reque
 	}
 	return nil
 }
+
 func (a *App) CreateEvent(event *models.Event, w http.ResponseWriter, r *http.Request) error {
 	err := a.Edb.Create(event).Error
 	if err != nil {
@@ -34,6 +35,7 @@ func (a *App) CreateEvent(event *models.Event, w http.ResponseWriter, r *http.Re
 	}
 	return nil
 }
+
 // called to search for user when adding user, returns FALSE if no user found and TRUE if found
 func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bool {
 	//call is based on User Strcut not credentials struct, may need to change
@@ -47,7 +49,7 @@ func (a *App) UserExists(name string, w http.ResponseWriter, r *http.Request) bo
 
 // called to search for user when adding user, returns FALSE if no user found and TRUE if found
 func (a *App) ClubExists(name string, w http.ResponseWriter, r *http.Request) bool {
-	//call is based on User Strcut not credentials struct, may need to change
+	//call is based on User Strcut not credentials struct
 	club := models.Club{}
 	if err := a.Cdb.First(&club, models.Club{Name: name}).Error; err != nil {
 		fmt.Println("Club not located, adding to database...")
@@ -64,7 +66,7 @@ func (a *App) EventExists(name string) bool {
 }
 // searches DB for user, returns nil if none found
 func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *models.User  {
-	//call is based on User Struct not credentials struct, may need to change
+	//call is based on User Struct not credentials struct
 	user := models.User{}
 	if err := a.DB.First(&user, models.User{ID: id}).Error; err != nil {
 		//respondError(w, http.StatusNotFound, err.Error())
@@ -76,12 +78,10 @@ func (a *App) QueryDbByID(id string, w http.ResponseWriter, r *http.Request) *mo
 
 // searches DB fpr user, returns nil if none found
 func (a *App) QueryByName(email string, w http.ResponseWriter, r *http.Request) *models.User {
-	//call is based on User Strcut not credentials struct, may need to change
+	//call is based on User Strcut not credentials struct
 	user := models.User{}
 	if err := a.DB.First(&user, models.User{Email: email}).Error; err != nil {
-		//respondError(w, http.StatusNotFound, err.Error())
 		fmt.Printf("Error: %s", err.Error())
-		//http.Error(w, "User not located", http.StatusNotFound)
 		return nil
 	}
 	return &user

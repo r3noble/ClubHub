@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms' ;
@@ -51,6 +51,9 @@ import { CalComponent } from './cal/cal.component';
     HeaderComponent,
     FooterComponent
   ],
+    schemas: [
+      NO_ERRORS_SCHEMA
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

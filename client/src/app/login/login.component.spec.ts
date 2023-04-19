@@ -1,56 +1,33 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { LoginService } from './login.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpTestingController } from '@angular/common/http/testing';
-import { of, throwError } from 'rxjs';
-// Other imports
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { AppRoutingModule } from '../app-routing.module';
-import { RouterModule } from '@angular/router';
-import appRoutes from '../app-routing.module';
+import { Router } from '@angular/router';
+import { User } from '../user.model';
+import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-
-
-describe('HttpClient testing', () => {
-  let httpClient:  HttpClient;
-  let httpTestingController: HttpTestingController;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, FormsModule ]
-    });
-
-    // Inject the http service and test controller for each test
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
-  });
-
-  it('works', () => {
-  });
-});
-
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let loginServiceSpy: jasmine.SpyObj<LoginService>;
+  let mockLoginService: jasmine.SpyObj<LoginService>;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
+    mockLoginService = jasmine.createSpyObj('LoginService', ['login']);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports:
-      [
-        FormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        RouterModule.forRoot(appRoutes)
-
+      imports:[FormsModule],
+      providers: [
+        { provide: LoginService, useValue: mockLoginService },
+        { provide: Router, useValue: mockRouter }
       ]
     })
     .compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -60,47 +37,32 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call loginService login method on submit', () => {
-    const username = 'testUser';
-    const password = 'testPassword';
-    loginServiceSpy.login.and.returnValue(of());
-    component.username = username;
-    component.password = password;
+  it('should login', () => {
+    const user: User = { id: "1", email: 'tester@example.com',name:"tester",password:"password123",clubs:"wece" };
+    mockLoginService.login.and.returnValue(of(user));
 
+    component.email = 'tester@example.com';
+    component.password = 'password123';
     component.onSubmit();
 
-    //expect(loginServiceSpy.login).toHaveBeenCalledWith(username, password);
+    expect(mockLoginService.login).toHaveBeenCalledWith('tester@example.com', 'password123');
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/profile', { User: user }]);
   });
 
-  // it('should navigate to profile page on successful login', () => {
-  //   const username = 'testUser';
-  //   const password = 'testPassword';
-  //   loginServiceSpy.login.and.returnValue(of(null));
-  //   component.username = username;
-  //   component.password = password;
-  //   spyOn(component.router, 'navigate');
+  it('should show error message on incorrect creds', () => {
+    mockLoginService.login.and.throwError('Incorrect Username or Password');
 
-  //   component.onSubmit();
-
-  //   expect(component.router.navigate).toHaveBeenCalledWith([`${component.baseUrl}/profile?username=${username}`]);
-  // });
-
-  it('should set error message and navigate to profile page on failed login', () => {
-    const errorMessage = 'Invalid credentials';
-    loginServiceSpy.login.and.returnValue(throwError({ message: errorMessage }));
-    spyOn(component.router, 'navigate');
-
+    component.email = 'tester@example.com';
+    component.password = 'password122';
     component.onSubmit();
 
-    expect(component.errorMessage).toEqual(errorMessage);
-    expect(component.router.navigate).toHaveBeenCalledWith(['/profile']);
+    expect(mockLoginService.login).toHaveBeenCalledWith('tester@example.com', 'password122');
+    expect(window.alert).toHaveBeenCalledWith('Incorrect Username or Password');
   });
 
-  it('should navigate to register page on register button click', () => {
-    spyOn(component.router, 'navigate');
-
+  it('should navigate to register page', () => {
     component.onRegister();
 
-    expect(component.router.navigate).toHaveBeenCalledWith(['/register']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/register']);
   });
 });

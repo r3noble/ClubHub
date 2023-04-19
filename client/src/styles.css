@@ -2,3 +2,7 @@
 @import 'node_modules/bulma/css/bulma.css';
 @import '/node_modules/font-awesome/css/font-awesome.css';
 @import 'smart-webcomponents-angular/source/styles/smart.default.css';
+
+body {
+  background-color: #3cc2a2;
+}
