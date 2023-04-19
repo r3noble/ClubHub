@@ -12,6 +12,7 @@ import { AuthService } from '../login/auth.service';
 export class CprofileComponent implements OnInit {
   name: string ="";
   club: Club | null = null;
+  url:string="";
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private cprofileService: CprofileService) { }
 
@@ -23,7 +24,7 @@ export class CprofileComponent implements OnInit {
     if(!this.isLoggedIn){
       alert("Please login to join a club.")
     }
-    
+
   }
 
   onCancel() {
@@ -36,7 +37,8 @@ export class CprofileComponent implements OnInit {
       this.cprofileService.getClubInfo(this.name).subscribe(
         (club: Club) => {
           this.club = club;
-          console.log(this.club.VP);
+          //this.url = club.calendar;
+         // console.log(this.club.VP);
         },
         (error) => {
           console.log(error);

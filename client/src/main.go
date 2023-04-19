@@ -143,6 +143,7 @@ func hardCodedValues(app *bapp.App) {
 		VP:        "Sarah Schultz",
 		Treasurer: "Isabella Cratem",
 		About:     "WECE's objective is not only to encourage women to pursue a degree in ECE, but also to be a source of assistance in reaching academic and career goals.",
+		Events:    "GBM, Hardware Team Meetings, Elections",
 	}
 	ieee := models.Club{
 		Name:      "Institute of Electrical and Electronics Engineers (IEEE)",
@@ -150,6 +151,7 @@ func hardCodedValues(app *bapp.App) {
 		VP:        "Julian Moldonado",
 		Treasurer: "Justin Nagovskiy",
 		About:     "The Institute of Electric and Electronics Engineers is the leading professional association for the advancement of technology. It is the world's largest technical society, bringing members access to the industry's most essential technical information, networking opportunities, career development tools, and many other exclusive benefits.",
+		Events:    "Volunteering at CW Norton, GBM, Day at the Pool",
 	}
 	ufsit := models.Club{
 		Name:      "UF Information Security Team (UFSIT)",
