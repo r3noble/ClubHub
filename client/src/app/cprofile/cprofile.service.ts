@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Observable } from 'rxjs';
 import { AuthService } from '../login/auth.service';
+import { member } from '../member.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,19 @@ export class CprofileService {
       })
     );
   }
+  ismember(id:string, name:string):Observable<member>{
+    const url = `http://localhost:8080/api/getRole`;
+    const body = { id, name };
+    return this.http.post<Club>(url,body).pipe(
+      map((response: any) => {
+        const member: member = {
+          id: response.string,
+          name: response.name,
+        };
+        return member;
+      })
+    );
+  }
 
   joinClub(id: string, name: string): Observable<User>
   {
@@ -51,10 +65,10 @@ export class CprofileService {
           clubs: response.clubs
         };
         this.authService.setLoggedIn(true,user);
-    
+
         return user;
       })
     );
   }
-  
+
 }

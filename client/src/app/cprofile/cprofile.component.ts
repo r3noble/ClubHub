@@ -4,6 +4,7 @@ import { CprofileService } from './cprofile.service';
 import { User } from '../user.model';
 import { Club } from '../club.model';
 import { AuthService } from '../login/auth.service';
+import { member } from '../member.model';
 
 @Component({
   selector: 'app-cprofile',
@@ -14,6 +15,8 @@ export class CprofileComponent implements OnInit {
   name: string ="";
   club: Club | null = null;
   url:string="";
+  member:member |null = null;
+  id:string = "";
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private cprofileService: CprofileService) { }
 
@@ -40,6 +43,18 @@ export class CprofileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.cprofileService.ismember(this.authService.getUser().name,this.name).subscribe(
+      (member:member)=> {
+        this.id = member.id;
+        member.name = member.name;
+       // alert(member.id);
+      },
+      (error) => {
+        alert('not found');
+        console.log(error);
+      }
+    );
     this.route.params.subscribe(params => {
       this.name = params['name'];
       this.cprofileService.getClubInfo(this.name).subscribe(
