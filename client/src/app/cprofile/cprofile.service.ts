@@ -23,7 +23,10 @@ export class CprofileService {
           VP: response.VP,
           treasurer: response.treasurer,
           about: response.about,
+          events: response.events,
         };
+
+
 
         return club;
       })

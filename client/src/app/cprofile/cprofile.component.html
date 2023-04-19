@@ -1,51 +1,37 @@
-<div class="tile is-ancestor">
-  <div class="tile is-parent">
-    <div class="tile is-child box">
-      <p class="title">{{club?.name}}</p>
-    </div>
-
-  </div>
-</div>
 <div class="tile is-ancestor ">
   <div class="tile is-4 is-vertical is-parent">
     <div class="tile is-child box ">
       <p class="subtitle">About this Club</p>
       <p>{{club?.about}}</p>
-
     </div>
     <div class="tile is-child box">
       <p>President:</p>
       <p class="subtitle"><a routerLink="/publicprofile/{{club?.president}}">{{club?.president}}</a></p>
-      <!--a>{{club?.president}}</a-->
-      <!--- this is an idea im not sure we will have time for-->
-      <!---a routerLink="/profile/{{president}}">{{presidentemail}}</a--->
       <p>Vice President:</p>
       <p class="subtitle"><a routerLink="/publicprofile/{{club?.VP}}">{{club?.VP}}</a></p>
-      <!---a >{{club?.VP}}</a--->
       <p>Treasurer:</p>
       <p class="subtitle"><a routerLink="/publicprofile/{{club?.treasurer}}">{{club?.treasurer}}</a></p>
-      <!---a>{{club?.treasurer}}</a--->
-
     </div>
-
   </div>
   <div class="tile is-6 is-parent">
     <div class="tile is-child box">
       <p class="subtitle">Upcoming Events</p>
-
+      <ul>
+        <li *ngFor="let event of club?.events?.split(',')">
+          <a routerLink="/event/{{event.trim()}}">{{event.trim()}}</a>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="tile is-2 is-parent">.
+  <div class="tile is-2 is-parent">
     <div class="tile is-child box">
       <p class="subtitle">Club Role</p>
-
     </div>
   </div>
 </div>
-
 <div class="control">
       <button class="button is-link is-light" (click)="onCancel()">Explore Other Clubs</button>
   </div>
-<div *ngIf="isLoggedIn()">
-   <button class="button is-link" (click)="onJoin()">Join Club!</button>
- </div>
+<div class="control">
+      <button class="button is-link" (click)="onJoin()">Join Club!</button>
+  </div>

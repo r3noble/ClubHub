@@ -4,4 +4,5 @@ export interface Club {
   VP: string;
   treasurer: string;
   about: string;
+  events: string;
 }
