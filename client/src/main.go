@@ -136,14 +136,14 @@ func main() {
 		President: "Gabriella N",
 		VP:        "Jon P",
 		Treasurer: "Rachel O",
-		About:     "Idk lol",
+		About:     "UFSIT works to provide a welcoming environment for students to learn more about all areas of information security, including topics such as penetration testing, reverse engineering, vulnerability research, digital forensics, and more.",
 	}
 	wicse := models.Club{
 		Name:      "WICSE",
 		President: "Robin Fintz",
 		VP:        "Minuet Greenberg",
 		Treasurer: "Katja Karoleski",
-		About:     "Idk lol",
+		About:     "WiCSE is the official student ACM-W chapter at the University of Florida. They are dedicated to increasing the representation of women in Computer Science.",
 	}
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
