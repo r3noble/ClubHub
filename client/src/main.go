@@ -136,7 +136,7 @@ func main() {
 		President: "Jenna Sheldon",
 		VP:        "Sarah Schultz",
 		Treasurer: "Isabella Cratem",
-		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
+		About:     "WECE's objective is not only to encourage women to pursue a degree in ECE, but also to be a source of assistance in reaching academic and career goals.",
 	}
 	ieee := models.Club{
 		Name:      "Institute of Electrical and Electronics Engineers (IEEE)",
