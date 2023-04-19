@@ -47,7 +47,7 @@ func TestLoginHandler(t *testing.T) {
     }
 
     //create a mock request to server
-    body := []byte(`{"username": "testlogin", "password": "testpassword"}`)
+    body := []byte(`{"email": "testuser@example.com", "password": "testpassword"}`)
     req, err := http.NewRequest("POST", "/api/login", bytes.NewBuffer(body))
     if err != nil {
         t.Fatal(err)
