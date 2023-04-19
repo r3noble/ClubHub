@@ -152,6 +152,13 @@ func main() {
 		Treasurer: "Kyle Myott",
 		About:     "Also known as Gator Motorsports, SAE offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
 	}
+	aiaa := models.Club{
+		Name:      "AIAA",
+		President: "Jose Aguilar",
+		VP:        "Esha Shah",
+		Treasurer: "Max Chern",
+		About:     "AIAA promotes professional development for AE majors as well as ME majors with an interest in space and aeronautics through information sessions, tours, guest speakers, community outreach events, professional workshops, industry technical talks and other programming.",
+	}
 	acm := models.Club{
 		Name:      "ACM",
 		President: "Jennifer Lopez",
@@ -165,13 +172,6 @@ func main() {
 		VP:        "Neeva Sethi",
 		Treasurer: "Vijayasai Somasundaram",
 		About:     "Dream Team Engineering is a group of engineering and non-engineering students alike that are dedicated to making novel technologies to enhance the lives of the patients at UF Health Shands, the surrounding Gainesville community, and beyond.",
-	}
-	aiaa := models.Club{
-		Name:      "AIAA",
-		President: "Jose Aguilar",
-		VP:        "Esha Shah",
-		Treasurer: "Max Chern",
-		About:     "AIAA promotes professional development for AE majors as well as ME majors with an interest in space and aeronautics through information sessions, tours, guest speakers, community outreach events, professional workshops, industry technical talks and other programming.",
 	}
 
 	err = app.Cdb.Create(wece).Error
@@ -194,15 +194,15 @@ func main() {
 	if err != nil {
 		fmt.Println("sae not added!")
 	}
+	err = app.Cdb.Create(aiaa).Error
+	if err != nil {
+		fmt.Println("dreamteam not added!")
+	}
 	err = app.Cdb.Create(acm).Error
 	if err != nil {
 		fmt.Println("acm not added!")
 	}
 	err = app.Cdb.Create(dreamteam).Error
-	if err != nil {
-		fmt.Println("dreamteam not added!")
-	}
-	err = app.Cdb.Create(aiaa).Error
 	if err != nil {
 		fmt.Println("dreamteam not added!")
 	}
