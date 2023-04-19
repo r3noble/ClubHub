@@ -23,7 +23,7 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	}
 	var club models.Club
 	err = a.Cdb.First(&club, models.Club{Name: clubName})
-	if err !:= nil {
+	if err := nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	//Add user name to the ClubAdder as response
