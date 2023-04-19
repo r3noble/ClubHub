@@ -74,6 +74,8 @@ func (a *App) GetRoleHandler(w http.ResponseWriter, r *http.Request){
 	
 	//list will hold list of User clubs
 }
+
+//tested
 func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//get identification of user to be accessed
 	var ident models.ClubAdder
