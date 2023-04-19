@@ -5,7 +5,6 @@ import (
     "bytes"
     "net/http"
     "net/http/httptest"
-    "fmt"
     "github.com/gorilla/mux"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -57,7 +56,6 @@ func TestAddEventHandler(t *testing.T) {
     if status := mockRec.Code; status != http.StatusOK {
         t.Errorf("Wrong status returned, got %v want %v", status, http.StatusOK)
     }
-    fmt.Println("API Request made")
     //check response body
     var responseEvent models.Event
     err = json.NewDecoder(mockRec.Body).Decode(&responseEvent)
@@ -65,7 +63,9 @@ func TestAddEventHandler(t *testing.T) {
         t.Fatal(err)
     }
 
-    if responseEvent.Club != event.Club || responseEvent.Event != event.Event || responseEvent.Date != event.Date || responseEvent.startTime != event.startTime || responseEvent.endTime != event.endTime {
+    if responseEvent.Club != event.Club || responseEvent.Event != event.Event || responseEvent.Date != event.Date || responseEvent.StartTime != event.StartTime || responseEvent.EndTime != event.EndTime {
         t.Errorf("Returned unexpected user data, got %v, want %v", responseEvent, event)
     }
+
+
 }

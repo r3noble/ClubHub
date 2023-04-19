@@ -12,6 +12,7 @@ import (
 	"github.com/r3noble/CEN3031-Project-Group/tree/main/client/src/models"
 )
 
+//tested
 func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 	//get identification of user to be accessed
 	var ident models.ClubAdder
@@ -65,6 +66,7 @@ func (a *App) JoinClubHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//tested
 func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is POST and the URL path is /user/login
 	// Decode the JSON payload from the request body
@@ -124,6 +126,7 @@ func (a *App) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Send a 404 Not Found response if the URL path doesn't match
 }
 
+
 func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
@@ -146,6 +149,7 @@ func (a *App) IdHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(userJSON)
 }
 
+//tested
 func (a *App) AddUserHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body to get the new user data
 	var newUser models.User
