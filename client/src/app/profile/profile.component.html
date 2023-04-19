@@ -36,9 +36,11 @@
         <p class="title">My Upcoming Events</p>
 <!--- these would become clickable links-->
         <div class="content">
-          GBM 2: Female Faculty Panel <br>
-          Lake Wauberg Social<br>
-          Info Session with Intel<br>
+          <ul>
+            <li *ngFor="let event of club?.events?.split(',')">
+              <a routerLink="/event/{{event.trim()}}">{{event.trim()}}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </article>
