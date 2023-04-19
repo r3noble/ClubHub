@@ -74,7 +74,13 @@ func main() {
 		Edb: edb,
 	}
 
-	//hardcodes test user to db
+	hardCodedValues(&app)
+
+	app.Start()
+}
+
+func hardCodedValues(app *bapp.App) {
+		//hardcodes test user to db
 	hardCoder := models.User{
 		ID:       "123",
 		Name:     "tester",
@@ -110,7 +116,7 @@ func main() {
 		Password: "password123",
 		Clubs:    "WECE",
 	}
-	err = app.DB.Create(hardCoder).Error
+	err := app.DB.Create(hardCoder).Error
 	if err != nil {
 		fmt.Println("Tester unsuccessfully hard-coded to db")
 	}
@@ -132,56 +138,56 @@ func main() {
 	}
 	//app.u["Cole"] = User{ID: "1", Name: "Cole", Email: "cole@rottenberg.org", Password: "pass"}
 	wece := models.Club{
-		Name:      "WECE",
+		Name:      "Women in Electrical and Computer Engineering (WECE)",
 		President: "Jenna Sheldon",
 		VP:        "Sarah Schultz",
 		Treasurer: "Isabella Cratem",
 		About:     "This is about promoting the inclusion of Women in the fields of both computer and electrical engineering",
 	}
 	ieee := models.Club{
-		Name:      "IEEE",
+		Name:      "Institute of Electrical and Electronics Engineers (IEEE)",
 		President: "Conrad Hellwege",
 		VP:        "Julian Moldonado",
 		Treasurer: "Justin Nagovskiy",
 		About:     "The Institute of Electric and Electronics Engineers is the leading professional association for the advancement of technology. It is the world's largest technical society, bringing members access to the industry's most essential technical information, networking opportunities, career development tools, and many other exclusive benefits.",
 	}
 	ufsit := models.Club{
-		Name:      "UFSIT",
+		Name:      "UF Information Security Team (UFSIT)",
 		President: "Gabriella N",
 		VP:        "Jon P",
 		Treasurer: "Rachel O",
 		About:     "UFSIT works to provide a welcoming environment for students to learn more about all areas of information security, including topics such as penetration testing, reverse engineering, vulnerability research, digital forensics, and more.",
 	}
 	wicse := models.Club{
-		Name:      "WICSE",
+		Name:      "Women in Computer Science and Engineering (WiCSE)",
 		President: "Robin Fintz",
 		VP:        "Minuet Greenberg",
 		Treasurer: "Katja Karoleski",
 		About:     "WiCSE is the official student ACM-W chapter at the University of Florida. They are dedicated to increasing the representation of women in Computer Science.",
 	}
 	sae := models.Club{
-		Name:      "SAE",
+		Name:      "Society of Automotive Engineers (SAE)",
 		President: "Mitchell Thoeni",
 		VP:        "Cam Lott",
 		Treasurer: "Kyle Myott",
 		About:     "Also known as Gator Motorsports, SAE offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
 	}
 	aiaa := models.Club{
-		Name:      "AIAA",
+		Name:      "American Institute of Aeronautics and Astronautics (AIAA)",
 		President: "Jose Aguilar",
 		VP:        "Esha Shah",
 		Treasurer: "Max Chern",
 		About:     "AIAA promotes professional development for AE majors as well as ME majors with an interest in space and aeronautics through information sessions, tours, guest speakers, community outreach events, professional workshops, industry technical talks and other programming.",
 	}
 	acm := models.Club{
-		Name:      "ACM",
+		Name:      "Association for Computing Machineru (ACM)",
 		President: "Jennifer Lopez",
 		VP:        "Matthew Hanson",
 		Treasurer: "Joonho Jun",
 		About:     "The University of Florida's Association for Computing Machinery works to promote computer science education through professional events, social events, and Special Interest Groups.",
 	}
 	dreamteam := models.Club{
-		Name:      "dreamteam",
+		Name:      "Dream Team Engineering",
 		President: "Emily Jones",
 		VP:        "Neeva Sethi",
 		Treasurer: "Vijayasai Somasundaram",
@@ -220,5 +226,4 @@ func main() {
 	if err != nil {
 		fmt.Println("dreamteam not added!")
 	}
-	app.Start()
 }
