@@ -27,4 +27,15 @@ export class CprofileService {
       })
     );
   }
+
+  joinClub(id: string, name: string)
+  {
+    const url = `http://localhost:8080/api/joinClub/${name}`;
+    const body = {
+      id: id,
+      name: name,
+    };
+
+    return this.http.post(url, body);
+  }
 }
