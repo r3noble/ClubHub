@@ -17,6 +17,9 @@
   - with redirects to club profiles
 - created club profiles 
   - with redirects to club executive member pages
+- added ability to join clubs
+  - join club buttons only show up when user is logged in
+  - ability to join multiple clubs
 - added functionality, redirects, permanence to login/logout
 - integrated user profile with backend
   - added functionality, redirects to user profile
