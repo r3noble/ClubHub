@@ -33,15 +33,14 @@ export class CprofileService {
       })
     );
   }
-  ismember(name:string, club:string):Observable<member>{
+  ismember(id:string, name:string):Observable<member>{
     const url = `http://localhost:8080/api/getRole`;
-    const body = { name, club };
+    const body = { id, name };
     return this.http.post<Club>(url,body).pipe(
       map((response: any) => {
         const member: member = {
           id: response.string,
           name: response.name,
-
         };
         return member;
       })
