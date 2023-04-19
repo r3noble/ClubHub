@@ -152,6 +152,13 @@ func main() {
 		Treasurer: "Kyle Myott",
 		About:     "Offers a hands on experience designing, manufacturing, and marketing a technically advanced product: a small scale formula racecar.",
 	}
+	acm := models.Club{
+		Name:      "ACM",
+		President: "Jennifer Lopez",
+		VP:        "Matthew Hanson",
+		Treasurer: "Joonho Jun",
+		About:     "The University of Florida's Association for Computing Machinery works to promote computer science education through professional events, social events, and Special Interest Groups ",
+	}
 
 	err = app.Cdb.Create(wece).Error
 	if err != nil {
@@ -172,6 +179,10 @@ func main() {
 	err = app.Cdb.Create(sae).Error
 	if err != nil {
 		fmt.Println("sae not added!")
+	}
+	err = app.Cdb.Create(acm).Error
+	if err != nil {
+		fmt.Println("acm not added!")
 	}
 	app.Start()
 }
