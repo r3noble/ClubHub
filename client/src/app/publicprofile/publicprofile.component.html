@@ -4,7 +4,7 @@
       <div class="tile is-parent is-vertical">
         <article class="tile is-child notification is-warning">
           <p class="title">Executive Member of:</p>
-          <p class="subtitle"><a routerLink="/cprofile/{{user?.clubs}}}">{{user?.clubs?? ""}}</a></p>
+          <p class="subtitle"><a routerLink="/cprofile/{{user?.clubs}}">{{user?.clubs?? ""}}</a></p>
 
         </article>
       </div>
@@ -36,9 +36,11 @@
         <p class="title">{{user?.name?? ""}}'s Upcoming Club Events</p>
 <!--- these would become clickable links-->
         <div class="content">
-          GBM 2: Female Faculty Panel <br>
-          Lake Wauberg Social<br>
-          Info Session with Intel<br>
+          <ul>
+            <li *ngFor="let event of club?.events?.split(',')">
+              <a routerLink="/event/{{event.trim()}}">{{event.trim()}}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </article>
