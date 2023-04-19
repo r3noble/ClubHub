@@ -4,12 +4,13 @@ import { Club } from '../club.model';
 import { map } from 'rxjs/operators';
 import { User } from '../user.model';
 import { Observable } from 'rxjs';
+import { AuthService } from '../login/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CprofileService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getClubInfo(name: string): Observable<Club> {
     const url = `http://localhost:8080/api/getClub/${name}`;
@@ -31,7 +32,7 @@ export class CprofileService {
 
   joinClub(id: string, name: string): Observable<User>
   {
-    const url = `http://localhost:8080/api/joinClub/${name}`;
+    const url = `http://localhost:8080/api/joinClub`;
     const body = {
       id: id,
       name: name,
@@ -46,6 +47,7 @@ export class CprofileService {
           password: response.password,
           clubs: response.clubs
         };
+        this.authService.setLoggedIn(true,user);
     
         return user;
       })
