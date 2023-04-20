@@ -10,6 +10,9 @@
   -  view clubs
   -  get club profiles
   -  add club to user 
+  - added event database
+  - added new structs to act as models for json requests and database models
+    - includes: clubAdder.go, events.go, clubs.go
 
 
 ### Front End
@@ -32,7 +35,11 @@
 ## Tests
 
 ### Back End
-
+- New Unit Tests:
+  - addclub_test : tests to ensure clubs are added correctly to database
+  - addevent_test : tests to ensure events are added correctly to database
+  - getRole_test : tests to ensure that the GetRole API handler works correctly
+  - joinClub_test : tests to ensure JoinCLub API handler worrks correctly and that club is formatted successfully in the database
 ### Front End
 - HeaderComponent
   - should create
