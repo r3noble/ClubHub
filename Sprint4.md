@@ -27,6 +27,7 @@
   -added future ability to integrate events to be handled with our api
 - added functionality in user profile page to show clubs that user joined
   - clicking on the club names takes the user to the club profile page
+  - shows events for clubs the user is a member of
 
 ## Tests
 
